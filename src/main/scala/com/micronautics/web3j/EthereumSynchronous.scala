@@ -115,6 +115,7 @@ class EthereumSynchronous(val web3j: Web3j) {
   def sendTransaction(transaction: request.Transaction): String =
     web3j.ethSendTransaction(transaction).send.getTransactionHash
 
+  /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#web3_sha3 web3_sha3]] JSON-RPC endpoint. */
   def sha3(data: String): String = web3j.web3Sha3(data).send.getResult
 
   def sign(address: String, sha3HashOfDataToSign: String): String =
@@ -163,8 +164,10 @@ class EthereumSynchronous(val web3j: Web3j) {
 
   def uninstallShhFilter(filterId: BigInteger): Boolean = web3j.shhUninstallFilter(filterId).send.isUninstalled
 
+  /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#web3_clientversion web3_clientversion]] JSON-RPC endpoint. */
   def versionWeb3J: String = web3j.web3ClientVersion.send.getWeb3ClientVersion
 
+  /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#net_version net_version]] JSON-RPC endpoint. */
   def versionNet: String = web3j.netVersion.send.getNetVersion
 
   def versionProtocol: String = web3j.ethProtocolVersion.send.getProtocolVersion

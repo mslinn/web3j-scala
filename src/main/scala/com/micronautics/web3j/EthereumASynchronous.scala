@@ -130,6 +130,7 @@ class EthereumASynchronous(val web3j: Web3j)
   def sendTransaction(transaction: request.Transaction): Future[String] =
     web3j.ethSendTransaction(transaction).sendAsync.toScala.map(_.getTransactionHash)
 
+  /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#web3_sha3 web3_sha3]] JSON-RPC endpoint. */
   def sha3(data: String): Future[String] = web3j.web3Sha3(data).sendAsync.toScala.map(_.getResult)
 
   def sign(address: String, sha3HashOfDataToSign: String): Future[String] =
@@ -187,8 +188,10 @@ class EthereumASynchronous(val web3j: Web3j)
   def uninstallShhFilter(filterId: BigInteger): Future[Boolean] =
     web3j.shhUninstallFilter(filterId).sendAsync.toScala.map(_.isUninstalled)
 
+  /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#web3_clientversion web3_clientversion]] JSON-RPC endpoint. */
   def versionWeb3J: Future[String] = web3j.web3ClientVersion.sendAsync.toScala.map(_.getWeb3ClientVersion)
 
+  /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#net_version net_version]] JSON-RPC endpoint. */
   def versionNet: Future[String] = web3j.netVersion.sendAsync.toScala.map(_.getNetVersion)
 
   def versionProtocol: Future[String] = web3j.ethProtocolVersion.sendAsync.toScala.map(_.getProtocolVersion)
