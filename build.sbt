@@ -76,6 +76,7 @@ javacOptions ++= Seq(
 )
 
 resolvers ++= Seq(
+  "Ethereum Maven" at "https://dl.bintray.com/ethereum/maven/"
 )
 
 val web3jVersion = "3.0.2"
