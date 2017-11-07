@@ -1,7 +1,6 @@
 package com.micronautics.web3j
 
 import java.math.BigInteger
-import java.util
 import java.util.Optional
 import org.web3j.protocol.Web3j
 import org.web3j.protocol.core.DefaultBlockParameter
@@ -12,12 +11,11 @@ import org.web3j.protocol.http.HttpService
 import org.web3j.protocol.infura.InfuraHttpService
 import scala.collection.JavaConverters._
 import scala.compat.java8.FutureConverters._
-import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.{global => defaultExecutionContext}
+import scala.concurrent.{ExecutionContext, Future}
 
 /** These methods block */
-trait EthereumSynchronous {
-  val web3j: Web3j
-
+class EthereumSynchronous(val web3j: Web3j) {
   def accounts: List[String] = web3j.ethAccounts.send.getAccounts.asScala.toList
 
   def addToGroup(identityAddress: String): Boolean = web3j.shhAddToGroup(identityAddress).send.addedToGroup
@@ -181,9 +179,8 @@ trait EthereumSynchronous {
 }
 
 /** These methods return a scala.concurrent.Future and do not block */
-trait EthereumASynchronous {
-  val web3j: Web3j
-
+class EthereumASynchronous(val web3j: Web3j)
+                          (implicit val ec: ExecutionContext = defaultExecutionContext) {
   def accounts: Future[List[String]] = web3j.ethAccounts.sendAsync.toScala.map(_.getAccounts.asScala.toList)
 
   def addToGroup(identityAddress: String): Future[Boolean] =
@@ -370,5 +367,3 @@ object Web3jBuilder {
 
   def fromHttp(url: String = "http://localhost:8545"): Web3j = Web3j.build(new HttpService(url))
 }
-
-class Ethereum(val web3j: Web3j) extends EthereumSynchronous with EthereumASynchronous

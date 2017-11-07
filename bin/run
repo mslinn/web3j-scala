@@ -4,7 +4,7 @@
 # bin/run -j [entryPoint]
 #
 # -j option forces rebuild of jar
-# entryPoint defaults to "Main"
+# entryPoint defaults to "com.micronautics.web3j.Main"
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/.."
 cd "$DIR"
@@ -41,7 +41,7 @@ fi
 if [ "$1" ]; then
   ENTRY="$1"
 else
-  ENTRY=Main
+  ENTRY="com.micronautics.web3j.Main"
 fi
 
 java -cp "$JAR" "$ENTRY" "$@"
