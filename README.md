@@ -28,7 +28,7 @@ Building the fat jar takes a while. Subsequent invocations happen much more quic
 
 ## Developers
 ### Scaladoc
-The Scaladoc is [here](http://mslinn.github.io/web3j-scala/latest/api/com/micronautics/web3j/index.html).
+[Here](http://mslinn.github.io/web3j-scala/latest/api/com/micronautics/web3j/index.html).
 
 ### Rebuilding the Fat Jar
 The `bin/run` script accepts a `-j` option, which forces a rebuild of the fat jar. 
