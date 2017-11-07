@@ -1,5 +1,6 @@
-<img src='https://docs.web3j.io/_static/web3j.png' align='right' width='15%'>
 # Web3J-Scala Library
+
+<img src='https://docs.web3j.io/_static/web3j.png' align='right' width='15%'>
 
 [![Build Status](https://travis-ci.org/mslinn/web3j-scala.svg?branch=master)](https://travis-ci.org/mslinn/web3j-scala)
 [![GitHub version](https://badge.fury.io/gh/mslinn%2Fweb3j-scala.svg)](https://badge.fury.io/gh/mslinn%2Fweb3j-scala)
