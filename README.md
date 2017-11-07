@@ -52,6 +52,8 @@ Do all of the above with this command:
     sbt ";publish ;doc ;ghpagesPushSite"
 
 ## Sponsor
+<img src='https://www.micronauticsresearch.com/images/robotCircle400shadow.png' align='right' width='15%'>
+
 This project is sponsored by [Micronautics Research Corporation](http://www.micronauticsresearch.com/),
 the company that delivers online Scala training via [ScalaCourses.com](http://www.ScalaCourses.com).
 You can learn Scala by taking the [Introduction to Scala](http://www.ScalaCourses.com/showCourse/40),
