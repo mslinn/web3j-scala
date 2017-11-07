@@ -7,7 +7,7 @@ Scala wrapper around [Web3J](https://www.web3j.io) for Ethereum.
 This project is built with Scala 2.12, which requires Java 8+.
 
 ## Developers
-The Scaladoc is [here](http://mslinn.github.io/web3j-scala/latest/api/index.html).
+The Scaladoc is [here](http://mslinn.github.io/web3j-scala/latest/api/com/micronautics/web3j/index.html).
 
 Publish the Scaladoc for this project with this command:
 

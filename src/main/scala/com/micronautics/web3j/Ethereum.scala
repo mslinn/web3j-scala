@@ -178,7 +178,7 @@ class EthereumSynchronous(val web3j: Web3j) {
   def work: EthGetWork = web3j.ethGetWork.send
 }
 
-/** These methods return a scala.concurrent.Future and do not block */
+/** These methods return a [[scala.concurrent.Future]] and do not block */
 class EthereumASynchronous(val web3j: Web3j)
                           (implicit val ec: ExecutionContext = defaultExecutionContext) {
   def accounts: Future[List[String]] = web3j.ethAccounts.sendAsync.toScala.map(_.getAccounts.asScala.toList)
