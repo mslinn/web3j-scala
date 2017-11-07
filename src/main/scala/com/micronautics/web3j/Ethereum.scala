@@ -5,7 +5,7 @@ import org.web3j.protocol.http.HttpService
 import org.web3j.protocol.infura.InfuraHttpService
 import scala.concurrent.ExecutionContext.{global => defaultExecutionContext}
 
-/** Web3J builders and any other misc. stuff might end up in this class. */
+/** [[https://www.web3j.io Web3J]] builders and any other misc. stuff might end up in this class. */
 object Ethereum {
   def fromInfura(token: String): Web3j =
     Web3j.build(new InfuraHttpService(s"https://ropsten.infura.io/$token"))
