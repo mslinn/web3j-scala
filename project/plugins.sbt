@@ -12,3 +12,5 @@ addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.3.1")
 //addSbtPlugin("com.artima.supersafe" % "sbtplugin" % "1.1.2")
 
 addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.14.5")
+
+addSbtPlugin("org.foundweekends" % "sbt-bintray" % "0.5.1")

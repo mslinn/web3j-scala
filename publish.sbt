@@ -1,3 +1,7 @@
+bintrayOrganization := Some("micronautics")
+bintrayRepository := "scala"
+bintrayPackage := "web3j-scala"
+
 // sbt-site settings
 enablePlugins(SiteScaladocPlugin)
 siteSourceDirectory := target.value / "api"
