@@ -10,6 +10,8 @@ package com.micronautics
   * The JSON-RPC [[https://github.com/ethereum/wiki/wiki/JSON-RPC#the-default-block-parameter default block parameter]]
   * can represent a `QUANTITY` or a `TAG`.
   * Quantities are expressed as integer block numbers, and tags are strings with one of the values "latest", "earliest" or "pending".
+  * The [[https://jar-download.com/javaDoc/org.web3j/core/3.0.2/index.html?org/web3j/protocol/core/DefaultBlockParameter.html Java implementation]]
+  * performs the same function as the JSON-RPC analog.
   *
   * [[https://github.com/ethereum/wiki/wiki/Whisper Whisper]] is a communication protocol of the Ethereum P2P protocol suite that allows
   * for messaging between users' DApps (Ethereum Distributed Applications).
