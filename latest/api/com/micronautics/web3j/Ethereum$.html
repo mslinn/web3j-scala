@@ -124,12 +124,22 @@ was the source of the comments.</p><p>The JSON-RPC <a href="https://github.com/e
 can represent a <code>QUANTITY</code> or a <code>TAG</code>.
 Quantities are expressed as integer block numbers, and tags are strings with one of the values &quot;latest&quot;, &quot;earliest&quot; or &quot;pending&quot;.
 The <a href="https://jar-download.com/javaDoc/org.web3j/core/3.0.2/index.html?org/web3j/protocol/core/DefaultBlockParameter.html" target="_blank">Java implementation</a>
-performs the same function as the JSON-RPC analog.</p><p><a href="https://github.com/ethereum/wiki/wiki/Whisper" target="_blank">Whisper</a> is a communication protocol of the Ethereum P2P protocol suite that allows
+performs the same function as the JSON-RPC analog.</p><p><a href="https://github.com/ethereum/wiki/wiki/Whisper" target="_blank">Whisper</a>
+is a communication protocol of the Ethereum P2P protocol suite that allows
 for messaging between users' DApps (Ethereum Distributed Applications).
 Whisper uses the same network that the blockchain runs on.
 The protocol is separate from the blockchain, so smart contracts do not have access to whispers.</p><p><a href="https://jar-download.com/javaDoc/org.web3j/core/3.0.2/index.html?org/web3j/protocol/core/methods/response/EthBlock.html" target="_blank">EthBlock</a>
-and its internal objects such as <a href="https://jar-download.com/javaDoc/org.web3j/core/3.0.2/index.html?org/web3j/protocol/core/methods/response/EthBlock.Block.html" target="_blank">Block</a>
-are returned by the following methods: eth_getBlockByHash, eth_getBlockByNumber, eth_getUncleByBlockHashAndIndex, eth_getUncleByBlockNumberAndIndex.
+and its internal objects such as
+<a href="https://jar-download.com/javaDoc/org.web3j/core/3.0.2/index.html?org/web3j/protocol/core/methods/response/EthBlock.Block.html" target="_blank">Block</a>
+are returned by the following methods: </p><pre>eth_getBlockByHash</pre><p>, </p><pre>eth_getBlockByNumber</pre><p>,</p><pre>eth_getUncleByBlockHashAndIndex</pre><p>, </p><pre>eth_getUncleByBlockNumberAndIndex</pre><p>.</p><p>eth_getUncleByBlockNumberAndIndex
+}}}</p><p>eth_getUncleByBlockHashAndIndex
+}}}</p><p>eth_getBlockByNumber
+}}}</p><pre>eth_getUncleByBlockHashAndIndex</pre><p>, </p><pre>eth_getUncleByBlockNumberAndIndex</pre><p>.</p><p>eth_getUncleByBlockNumberAndIndex
+}}}</p><p>eth_getUncleByBlockHashAndIndex
+}}}</p><p>eth_getBlockByHash
+}}}</p><pre>eth_getUncleByBlockHashAndIndex</pre><p>, </p><pre>eth_getUncleByBlockNumberAndIndex</pre><p>.</p><p>eth_getUncleByBlockNumberAndIndex
+}}}</p><p>eth_getUncleByBlockHashAndIndex
+}}}
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="com.micronautics">micronautics</a></dd></dl></div>
     </li><li class="current-entities indented3">
                         <span class="separator"></span>
