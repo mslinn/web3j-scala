@@ -22,7 +22,6 @@ package com.micronautics
   * [[https://jar-download.com/javaDoc/org.web3j/core/3.0.2/index.html?org/web3j/protocol/core/methods/response/EthBlock.html EthBlock]]
   * and its internal objects such as
   * [[https://jar-download.com/javaDoc/org.web3j/core/3.0.2/index.html?org/web3j/protocol/core/methods/response/EthBlock.Block.html Block]]
-  * are returned by the following methods: {{{eth_getBlockByHash}}}, {{{eth_getBlockByNumber}}},
-  * {{{eth_getUncleByBlockHashAndIndex}}}, {{{eth_getUncleByBlockNumberAndIndex}}}.
+  * are returned by the following methods: {{{blockByHash}}}, {{{blockByNumber}}}, {{{uncleByBlockHashAndIndex}}}, {{{uncleByBlockNumberAndIndex}}}.
   */
 package object web3j
