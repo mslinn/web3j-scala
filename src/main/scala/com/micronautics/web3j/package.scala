@@ -20,8 +20,11 @@ package com.micronautics
   * The protocol is separate from the blockchain, so smart contracts do not have access to whispers.
   *
   * [[https://jar-download.com/javaDoc/org.web3j/core/3.0.2/index.html?org/web3j/protocol/core/methods/response/EthBlock.html EthBlock]]
-  * and its internal objects such as
-  * [[https://jar-download.com/javaDoc/org.web3j/core/3.0.2/index.html?org/web3j/protocol/core/methods/response/EthBlock.Block.html Block]]
-  * are returned by the following methods: {{{blockByHash}}}, {{{blockByNumber}}}, {{{uncleByBlockHashAndIndex}}}, {{{uncleByBlockNumberAndIndex}}}.
+  * and its internal types such as
+  * [[https://jar-download.com/javaDoc/org.web3j/core/3.0.2/index.html?org/web3j/protocol/core/methods/response/EthBlock.Block.html Block]],
+  * [[https://jar-download.com/javaDoc/org.web3j/core/3.0.2/index.html?org/web3j/protocol/core/methods/response/EthBlock.TransactionObject.html TransactionObject]] and
+  * [[https://jar-download.com/javaDoc/org.web3j/core/3.0.2/index.html?org/web3j/protocol/core/methods/response/EthBlock.TransactionResult.html TransactionResult]]
+  * are returned by the following methods of [[com.micronautics.web3j.EthereumSynchronous]] and [[com.micronautics.web3j.EthereumASynchronous]]:
+  * `blockByHash`, `blockByNumber`, `uncleByBlockHashAndIndex`, `uncleByBlockNumberAndIndex`.
   */
 package object web3j
