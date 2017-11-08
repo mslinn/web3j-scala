@@ -28,10 +28,10 @@ $ bin/run
 Building the fat jar takes a while. Subsequent invocations happen much more quickly.
 
 ## Developers
-### Scaladoc
-[This library's Scaladoc is here](http://mslinn.github.io/web3j-scala/latest/api/com/micronautics/web3j/index.html).
+### API Documentation
+* [This library's Scaladoc is here](http://mslinn.github.io/web3j-scala/latest/api/com/micronautics/web3j/index.html).
 
-[The Wej3J JavaDoc is here](https://jar-download.com/java-documentation-javadoc.php?a=core&g=org.web3j&v=3.0.2)
+* [The Wej3J JavaDoc is here](https://jar-download.com/java-documentation-javadoc.php?a=core&g=org.web3j&v=3.0.2).
 
 ### Rebuilding the Fat Jar
 The `bin/run` script accepts a `-j` option, which forces a rebuild of the fat jar. 
