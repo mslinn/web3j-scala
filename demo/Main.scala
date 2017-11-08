@@ -2,11 +2,14 @@ package demo
 
 /** Adapted from [[https://docs.web3j.io/getting_started.html#start-a-client Web3J Getting Started]].
   *
-  * Before running this program, start up an Ethereum client if you don’t already have one running, such as `geth`:
-  * {{{geth --rpcapi personal,db,eth,net,web3 --rpc --rinkeby}}}
+  * 1. Before running this program, start up an Ethereum client if you don’t already have one running, such as `geth`:
+  * {{{$ geth --rpcapi personal,db,eth,net,web3 --rpc --rinkeby --ipcpath "geth.ipc"}}}
   *
-  * Run this program by typing the following at a shell prompt:
-  * {{{sbt test:run}}} */
+  * 2. Create the smart contract JVM wrapper by running `demo/DemoSmartContracts.scala`:
+  * {{{$ sbt "test:runMain demo.DemoSmartContracts"}}}
+  *
+  * 3. Run this program by typing the following at a shell prompt:
+  * {{{$ sbt "test:runMain demo.Main"}}} */
 object Main extends App {
   val demo = new Demo
   new DemoSmartContracts(demo)

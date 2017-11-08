@@ -8,13 +8,13 @@ import org.web3j.tx.Transfer
 import org.web3j.utils.Convert
 
 class DemoTransaction(demo: Demo) {
-  import demo._
+  import Demo._, demo._
 
   //  web3j provides support for both working with Ethereum wallet files (recommended) and Ethereum client admin commands for sending transactions.
   //  To send Ether to another party using your Ethereum wallet file:
-  val credentials: Credentials = WalletUtils.loadCredentials("password", "/path/to/walletfile")
+  val credentials: Credentials = WalletUtils.loadCredentials("password", walletDir)
   val transactionReceipt: TransactionReceipt =
-    Transfer.sendFunds(web3j, credentials, "0x...", BigDecimal.valueOf(1.0).bigDecimal, Convert.Unit.ETHER).send()
+    Transfer.sendFunds(web3j, credentials, "0x...", BigDecimal.valueOf(0.01).bigDecimal, Convert.Unit.ETHER).send()
 
   //  Or if you wish to create your own custom transaction, get the next available nonce
   val ethGetTransactionCount: EthGetTransactionCount = web3j.ethGetTransactionCount("address", DefaultBlockParameterName.LATEST).send()

@@ -18,14 +18,19 @@ Add this to your SBT project's `build.sbt`:
 Only Scala 2.12 with JDK 8 is supported at present; this is a limitation of the Scala ecosystem as of November 7, 2017.
 
 ## Run the demo.Demo Program
-First create the smart contract wrapper by running `demo/DemoSmartContracts.scala`:
-
-    $ sbt "test:runMain demo.DemoSmartContracts"
-
-Now run the demo in `demo/Main.scala`:
-
-    $ sbt "test:runMain demo.Main"
-
+1. Before running the demo program, start up an Ethereum client if you don’t already have one running, such as `geth`:
+   ```
+   $ geth --rpcapi personal,db,eth,net,web3 --rpc --rinkeby --ipcpath "geth.ipc"
+   ```
+2. Create the smart contract JVM wrapper by running `demo/DemoSmartContracts.scala`:
+   ```
+   $ sbt "test:runMain demo.DemoSmartContracts"
+   ```
+3. Run the demo in `demo/Main.scala`:
+   ```
+   $ sbt "test:runMain demo.Main"
+   ```
+   
 ## Developers
 ### API Documentation
 * [This library's Scaladoc is here](http://mslinn.github.io/web3j-scala/latest/api/com/micronautics/web3j/index.html).

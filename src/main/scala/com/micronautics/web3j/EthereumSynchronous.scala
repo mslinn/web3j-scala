@@ -12,6 +12,7 @@ import scala.collection.JavaConverters._
 /** All of the methods in this class block until a value is ready to be returned to the caller.
   * @param web3j can be shared with [[EthereumASynchronous]] */
 class EthereumSynchronous(val web3j: Web3j) {
+  Ethereum.verifyConnection(web3j)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_accounts eth_accounts]] JSON-RPC endpoint.
     * @return the list of addresses owned by the client */

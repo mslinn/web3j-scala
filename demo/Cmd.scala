@@ -26,16 +26,18 @@ object Cmd {
 
   @inline protected def whichOrThrow(program: String): Path =
     which(program) match {
-      case None => throw new Exception(program + " not found on path")
+      case None => sys.error(program + " not found on path")
       case Some(programPath) => programPath
     }
+
+  @inline def home(path: String): String = path.replace("~", sys.props("user.home"))
 }
 
 class Cmd(cwd: File = new File("."), showOutput: Boolean=true, verbose: Boolean=false) {
   import demo.Cmd._
 
   @inline def apply(cmd: String*): ProcessBuilder = {
-    val command: List[String] = whichOrThrow(cmd(0)).toString :: cmd.tail.toList
+    val command: List[String] = whichOrThrow(cmd(0)).toString :: cmd.tail.toList.map(home)
     if (verbose) println(s"[${ cwd.getAbsolutePath }] " + command.mkString(" "))
     Process(command=command, cwd=cwd)
   }
@@ -48,7 +50,7 @@ class Cmd(cwd: File = new File("."), showOutput: Boolean=true, verbose: Boolean=
     } catch {
       case e: Exception =>
         Console.err.println(e.getMessage)
-        if (e.getCause.toString.nonEmpty) Console.err.println(e.getCause)
+        if (null!=e.getCause && e.getCause.toString.nonEmpty) Console.err.println(e.getCause)
         Console.err.println(e.getStackTrace.mkString("\n"))
         sys.exit(-1)
     }
