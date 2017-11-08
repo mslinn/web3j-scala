@@ -104,7 +104,7 @@ libraryDependencies ++= Seq(
 )
 
 unmanagedSourceDirectories in Test += baseDirectory.value / "abi"
-//unmanagedSourceDirectories in Test += baseDirectory.value / "demo"
+unmanagedSourceDirectories in Test += baseDirectory.value / "demo"
 
 logLevel := Level.Warn
 
