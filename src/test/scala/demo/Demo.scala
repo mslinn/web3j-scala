@@ -1,24 +1,15 @@
+package demo
+
 import java.math.BigInteger
-import Cmd._
-import com.micronautics.web3j._
+import com.micronautics.web3j.{Ethereum, EthereumASynchronous, EthereumSynchronous}
+import demo.Cmd.{isMac, isWindows}
 import org.web3j.protocol.Web3j
 import org.web3j.protocol.ipc.{UnixIpcService, WindowsIpcService}
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
 
-/** Adapted from [[https://docs.web3j.io/getting_started.html#start-a-client Web3J Getting Started]].
-  *
-  * Before running this program, start up an Ethereum client if you don’t already have one running, such as `geth`:
-  * {{{geth --rpcapi personal,db,eth,net,web3 --rpc --rinkeby}}}
-  *
-  * Run this program by typing the following at a shell prompt:
-  * {{{sbt test:run}}} */
-object Main extends App {
-  val demo = new Demo
-  new DemoSmartContracts(demo)
-  new DemoFilters(demo)
-}
-
+/**
+  * @author mslin_000 */
 class Demo {
   // Setup from running command lines from Scala
   val cmd = new Cmd()

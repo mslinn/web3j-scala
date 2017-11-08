@@ -1,12 +1,9 @@
+package demo
+
 import java.math.BigInteger
-import com.micronautics.web3j.Ethereum
 import org.web3j.crypto.{Credentials, RawTransaction, TransactionEncoder, WalletUtils}
-import org.web3j.protocol.Web3j
-import org.web3j.protocol.admin.Admin
-import org.web3j.protocol.admin.methods.response.PersonalUnlockAccount
 import org.web3j.protocol.core.DefaultBlockParameterName
 import org.web3j.protocol.core.methods.response.{EthGetTransactionCount, EthSendTransaction, TransactionReceipt}
-import org.web3j.protocol.http.HttpService
 import org.web3j.tx.Transfer
 import org.web3j.utils.Convert
 

@@ -1,4 +1,6 @@
-import Cmd.{isMac, isWindows}
+package demo
+
+import demo.Cmd.{isMac, isWindows}
 import org.web3j.crypto.{Credentials, WalletUtils}
 
 class DemoSmartContracts(demo: Demo) {

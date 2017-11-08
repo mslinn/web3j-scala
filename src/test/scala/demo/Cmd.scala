@@ -1,3 +1,5 @@
+package demo
+
 import java.io.File
 import java.nio.file.{Files, Path, Paths}
 import java.util.regex.Pattern
@@ -30,7 +32,7 @@ object Cmd {
 }
 
 class Cmd(cwd: File = new File("."), showOutput: Boolean=true, verbose: Boolean=false) {
-  import Cmd._
+  import demo.Cmd._
 
   @inline def apply(cmd: String*): ProcessBuilder = {
     val command: List[String] = whichOrThrow(cmd(0)).toString :: cmd.tail.toList

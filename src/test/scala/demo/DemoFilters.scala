@@ -1,3 +1,5 @@
+package demo
+
 import rx.Subscription
 
 /**
