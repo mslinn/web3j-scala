@@ -38,7 +38,7 @@ class EthereumASynchronous(val web3j: Web3j)
     web3j.ethGetBalance(address, defaultBlockParameter).sendAsync.toScala.map(_.getBalance)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getblockbyhash eth_getblockbyhash]] JSON-RPC endpoint.
-    * @return Some(block object), or None if no block was found */
+    * @return Some(block), or None if no block was found */
   def blockByHash(blockHash: String, returnFullTransactionObjects: Boolean): Future[Option[EthBlock.Block]] =
     web3j.ethGetBlockByHash(blockHash, returnFullTransactionObjects).sendAsync.toScala.map(x => Option(x.getBlock))
 
