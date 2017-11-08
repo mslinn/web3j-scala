@@ -86,13 +86,13 @@ libraryDependencies ++= Seq(
   "org.web3j"              %  "codegen"               % web3jVersion withSources(), // Code generators
   "org.web3j"              %  "console"               % web3jVersion withSources(), // Command-line tools
   "org.web3j"              %  "core"                  % web3jVersion withSources(),
-  "org.web3j"              %  "crypto"                % web3jVersion withSources(), // For transaction signing and key/wallet management
+//  "org.web3j"              %  "crypto"                % web3jVersion withSources(), // For transaction signing and key/wallet management
   "org.web3j"              %  "geth"                  % web3jVersion withSources(), // Geth-specific JSON-RPC module
   "org.web3j"              %  "infura"                % web3jVersion withSources(), // Infura-specific HTTP header support
   "org.web3j"              %  "parity"                % web3jVersion withSources(), // Parity-specific JSON-RPC module
-  "org.web3j"              %  "quorum"                % "0.7.0"      withSources(), // integration with JP Morgan's Quorum
+//  "org.web3j"              %  "quorum"                % "0.7.0"      withSources(), // integration with JP Morgan's Quorum
   "org.web3j"              %  "rlp"                   % web3jVersion withSources(), // Recursive Length Prefix (RLP) encoders
-  "org.web3j"              %  "tuples"                % web3jVersion withSources(), // See http://www.javatuples.org ... not needed for Scala?
+//  "org.web3j"              %  "tuples"                % web3jVersion withSources(), // See http://www.javatuples.org ... not needed for Scala?
   "org.web3j"              %  "utils"                 % web3jVersion withSources(), // Minimal set of utility classes
   "org.web3j"              %  "web3j-maven-plugin"    % "0.1.2"      withSources(), // Create Java classes from solidity contract files
   //

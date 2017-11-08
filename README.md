@@ -18,28 +18,17 @@ Add this to your SBT project's `build.sbt`:
 Only Scala 2.12 with JDK 8 is supported at present; this is a limitation of the Scala ecosystem as of November 7, 2017.
 
 ## Run the Demo Program
-The `bin/run` Bash script assembles this project into a fat jar and runs it.
-Type the following to run the [Main](http://blog.mslinn.com/web3j-scala/latest/api/com/micronautics/web3j/Main$.html) 
-entry point in `src/main/scala/com.micronautics.web3j/Main.scala`:
+To run the entry point in `test/main/scala/Main.scala`, type:
 
 ```
-$ bin/run
+$ sbt test:run
 ```
-Building the fat jar takes a while. Subsequent invocations happen much more quickly.
 
 ## Developers
 ### API Documentation
 * [This library's Scaladoc is here](http://mslinn.github.io/web3j-scala/latest/api/com/micronautics/web3j/index.html).
 
 * [The Web3J JavaDoc is here](https://jar-download.com/java-documentation-javadoc.php?a=core&g=org.web3j&v=3.0.2).
-
-### Rebuilding the Fat Jar
-The `bin/run` script accepts a `-j` option, which forces a rebuild of the fat jar. 
-Use it after modifying the source code.
-
-```
-$ bin/run -j
-```
 
 ### Publishing
 Publish a new version of this library, including source code and Scaladoc with this command:
