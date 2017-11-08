@@ -120,7 +120,12 @@
 This project is an idiomatic Scala wrapper around <a href="https://www.web3j.io" target="_blank">Web3J</a> for Ethereum.</p><div class="fullcomment"><div class="comment cmt"><p><img src='https://docs.web3j.io/_static/web3j.png' align='right' height='100px'>
 This project is an idiomatic Scala wrapper around <a href="https://www.web3j.io" target="_blank">Web3J</a> for Ethereum.
 This project is built with Scala 2.12, and requires the Java 8 runtime; it is not yet compatible with Java 9.</p><p>The <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC" target="_blank">Ethereum JSON-RPC documentation</a>
-was the source of the comments.</p><p>&nbsp;</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="com.micronautics">micronautics</a></dd></dl></div>
+was the source of the comments.</p><p>The JSON-RPC <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#the-default-block-parameter" target="_blank">default block parameter</a>
+can represent a <code>QUANTITY</code> or a <code>TAG</code>.
+Quantities are expressed as integer block numbers, and tags are strings with one of the values &quot;latest&quot;, &quot;earliest&quot; or &quot;pending&quot;.</p><p>[Whisper](https://github.com/ethereum/wiki/wiki/Whisper) is a communication protocol of the Ethereum P2P protocol suite that allows
+for messaging between users' DApps (Ethereum Distributed Applications) to communicate with each other.
+Whisper uses the same network that the blockchain runs on.
+The protocol is separate from the blockchain, so smart contracts do not have access.</p><p>&nbsp;</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="com.micronautics">micronautics</a></dd></dl></div>
     </li><li class="current-entities indented3">
                         <span class="separator"></span>
                         <a class="object" href="Ethereum$.html" title="Web3J builders and any other misc."></a>
@@ -165,7 +170,7 @@ was the source of the comments.</p><p>&nbsp;</p></div><dl class="attributes bloc
       </h4>
 
       
-          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>All of the methods in this class return a <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/concurrent/Future.html" class="extype" name="scala.concurrent.Future">scala.concurrent.Future</a> and do not block.</p></div><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/mslinn/{name.value}/tree/master/src/main/scala/com/micronautics/web3j/EthereumASynchronous.scala" target="_blank">EthereumASynchronous.scala</a></dd></dl><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>All of the methods in this class return a <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/concurrent/Future.html" class="extype" name="scala.concurrent.Future">scala.concurrent.Future</a> and do not block.</p></div><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/mslinn/web3j-scala/tree/master/src/main/scala/com/micronautics/web3j/EthereumASynchronous.scala" target="_blank">EthereumASynchronous.scala</a></dd></dl><div class="toggleContainer block">
           <span class="toggle">
             Linear Supertypes
           </span>
@@ -370,7 +375,7 @@ See the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#the-default-bloc
         <span class="name">blockByHash</span><span class="params">(<span name="blockHash">blockHash: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="returnFullTransactionObjects">returnFullTransactionObjects: <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/Boolean.html#scala.Boolean" class="extype" name="scala.Boolean">Boolean</a></span>)</span><span class="result">: <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/concurrent/Future.html#scala.concurrent.Future" class="extype" name="scala.concurrent.Future">Future</a>[<a href="http://scala-lang.org/files/archive/api/2.12.4/scala/Option.html#scala.Option" class="extype" name="scala.Option">Option</a>[<span class="extype" name="org.web3j.protocol.core.methods.response.EthBlock.Block">Block</span>]]</span>
       </span>
       
-      <p class="shortcomment cmt">Invokes the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getblockbyhash" target="_blank">eth_getblockbyhash</a> JSON-RPC endpoint.</p><div class="fullcomment"><div class="comment cmt"><p>Invokes the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getblockbyhash" target="_blank">eth_getblockbyhash</a> JSON-RPC endpoint.</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>Some(block object), or None if no block was found</p></dd></dl></div>
+      <p class="shortcomment cmt">Invokes the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getblockbyhash" target="_blank">eth_getblockbyhash</a> JSON-RPC endpoint.</p><div class="fullcomment"><div class="comment cmt"><p>Invokes the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getblockbyhash" target="_blank">eth_getblockbyhash</a> JSON-RPC endpoint.</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>Some(block), or None if no block was found</p></dd></dl></div>
     </li><li name="com.micronautics.web3j.EthereumASynchronous#blockByNumber" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="blockByNumber(defaultBlockParameter:org.web3j.protocol.core.DefaultBlockParameter,returnFullTransactionObjects:Boolean):scala.concurrent.Future[Option[org.web3j.protocol.core.methods.response.EthBlock.Block]]"></a><a id="blockByNumber(DefaultBlockParameter,Boolean):Future[Option[Block]]"></a>
       <span class="permalink">
