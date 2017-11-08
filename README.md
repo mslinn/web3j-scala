@@ -6,6 +6,7 @@
 [![GitHub version](https://badge.fury.io/gh/mslinn%2Fweb3j-scala.svg)](https://badge.fury.io/gh/mslinn%2Fweb3j-scala)
 
 `Web3J-Scala` is an idiomatic Scala wrapper around [Web3J](https://www.web3j.io) for Ethereum.
+Web3J is a lightweight, reactive, type safe Java and Android library for integrating with nodes on Ethereum blockchains.
 
 ## Use As a Library
 Add this to your SBT project's `build.sbt`:
