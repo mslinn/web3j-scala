@@ -355,10 +355,10 @@ was the source of the comments.</p><p>&nbsp;</p></div><dl class="attributes bloc
       
       <p class="shortcomment cmt">Invokes the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getbalance" target="_blank">eth_getbalance</a> JSON-RPC endpoint.</p><div class="fullcomment"><div class="comment cmt"><p>Invokes the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getbalance" target="_blank">eth_getbalance</a> JSON-RPC endpoint.</p></div><dl class="paramcmts block"><dt class="param">defaultBlockParameter</dt><dd class="cmt"><p>either an integer block number, or the string &quot;latest&quot;, &quot;earliest&quot; or &quot;pending&quot;.
 See the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#the-default-block-parameter" target="_blank">specification</a>.</p></dd><dt>returns</dt><dd class="cmt"><p>the balance of the account of given address</p></dd></dl></div>
-    </li><li name="com.micronautics.web3j.EthereumASynchronous#blockByHash" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="blockByHash(blockHash:String,returnFullTransactionObjects:Boolean):scala.concurrent.Future[org.web3j.protocol.core.methods.response.EthBlock.Block]"></a><a id="blockByHash(String,Boolean):Future[Block]"></a>
+    </li><li name="com.micronautics.web3j.EthereumASynchronous#blockByHash" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="blockByHash(blockHash:String,returnFullTransactionObjects:Boolean):scala.concurrent.Future[Option[org.web3j.protocol.core.methods.response.EthBlock.Block]]"></a><a id="blockByHash(String,Boolean):Future[Option[Block]]"></a>
       <span class="permalink">
-      <a href="../../../com/micronautics/web3j/EthereumASynchronous.html#blockByHash(blockHash:String,returnFullTransactionObjects:Boolean):scala.concurrent.Future[org.web3j.protocol.core.methods.response.EthBlock.Block]" title="Permalink">
+      <a href="../../../com/micronautics/web3j/EthereumASynchronous.html#blockByHash(blockHash:String,returnFullTransactionObjects:Boolean):scala.concurrent.Future[Option[org.web3j.protocol.core.methods.response.EthBlock.Block]]" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -367,14 +367,14 @@ See the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#the-default-bloc
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">blockByHash</span><span class="params">(<span name="blockHash">blockHash: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="returnFullTransactionObjects">returnFullTransactionObjects: <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/Boolean.html#scala.Boolean" class="extype" name="scala.Boolean">Boolean</a></span>)</span><span class="result">: <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/concurrent/Future.html#scala.concurrent.Future" class="extype" name="scala.concurrent.Future">Future</a>[<span class="extype" name="org.web3j.protocol.core.methods.response.EthBlock.Block">Block</span>]</span>
+        <span class="name">blockByHash</span><span class="params">(<span name="blockHash">blockHash: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="returnFullTransactionObjects">returnFullTransactionObjects: <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/Boolean.html#scala.Boolean" class="extype" name="scala.Boolean">Boolean</a></span>)</span><span class="result">: <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/concurrent/Future.html#scala.concurrent.Future" class="extype" name="scala.concurrent.Future">Future</a>[<a href="http://scala-lang.org/files/archive/api/2.12.4/scala/Option.html#scala.Option" class="extype" name="scala.Option">Option</a>[<span class="extype" name="org.web3j.protocol.core.methods.response.EthBlock.Block">Block</span>]]</span>
       </span>
       
-      
-    </li><li name="com.micronautics.web3j.EthereumASynchronous#blockByNumber" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="blockByNumber(defaultBlockParameter:org.web3j.protocol.core.DefaultBlockParameter,returnFullTransactionObjects:Boolean):scala.concurrent.Future[org.web3j.protocol.core.methods.response.EthBlock.Block]"></a><a id="blockByNumber(DefaultBlockParameter,Boolean):Future[Block]"></a>
+      <p class="shortcomment cmt">Invokes the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getblockbyhash" target="_blank">eth_getblockbyhash</a> JSON-RPC endpoint.</p><div class="fullcomment"><div class="comment cmt"><p>Invokes the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getblockbyhash" target="_blank">eth_getblockbyhash</a> JSON-RPC endpoint.</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>Some(block object), or None if no block was found</p></dd></dl></div>
+    </li><li name="com.micronautics.web3j.EthereumASynchronous#blockByNumber" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="blockByNumber(defaultBlockParameter:org.web3j.protocol.core.DefaultBlockParameter,returnFullTransactionObjects:Boolean):scala.concurrent.Future[Option[org.web3j.protocol.core.methods.response.EthBlock.Block]]"></a><a id="blockByNumber(DefaultBlockParameter,Boolean):Future[Option[Block]]"></a>
       <span class="permalink">
-      <a href="../../../com/micronautics/web3j/EthereumASynchronous.html#blockByNumber(defaultBlockParameter:org.web3j.protocol.core.DefaultBlockParameter,returnFullTransactionObjects:Boolean):scala.concurrent.Future[org.web3j.protocol.core.methods.response.EthBlock.Block]" title="Permalink">
+      <a href="../../../com/micronautics/web3j/EthereumASynchronous.html#blockByNumber(defaultBlockParameter:org.web3j.protocol.core.DefaultBlockParameter,returnFullTransactionObjects:Boolean):scala.concurrent.Future[Option[org.web3j.protocol.core.methods.response.EthBlock.Block]]" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -383,10 +383,10 @@ See the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#the-default-bloc
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">blockByNumber</span><span class="params">(<span name="defaultBlockParameter">defaultBlockParameter: <a href="https://oss.sonatype.org/service/local/repositories/public/archive/org/web3j/core/3.0.2/core-3.0.2-javadoc.jar/!/org/web3j/protocol/core/DefaultBlockParameter.html#org.web3j.protocol.core.DefaultBlockParameter" class="extype" name="org.web3j.protocol.core.DefaultBlockParameter">DefaultBlockParameter</a></span>, <span name="returnFullTransactionObjects">returnFullTransactionObjects: <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/Boolean.html#scala.Boolean" class="extype" name="scala.Boolean">Boolean</a></span>)</span><span class="result">: <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/concurrent/Future.html#scala.concurrent.Future" class="extype" name="scala.concurrent.Future">Future</a>[<span class="extype" name="org.web3j.protocol.core.methods.response.EthBlock.Block">Block</span>]</span>
+        <span class="name">blockByNumber</span><span class="params">(<span name="defaultBlockParameter">defaultBlockParameter: <a href="https://oss.sonatype.org/service/local/repositories/public/archive/org/web3j/core/3.0.2/core-3.0.2-javadoc.jar/!/org/web3j/protocol/core/DefaultBlockParameter.html#org.web3j.protocol.core.DefaultBlockParameter" class="extype" name="org.web3j.protocol.core.DefaultBlockParameter">DefaultBlockParameter</a></span>, <span name="returnFullTransactionObjects">returnFullTransactionObjects: <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/Boolean.html#scala.Boolean" class="extype" name="scala.Boolean">Boolean</a></span>)</span><span class="result">: <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/concurrent/Future.html#scala.concurrent.Future" class="extype" name="scala.concurrent.Future">Future</a>[<a href="http://scala-lang.org/files/archive/api/2.12.4/scala/Option.html#scala.Option" class="extype" name="scala.Option">Option</a>[<span class="extype" name="org.web3j.protocol.core.methods.response.EthBlock.Block">Block</span>]]</span>
       </span>
       
-      
+      <p class="shortcomment cmt">Invokes the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getblockbyhash" target="_blank">eth_getblockbyhash</a> JSON-RPC endpoint.</p><div class="fullcomment"><div class="comment cmt"><p>Invokes the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getblockbyhash" target="_blank">eth_getblockbyhash</a> JSON-RPC endpoint.</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>Some(block object), or None if no block was found</p></dd></dl></div>
     </li><li name="com.micronautics.web3j.EthereumASynchronous#blockNumber" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="blockNumber:scala.concurrent.Future[java.math.BigInteger]"></a><a id="blockNumber:Future[BigInteger]"></a>
       <span class="permalink">
@@ -435,7 +435,7 @@ See the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#the-default-bloc
       </span>
       
       
-    </li><li name="com.micronautics.web3j.EthereumASynchronous#call" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="com.micronautics.web3j.EthereumASynchronous#call" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="call(transaction:org.web3j.protocol.core.methods.request.Transaction,defaultBlockParameter:org.web3j.protocol.core.DefaultBlockParameter):scala.concurrent.Future[String]"></a><a id="call(Transaction,DefaultBlockParameter):Future[String]"></a>
       <span class="permalink">
       <a href="../../../com/micronautics/web3j/EthereumASynchronous.html#call(transaction:org.web3j.protocol.core.methods.request.Transaction,defaultBlockParameter:org.web3j.protocol.core.DefaultBlockParameter):scala.concurrent.Future[String]" title="Permalink">
@@ -450,7 +450,7 @@ See the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#the-default-bloc
         <span class="name">call</span><span class="params">(<span name="transaction">transaction: <a href="https://oss.sonatype.org/service/local/repositories/public/archive/org/web3j/core/3.0.2/core-3.0.2-javadoc.jar/!/org/web3j/protocol/core/methods/request/Transaction.html#org.web3j.protocol.core.methods.request.Transaction" class="extype" name="org.web3j.protocol.core.methods.request.Transaction">Transaction</a></span>, <span name="defaultBlockParameter">defaultBlockParameter: <a href="https://oss.sonatype.org/service/local/repositories/public/archive/org/web3j/core/3.0.2/core-3.0.2-javadoc.jar/!/org/web3j/protocol/core/DefaultBlockParameter.html#org.web3j.protocol.core.DefaultBlockParameter" class="extype" name="org.web3j.protocol.core.DefaultBlockParameter">DefaultBlockParameter</a></span>)</span><span class="result">: <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/concurrent/Future.html#scala.concurrent.Future" class="extype" name="scala.concurrent.Future">Future</a>[<span class="extype" name="scala.Predef.String">String</span>]</span>
       </span>
       
-      
+      <p class="shortcomment cmt">Invokes the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_call" target="_blank">eth_call</a> JSON-RPC endpoint.</p><div class="fullcomment"><div class="comment cmt"><p>Invokes the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_call" target="_blank">eth_call</a> JSON-RPC endpoint.</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>value of executed contract, without creating a transaction on the block chain</p></dd></dl></div>
     </li><li name="scala.AnyRef#clone" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="clone():Object"></a><a id="clone():AnyRef"></a>
       <span class="permalink">
@@ -475,7 +475,7 @@ See the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#the-default-bloc
     </span>)</span>
               
         </dd></dl></div>
-    </li><li name="com.micronautics.web3j.EthereumASynchronous#code" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="com.micronautics.web3j.EthereumASynchronous#code" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="code(address:String,defaultBlockParameter:org.web3j.protocol.core.DefaultBlockParameter):scala.concurrent.Future[String]"></a><a id="code(String,DefaultBlockParameter):Future[String]"></a>
       <span class="permalink">
       <a href="../../../com/micronautics/web3j/EthereumASynchronous.html#code(address:String,defaultBlockParameter:org.web3j.protocol.core.DefaultBlockParameter):scala.concurrent.Future[String]" title="Permalink">
@@ -490,7 +490,7 @@ See the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#the-default-bloc
         <span class="name">code</span><span class="params">(<span name="address">address: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="defaultBlockParameter">defaultBlockParameter: <a href="https://oss.sonatype.org/service/local/repositories/public/archive/org/web3j/core/3.0.2/core-3.0.2-javadoc.jar/!/org/web3j/protocol/core/DefaultBlockParameter.html#org.web3j.protocol.core.DefaultBlockParameter" class="extype" name="org.web3j.protocol.core.DefaultBlockParameter">DefaultBlockParameter</a></span>)</span><span class="result">: <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/concurrent/Future.html#scala.concurrent.Future" class="extype" name="scala.concurrent.Future">Future</a>[<span class="extype" name="scala.Predef.String">String</span>]</span>
       </span>
       
-      
+      <p class="shortcomment cmt">Invokes the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getcode" target="_blank">eth_getcode</a> JSON-RPC endpoint.</p><div class="fullcomment"><div class="comment cmt"><p>Invokes the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getcode" target="_blank">eth_getcode</a> JSON-RPC endpoint.</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>code at a given address</p></dd></dl></div>
     </li><li name="com.micronautics.web3j.EthereumASynchronous#coinbaseAddress" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="coinbaseAddress:scala.concurrent.Future[String]"></a><a id="coinbaseAddress:Future[String]"></a>
       <span class="permalink">
@@ -619,7 +619,7 @@ See the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#the-default-bloc
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="com.micronautics.web3j.EthereumASynchronous#estimateGas" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="com.micronautics.web3j.EthereumASynchronous#estimateGas" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="estimateGas(transaction:org.web3j.protocol.core.methods.request.Transaction):scala.concurrent.Future[java.math.BigInteger]"></a><a id="estimateGas(Transaction):Future[BigInteger]"></a>
       <span class="permalink">
       <a href="../../../com/micronautics/web3j/EthereumASynchronous.html#estimateGas(transaction:org.web3j.protocol.core.methods.request.Transaction):scala.concurrent.Future[java.math.BigInteger]" title="Permalink">
@@ -634,7 +634,10 @@ See the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#the-default-bloc
         <span class="name">estimateGas</span><span class="params">(<span name="transaction">transaction: <a href="https://oss.sonatype.org/service/local/repositories/public/archive/org/web3j/core/3.0.2/core-3.0.2-javadoc.jar/!/org/web3j/protocol/core/methods/request/Transaction.html#org.web3j.protocol.core.methods.request.Transaction" class="extype" name="org.web3j.protocol.core.methods.request.Transaction">Transaction</a></span>)</span><span class="result">: <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/concurrent/Future.html#scala.concurrent.Future" class="extype" name="scala.concurrent.Future">Future</a>[<a href="https://docs.oracle.com/javase/8/docs/api/java/math/BigInteger.html#java.math.BigInteger" class="extype" name="java.math.BigInteger">BigInteger</a>]</span>
       </span>
       
-      
+      <p class="shortcomment cmt">Makes a call or transaction, which won't be added to the blockchain and returns the used gas, which can be used
+for estimating the used gas.</p><div class="fullcomment"><div class="comment cmt"><p>Makes a call or transaction, which won't be added to the blockchain and returns the used gas, which can be used
+for estimating the used gas.
+Invokes the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_estimategas" target="_blank">eth_estimategas</a> JSON-RPC endpoint.</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>amount of gas estimated</p></dd></dl></div>
     </li><li name="com.micronautics.web3j.EthereumASynchronous#filterChangesEth" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="filterChangesEth(filterId:java.math.BigInteger):scala.concurrent.Future[List[org.web3j.protocol.core.methods.response.EthLog.LogResult[_]]]"></a><a id="filterChangesEth(BigInteger):Future[List[LogResult[_]]]"></a>
       <span class="permalink">
@@ -1101,7 +1104,7 @@ See the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#the-default-bloc
       </span>
       
       
-    </li><li name="com.micronautics.web3j.EthereumASynchronous#sendRawTransaction" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="com.micronautics.web3j.EthereumASynchronous#sendRawTransaction" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="sendRawTransaction(signedTransactionData:String):scala.concurrent.Future[String]"></a><a id="sendRawTransaction(String):Future[String]"></a>
       <span class="permalink">
       <a href="../../../com/micronautics/web3j/EthereumASynchronous.html#sendRawTransaction(signedTransactionData:String):scala.concurrent.Future[String]" title="Permalink">
@@ -1116,8 +1119,8 @@ See the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#the-default-bloc
         <span class="name">sendRawTransaction</span><span class="params">(<span name="signedTransactionData">signedTransactionData: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/concurrent/Future.html#scala.concurrent.Future" class="extype" name="scala.concurrent.Future">Future</a>[<span class="extype" name="scala.Predef.String">String</span>]</span>
       </span>
       
-      
-    </li><li name="com.micronautics.web3j.EthereumASynchronous#sendTransaction" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">Invokes the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_sendrawtransaction" target="_blank">eth_sendrawtransaction</a> JSON-RPC endpoint.</p><div class="fullcomment"><div class="comment cmt"><p>Invokes the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_sendrawtransaction" target="_blank">eth_sendrawtransaction</a> JSON-RPC endpoint.</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>new message call transaction or a contract creation for signed transactions</p></dd></dl></div>
+    </li><li name="com.micronautics.web3j.EthereumASynchronous#sendTransaction" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="sendTransaction(transaction:org.web3j.protocol.core.methods.request.Transaction):scala.concurrent.Future[String]"></a><a id="sendTransaction(Transaction):Future[String]"></a>
       <span class="permalink">
       <a href="../../../com/micronautics/web3j/EthereumASynchronous.html#sendTransaction(transaction:org.web3j.protocol.core.methods.request.Transaction):scala.concurrent.Future[String]" title="Permalink">
@@ -1132,7 +1135,7 @@ See the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#the-default-bloc
         <span class="name">sendTransaction</span><span class="params">(<span name="transaction">transaction: <a href="https://oss.sonatype.org/service/local/repositories/public/archive/org/web3j/core/3.0.2/core-3.0.2-javadoc.jar/!/org/web3j/protocol/core/methods/request/Transaction.html#org.web3j.protocol.core.methods.request.Transaction" class="extype" name="org.web3j.protocol.core.methods.request.Transaction">Transaction</a></span>)</span><span class="result">: <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/concurrent/Future.html#scala.concurrent.Future" class="extype" name="scala.concurrent.Future">Future</a>[<span class="extype" name="scala.Predef.String">String</span>]</span>
       </span>
       
-      
+      <p class="shortcomment cmt">Invokes the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_sendtransaction" target="_blank">eth_sendtransaction</a> JSON-RPC endpoint.</p><div class="fullcomment"><div class="comment cmt"><p>Invokes the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_sendtransaction" target="_blank">eth_sendtransaction</a> JSON-RPC endpoint.</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>a new contract if the </p><pre>Transaction.data</pre></dd></dl></div>
     </li><li name="com.micronautics.web3j.EthereumASynchronous#sha3" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="sha3(data:String):scala.concurrent.Future[String]"></a><a id="sha3(String):Future[String]"></a>
       <span class="permalink">
@@ -1149,7 +1152,7 @@ See the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#the-default-bloc
       </span>
       
       <p class="shortcomment cmt">Invokes the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#web3_sha3" target="_blank">web3_sha3</a> JSON-RPC endpoint.</p><div class="fullcomment"><div class="comment cmt"><p>Invokes the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#web3_sha3" target="_blank">web3_sha3</a> JSON-RPC endpoint.</p></div><dl class="paramcmts block"><dt class="param">data</dt><dd class="cmt"><p>the data to convert into an SHA3 hash</p></dd><dt>returns</dt><dd class="cmt"><p>Keccak-256 hash (not the standardized SHA3-256 hash) of the given data</p></dd></dl></div>
-    </li><li name="com.micronautics.web3j.EthereumASynchronous#sign" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="com.micronautics.web3j.EthereumASynchronous#sign" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="sign(address:String,sha3HashOfDataToSign:String):scala.concurrent.Future[String]"></a><a id="sign(String,String):Future[String]"></a>
       <span class="permalink">
       <a href="../../../com/micronautics/web3j/EthereumASynchronous.html#sign(address:String,sha3HashOfDataToSign:String):scala.concurrent.Future[String]" title="Permalink">
@@ -1164,7 +1167,8 @@ See the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#the-default-bloc
         <span class="name">sign</span><span class="params">(<span name="address">address: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="sha3HashOfDataToSign">sha3HashOfDataToSign: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/concurrent/Future.html#scala.concurrent.Future" class="extype" name="scala.concurrent.Future">Future</a>[<span class="extype" name="scala.Predef.String">String</span>]</span>
       </span>
       
-      
+      <p class="shortcomment cmt">Calculates an Ethereum-specific signature with:</p><div class="fullcomment"><div class="comment cmt"><p>Calculates an Ethereum-specific signature with:</p><pre>sign(keccak256(<span class="lit">"\x19Ethereum Signed Message:\n"</span> + len(message) + message)))</pre><p>By adding a prefix to the message makes the calculated signature recognisable as an Ethereum-specific signature.
+This prevents misuse where a malicious DApp can sign arbitrary data (e.g. transaction) and use the signature to impersonate the victim.</p><p>Note: the address to sign with must be unlocked.</p><p>Invokes the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_sign" target="_blank">eth_sign</a> JSON-RPC endpoint.</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>Signature</p></dd></dl></div>
     </li><li name="com.micronautics.web3j.EthereumASynchronous#storageAt" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="storageAt(address:String,position:java.math.BigInteger,defaultBlockParameter:org.web3j.protocol.core.DefaultBlockParameter):scala.concurrent.Future[String]"></a><a id="storageAt(String,BigInteger,DefaultBlockParameter):Future[String]"></a>
       <span class="permalink">
@@ -1324,7 +1328,7 @@ See the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#the-default-bloc
         <span class="name">transactionByHash</span><span class="params">(<span name="transactionHash">transactionHash: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/concurrent/Future.html#scala.concurrent.Future" class="extype" name="scala.concurrent.Future">Future</a>[<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html#java.util.Optional" class="extype" name="java.util.Optional">Optional</a>[<a href="https://oss.sonatype.org/service/local/repositories/public/archive/org/web3j/core/3.0.2/core-3.0.2-javadoc.jar/!/org/web3j/protocol/core/methods/response/Transaction.html#org.web3j.protocol.core.methods.response.Transaction" class="extype" name="org.web3j.protocol.core.methods.response.Transaction">Transaction</a>]]</span>
       </span>
       
-      <p class="shortcomment cmt">Invokes the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getblocktransactioncountbyhash" target="_blank">eth_getblocktransactioncountbyhash</a> JSON-RPC endpoint.</p><div class="fullcomment"><div class="comment cmt"><p>Invokes the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getblocktransactioncountbyhash" target="_blank">eth_getblocktransactioncountbyhash</a> JSON-RPC endpoint.</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>number of transactions in the block with a matching block hash</p></dd></dl></div>
+      <p class="shortcomment cmt">Invokes the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactionbyhash" target="_blank">eth_gettransactionbyhash</a> JSON-RPC endpoint.</p><div class="fullcomment"><div class="comment cmt"><p>Invokes the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactionbyhash" target="_blank">eth_gettransactionbyhash</a> JSON-RPC endpoint.</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>Future containing Some(transaction object), or None when no transaction was found</p></dd></dl></div>
     </li><li name="com.micronautics.web3j.EthereumASynchronous#transactionCount" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="transactionCount(address:String,defaultBlockParameter:org.web3j.protocol.core.DefaultBlockParameter):scala.concurrent.Future[java.math.BigInteger]"></a><a id="transactionCount(String,DefaultBlockParameter):Future[BigInteger]"></a>
       <span class="permalink">
@@ -1389,7 +1393,7 @@ See the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#the-default-bloc
       </span>
       
       
-    </li><li name="com.micronautics.web3j.EthereumASynchronous#uncleCountByBlockHash" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="com.micronautics.web3j.EthereumASynchronous#uncleCountByBlockHash" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="uncleCountByBlockHash(blockHash:String):scala.concurrent.Future[java.math.BigInteger]"></a><a id="uncleCountByBlockHash(String):Future[BigInteger]"></a>
       <span class="permalink">
       <a href="../../../com/micronautics/web3j/EthereumASynchronous.html#uncleCountByBlockHash(blockHash:String):scala.concurrent.Future[java.math.BigInteger]" title="Permalink">
@@ -1404,8 +1408,8 @@ See the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#the-default-bloc
         <span class="name">uncleCountByBlockHash</span><span class="params">(<span name="blockHash">blockHash: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/concurrent/Future.html#scala.concurrent.Future" class="extype" name="scala.concurrent.Future">Future</a>[<a href="https://docs.oracle.com/javase/8/docs/api/java/math/BigInteger.html#java.math.BigInteger" class="extype" name="java.math.BigInteger">BigInteger</a>]</span>
       </span>
       
-      
-    </li><li name="com.micronautics.web3j.EthereumASynchronous#uncleCountByBlockNumber" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">Invokes the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getunclecountbyblockhash" target="_blank">eth_getunclecountbyblockhash</a> JSON-RPC endpoint.</p><div class="fullcomment"><div class="comment cmt"><p>Invokes the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getunclecountbyblockhash" target="_blank">eth_getunclecountbyblockhash</a> JSON-RPC endpoint.</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>the number of uncles in a block from a block matching the given block hash</p></dd></dl></div>
+    </li><li name="com.micronautics.web3j.EthereumASynchronous#uncleCountByBlockNumber" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="uncleCountByBlockNumber(defaultBlockParameter:org.web3j.protocol.core.DefaultBlockParameter):scala.concurrent.Future[java.math.BigInteger]"></a><a id="uncleCountByBlockNumber(DefaultBlockParameter):Future[BigInteger]"></a>
       <span class="permalink">
       <a href="../../../com/micronautics/web3j/EthereumASynchronous.html#uncleCountByBlockNumber(defaultBlockParameter:org.web3j.protocol.core.DefaultBlockParameter):scala.concurrent.Future[java.math.BigInteger]" title="Permalink">
@@ -1420,7 +1424,7 @@ See the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#the-default-bloc
         <span class="name">uncleCountByBlockNumber</span><span class="params">(<span name="defaultBlockParameter">defaultBlockParameter: <a href="https://oss.sonatype.org/service/local/repositories/public/archive/org/web3j/core/3.0.2/core-3.0.2-javadoc.jar/!/org/web3j/protocol/core/DefaultBlockParameter.html#org.web3j.protocol.core.DefaultBlockParameter" class="extype" name="org.web3j.protocol.core.DefaultBlockParameter">DefaultBlockParameter</a></span>)</span><span class="result">: <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/concurrent/Future.html#scala.concurrent.Future" class="extype" name="scala.concurrent.Future">Future</a>[<a href="https://docs.oracle.com/javase/8/docs/api/java/math/BigInteger.html#java.math.BigInteger" class="extype" name="java.math.BigInteger">BigInteger</a>]</span>
       </span>
       
-      
+      <p class="shortcomment cmt">Invokes the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getunclecountbyblocknumber" target="_blank">eth_getunclecountbyblocknumber</a> JSON-RPC endpoint.</p><div class="fullcomment"><div class="comment cmt"><p>Invokes the <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getunclecountbyblocknumber" target="_blank">eth_getunclecountbyblocknumber</a> JSON-RPC endpoint.</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>the number of uncles in a block from a block matching the given block number</p></dd></dl></div>
     </li><li name="com.micronautics.web3j.EthereumASynchronous#uninstallFilter" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="uninstallFilter(filterId:java.math.BigInteger):scala.concurrent.Future[Boolean]"></a><a id="uninstallFilter(BigInteger):Future[Boolean]"></a>
       <span class="permalink">
