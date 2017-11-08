@@ -18,11 +18,13 @@ Add this to your SBT project's `build.sbt`:
 Only Scala 2.12 with JDK 8 is supported at present; this is a limitation of the Scala ecosystem as of November 7, 2017.
 
 ## Run the demo.Demo Program
-To run the entry point in `test/main/scala/demo/Main.scala`, type:
+First create the smart contract wrapper by running `test/main/scala/demo/DemoSmartContracts.scala`:
 
-```
-$ sbt test:run
-```
+    $ sbt "test:runMain demo.DemoSmartContracts"
+
+Now run the demo in `test/main/scala/demo/Main.scala`:
+
+    $ sbt "test:runMain demo.Main"
 
 ## Developers
 ### API Documentation

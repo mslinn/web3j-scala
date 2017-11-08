@@ -103,6 +103,9 @@ libraryDependencies ++= Seq(
   "junit"                  %  "junit"       % "4.12"  % Test
 )
 
+unmanagedSourceDirectories in Test += baseDirectory.value / "abi"
+//unmanagedSourceDirectories in Test += baseDirectory.value / "demo"
+
 logLevel := Level.Warn
 
 // Only show warnings and errors on the screen for compilations.
