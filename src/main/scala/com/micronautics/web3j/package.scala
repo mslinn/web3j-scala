@@ -11,10 +11,10 @@ package com.micronautics
   * can represent a `QUANTITY` or a `TAG`.
   * Quantities are expressed as integer block numbers, and tags are strings with one of the values "latest", "earliest" or "pending".
   *
-  * [Whisper](https://github.com/ethereum/wiki/wiki/Whisper) is a communication protocol of the Ethereum P2P protocol suite that allows
-  * for messaging between users' DApps (Ethereum Distributed Applications) to communicate with each other.
+  * [[https://github.com/ethereum/wiki/wiki/Whisper Whisper]] is a communication protocol of the Ethereum P2P protocol suite that allows
+  * for messaging between users' DApps (Ethereum Distributed Applications).
   * Whisper uses the same network that the blockchain runs on.
-  * The protocol is separate from the blockchain, so smart contracts do not have access.
+  * The protocol is separate from the blockchain, so smart contracts do not have access to whispers.
   *
   * <p style="clear: both">&nbsp;</p> */
 package object web3j
