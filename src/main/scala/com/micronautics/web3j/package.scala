@@ -16,5 +16,8 @@ package com.micronautics
   * Whisper uses the same network that the blockchain runs on.
   * The protocol is separate from the blockchain, so smart contracts do not have access to whispers.
   *
-  * <p style="clear: both">&nbsp;</p> */
+  * [[https://jar-download.com/javaDoc/org.web3j/core/3.0.2/index.html?org/web3j/protocol/core/methods/response/EthBlock.html EthBlock]]
+  * and its internal objects such as [[https://jar-download.com/javaDoc/org.web3j/core/3.0.2/index.html?org/web3j/protocol/core/methods/response/EthBlock.Block.html Block]]
+  * are returned by the following methods: eth_getBlockByHash, eth_getBlockByNumber, eth_getUncleByBlockHashAndIndex, eth_getUncleByBlockNumberAndIndex.
+  */
 package object web3j
