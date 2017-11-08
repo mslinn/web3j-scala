@@ -11,4 +11,5 @@ object Main extends App {
   val demo = new Demo
   new DemoSmartContracts(demo)
   new DemoFilters(demo)
+  new DemoTransaction(demo)
 }
