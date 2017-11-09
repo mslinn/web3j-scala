@@ -22,12 +22,18 @@ The `bin/run` bash script performs all of the following steps:
 
 1. Before running the demo program, start up an Ethereum client if you don’t already have one running, such as `geth`:
    ```
-   $ geth --rpcapi personal,db,eth,net,web3 --rpc --rinkeby --ipcpath "geth.ipc"
+   $ geth --rpc --rinkeby --ipcpath geth.ipc
    ```
-   You can create a log file for the geth output if you like:
+   The following creates the `log/` directory if it does not already exist, and starts `geth` with the following options:
+     - The Ethereum data directory is set `.ethereum` within the current directory; this will be created if required
+     - JSON-RPC is enabled
+     - The experimental Whisper message facility is enabled
+     - The Rinkeby test network is used
+     - Interprocess communication will be via a virtual file located at `.ethereum/geth.ipc`
+     - A log file for the `geth` output will be written, or overwritten, in `logs/geth.log`
    ```
    $ mkdir logs/
-   $ geth --datadir "./.ethereum" --rpc --shh --rinkeby --ipcpath "geth.ipc" > logs/geth.log
+   $ geth --datadir .ethereum --rpc --shh --rinkeby --ipcpath geth.ipc > logs/geth.log
    ```
 2. Create the smart contract JVM wrapper by running `demo/DemoSmartContracts.scala`.
    If you did not create a log file, then type the following into another shell:

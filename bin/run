@@ -2,14 +2,13 @@
 
 mkdir -p logs/
 
-# geth -h  # displays help message, saved in geth.md
+# geth -h  # displays help message, previously saved in geth.md
 
 geth \
-  # --rpcapi personal,db,eth,net,web3 \
-  --datadir "./.ethereum" \
+  --datadir .ethereum \
   --rpc \
   --rinkeby \
-  --ipcpath "geth.ipc" \
+  --ipcpath geth.ipc \
   --verbosity warn \
   --ws \
   --shh \
