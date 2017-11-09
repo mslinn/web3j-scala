@@ -52,17 +52,23 @@ The `bin/run` bash script performs all of the following steps:
   and here is the [Web3J gitter channel](https://gitter.im/web3j/web3j).
 
 ### Publishing
-Publish a new version of this library, including source code and Scaladoc with this command:
+1. Update the version string in `build.sbt` and in this `README.md` before attempting to publish to Bintray.
+2. Commit changes with a descriptive comment:
+   $ git add -a && git commit -m "Comment here"
+3. Publish a new version of this library, including source code and Scaladoc with this command:
+   ```
+   sbt publishAndTag
+   ```
 
-    sbt publish
-   
-Publish the Scaladoc for this project with this command:
+### Updating Scaladoc
+If you just want to republish the Scaladoc for this project, without creating a new version, use this command:
 
-    sbt ";test:doc ;ghpagesPushSite"
+    sbt scaladoc
 
-Do all of the above with this command:
+### Updating Scaladoc and Commiting Changes Without Publishing a New Version
+This task rebuilds the docs, commits the git repository, and publishes the updated Scaladoc without publishing a new version:
 
-    sbt ";publish ;test:doc ;ghpagesPushSite"
+    sbt commitAndPublish
 
 ## Sponsor
 <img src='https://www.micronauticsresearch.com/images/robotCircle400shadow.png' align='right' width='15%'>

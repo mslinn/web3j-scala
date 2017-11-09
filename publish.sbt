@@ -1,9 +1,17 @@
+val scaladoc =
+  taskKey[Unit]("Rebuilds the Scaladoc and pushes the updated Scaladoc to GitHub pages without committing to the git repository")
+
+scaladoc := {
+  doc.in(Test).value
+  ghpagesPushSite.value
+}
+
 /** This task tries to `git push` even if there's nothing to commit, then publishes Scaladoc.
   * Best practice is to comment your commits: git commit -m "Your comment here"
   * However, this task ensures any uncommitted changes are committed before publishing, including new files;
   * it provides the comment as "-". */
 val commitAndPublish =
-  taskKey[Unit]("Rebuilds the docs, commits the git repository, and pushes to publish the updated gitbook")
+  taskKey[Unit]("Rebuilds the docs, commits the git repository, and publishes the updated Scaladoc without publishing a new version")
 
 commitAndPublish := {
   "git pull".!!
