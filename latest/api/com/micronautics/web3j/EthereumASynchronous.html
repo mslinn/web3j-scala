@@ -123,15 +123,15 @@ This project is built with Scala 2.12, and requires the Java 8 runtime; it is no
    This means some properties do not have exactly the same name as their Web3J counterpart.</li><li>Zero-argument methods only require parentheses if they perform side effects.</li><li>Scala data types are used to the maximum extent that makes sense.
    For example, <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/concurrent/Future.html" class="extype" name="scala.concurrent.Future">scala.concurrent.Future</a>.</li><li>A functional programming style is encouraged by always returning immutable data types from methods.
    For example, <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/collection/immutable/List.html" class="extype" name="scala.collection.immutable.List">scala.collection.immutable.List</a></li></ul><p>The <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC" target="_blank">Ethereum JSON-RPC documentation</a>
-was the source of many comments.</p><p>The JSON-RPC <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#the-default-block-parameter" target="_blank">default block parameter</a>
+was the source of many the comments incorporated into this Scaladoc.</p><p>The JSON-RPC <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#the-default-block-parameter" target="_blank">default block parameter</a>
 can represent a <code>QUANTITY</code> or a <code>TAG</code>.
 Quantities are expressed as integer block numbers, and tags are strings with one of the values &quot;latest&quot;, &quot;earliest&quot; or &quot;pending&quot;.
 The <a href="https://jar-download.com/javaDoc/org.web3j/core/3.0.2/index.html?org/web3j/protocol/core/DefaultBlockParameter.html" target="_blank">Java implementation</a>
 performs the same function as the underlying JSON-RPC implementation.</p><p><a href="https://github.com/ethereum/wiki/wiki/Whisper" target="_blank">Whisper</a>
-is a communication protocol of the Ethereum P2P protocol suite that allows
+is an experimental communication protocol of the Ethereum P2P protocol suite that allows
 for messaging between users' DApps (Ethereum Distributed Applications).
 Whisper uses the same network that the blockchain runs on.
-The protocol is separate from the blockchain, so smart contracts do not have access to whispers.</p><p><a href="https://jar-download.com/javaDoc/org.web3j/core/3.0.2/index.html?org/web3j/protocol/core/methods/response/EthBlock.html" target="_blank">EthBlock</a>
+The protocol is separate from the blockchain, so smart contracts do not have access to whispered messages.</p><p><a href="https://jar-download.com/javaDoc/org.web3j/core/3.0.2/index.html?org/web3j/protocol/core/methods/response/EthBlock.html" target="_blank">EthBlock</a>
 and its internal types such as
 <a href="https://jar-download.com/javaDoc/org.web3j/core/3.0.2/index.html?org/web3j/protocol/core/methods/response/EthBlock.Block.html" target="_blank">Block</a>,
 <a href="https://jar-download.com/javaDoc/org.web3j/core/3.0.2/index.html?org/web3j/protocol/core/methods/response/EthBlock.TransactionObject.html" target="_blank">TransactionObject</a> and
@@ -141,8 +141,8 @@ are returned by the following methods of <a href="EthereumSynchronous.html" clas
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="com.micronautics">micronautics</a></dd></dl></div>
     </li><li class="current-entities indented3">
                         <span class="separator"></span>
-                        <a class="object" href="Ethereum$.html" title="Web3J builders and any other misc."></a>
-                        <a href="Ethereum$.html" title="Web3J builders and any other misc.">Ethereum</a>
+                        <a class="object" href="Ethereum$.html" title="Web3J builders."></a>
+                        <a href="Ethereum$.html" title="Web3J builders.">Ethereum</a>
                       </li><li class="current-entities indented3">
                         <span class="separator"></span>
                         <a class="class" href="" title="All of the methods in this class return a scala.concurrent.Future and do not block."></a>
@@ -151,6 +151,10 @@ are returned by the following methods of <a href="EthereumSynchronous.html" clas
                         <span class="separator"></span>
                         <a class="class" href="EthereumSynchronous.html" title="All of the methods in this class block until a value is ready to be returned to the caller."></a>
                         <a href="EthereumSynchronous.html" title="All of the methods in this class block until a value is ready to be returned to the caller.">EthereumSynchronous</a>
+                      </li><li class="current-entities indented3">
+                        <span class="separator"></span>
+                        <a class="class" href="InfuraNetwork.html" title=""></a>
+                        <a href="InfuraNetwork.html" title="">InfuraNetwork</a>
                       </li>
               </ul>
             </div>
