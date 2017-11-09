@@ -5,7 +5,7 @@
 [![Build Status](https://travis-ci.org/mslinn/web3j-scala.svg?branch=master)](https://travis-ci.org/mslinn/web3j-scala)
 [![GitHub version](https://badge.fury.io/gh/mslinn%2Fweb3j-scala.svg)](https://badge.fury.io/gh/mslinn%2Fweb3j-scala)
 
-`Web3J-Scala` is an idiomatic Scala wrapper around [Web3J](https://www.web3j.io) for Ethereum.
+`web3j-scala` is an idiomatic Scala wrapper around [Web3J](https://www.web3j.io) for Ethereum.
 Web3J is a lightweight, reactive, type safe Java and Android library for integrating with nodes on Ethereum blockchains.
 
 ## Use As a Library
@@ -21,11 +21,11 @@ Only Scala 2.12 with JDK 8 is supported at present; this is a limitation of the 
 The `bin/run` bash script performs all of the following steps:
 
 1. Before running the demo program, start up an Ethereum client if you don’t already have one running, such as `geth`.
-   The following starts `geth` with the following options:
+   Below  the command line invocation of `geth` with the following options:
      - The Ethereum data directory is set `.ethereum` within the current directory; this will be created if required.
      - JSON-RPC is enabled.
-     - The experimental Whisper message facility is enabled.
-     - The Rinkeby test network is used.
+     - Ethereum's experimental Whisper message facility is enabled.
+     - The Rinkeby test network is used; no actual money will be risked for this test.
      - Interprocess communication will be via a virtual file located at `.ethereum/geth.ipc`.
      - A log file for the `geth` output will be written, or overwritten, in `logs/geth.log`;
        the `log/` directory will be if it does not already exist.
@@ -34,7 +34,8 @@ The `bin/run` bash script performs all of the following steps:
    $ geth --datadir .ethereum --rpc --shh --rinkeby --ipcpath geth.ipc > logs/geth.log
    ```
 2. Create the smart contract JVM wrapper by running `demo/DemoSmartContracts.scala`.
-   If you did not create a log file, then type the following into another shell:
+   If you did not create a log file, then the shell that you used will continuously scroll output as you proceed through these instructions, 
+   so type the following into another shell:
    ```
    $ sbt "test:runMain demo.DemoSmartContracts"
    ```
