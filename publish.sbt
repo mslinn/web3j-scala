@@ -29,11 +29,12 @@ commitAndPublish := {
       "git commit -m -".!!
     }
 
-    val stagedFileNames = "git diff --cached --name-only".!!.trim.replace("\n", ", ")
+    /*val stagedFileNames = "git diff --cached --name-only".!!.trim.replace("\n", ", ")
     if (stagedFileNames.nonEmpty) {
       println(s"About to push these staged files: $stagedFileNames")
-      "git push origin master".!!
-    }
+    }*/
+
+    "git push origin master".!!
 
     ghpagesPushSite.value
     publish.value
