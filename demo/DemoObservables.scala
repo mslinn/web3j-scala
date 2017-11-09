@@ -29,18 +29,19 @@ class DemoObservables(demo: Demo) {
     println(format(ethBlock))
   }
 
-  //  Other transaction and block replay Observables are described in Filters and Events.
+  //  Other transaction and block replay Observables are described in [[https://docs.web3j.io/filters.html Filters and Events]].
 
-  //  Demo of topic filters
+  //  Topic Filter Demo
   //  Filters are not supported on the Infura network.
   val contractAddress = "todo do something intelligent here"
 
-  val filter: request.EthFilter =
-    new request.EthFilter(EARLIEST, LATEST, contractAddress)
+  val ethFilter: request.EthFilter =
+    new request
+      .EthFilter(EARLIEST, LATEST, contractAddress)
       .addSingleTopic("???")
       .addOptionalTopics("???", "???")
 
-  web3j.ethLogObservable(filter).subscribe { log =>
+  web3j.ethLogObservable(ethFilter).subscribe { log =>
     println(format(log))
   }
 
