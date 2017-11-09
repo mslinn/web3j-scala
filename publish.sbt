@@ -11,7 +11,7 @@ scaladoc := {
   * 1. `git pull` when it starts.
   * 2. Attempts to build Scaladoc, which fails if there is a compile error
   * 3. Ensures any uncommitted changes are committed before publishing, including new files; it provides the comment as "-".
-  * 4. Pushes all files in the git cache
+  * 4. Git pushes all files
   * 5. Uploads new Scaladoc
   * 6. Publishes new version to Bintray */
 lazy val commitAndPublish =
@@ -34,7 +34,7 @@ commitAndPublish := {
       println(s"About to push these staged files: $stagedFileNames")
     }*/
 
-    "git push origin master".!!
+    "git push origin HEAD".!!  // See https://stackoverflow.com/a/20922141/553865
 
     ghpagesPushSite.value
     publish.value
