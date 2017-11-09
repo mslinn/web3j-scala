@@ -2,10 +2,13 @@ package demo
 
 import java.math.BigInteger
 import org.web3j.crypto.{Credentials, RawTransaction, TransactionEncoder, WalletUtils}
+import org.web3j.protocol.admin.Admin
+import org.web3j.protocol.admin.methods.response.PersonalUnlockAccount
 import org.web3j.protocol.core.DefaultBlockParameterName._
 import org.web3j.protocol.core.methods.response.TransactionReceipt
+import org.web3j.protocol.http.HttpService
 import org.web3j.tx.Transfer
-import org.web3j.utils.Convert.Unit.{ETHER,WEI}
+import org.web3j.utils.Convert.Unit.{ETHER, WEI}
 
 /** web3j provides support for both working with Ethereum wallet files (recommended) and Ethereum client admin commands
   * for sending transactions. */
@@ -36,10 +39,11 @@ class DemoTransaction(demo: Demo) {
   Transfer.sendFunds(web3j, credentials, "toAddress", BigDecimal(1).bigDecimal, WEI)
 
   // Here is how to use the Ethereum client’s admin commands:
-//  val personalUnlockAccount: PersonalUnlockAccount = web3j.personalUnlockAccount("0x000...", "a password").sendAsync.get
-//  if (personalUnlockAccount.accountUnlocked) {
-       //send a transaction
-//  }
+  val web3jAdmin: Admin = Admin.build(new HttpService)
+  val personalUnlockAccount: PersonalUnlockAccount = web3jAdmin.personalUnlockAccount("0x000...", "a password").sendAsync.get
+  if (personalUnlockAccount.accountUnlocked) {
+       // todo send a transaction
+  }
 
   // To make use of Parity’s Personal, Trace, or Geth’s Personal client APIs, use the org.web3j:parity and org.web3j:geth modules respectively.
 
