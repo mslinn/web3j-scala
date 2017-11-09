@@ -11,6 +11,8 @@ package demo
   * 3. Run this program by typing the following at a shell prompt:
   * {{{$ sbt "test:runMain demo.Main"}}} */
 object Main extends App {
+  import scala.concurrent.ExecutionContext.Implicits.global
+
   val demo = new Demo
   new DemoObservables(demo)
   new DemoSmartContracts(demo)

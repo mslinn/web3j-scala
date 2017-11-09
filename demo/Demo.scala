@@ -1,12 +1,12 @@
 package demo
 
 import java.math.BigInteger
-import com.micronautics.web3j.{Ethereum, EthereumASynchronous, EthereumSynchronous}
+import com.micronautics.web3j.Web3JScala
 import demo.Cmd.{isMac, isWindows}
 import org.web3j.protocol.Web3j
 import org.web3j.protocol.ipc.{UnixIpcService, WindowsIpcService}
-import scala.concurrent.Await
 import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, ExecutionContext, Promise}
 
 object Demo {
   val gasPrice: BigInteger = BigInt(1).bigInteger
@@ -19,22 +19,29 @@ object Demo {
   )
 }
 
-class Demo {
-  // Setup from running command lines from Scala
+class Demo(implicit ec: ExecutionContext) {
+  // Setup for running command lines from Scala
   val cmd = new Cmd()
 
   // Instantiate an instance of the underlying Web3J library:
-  val web3j: Web3j = Ethereum.fromHttp()  // defaults to http://localhost:8545/
+  val web3j: Web3j = Web3JScala.fromHttp()  // defaults to http://localhost:8545/
+  val web3jScala: Web3JScala = new Web3JScala(web3j)
 
-  // To send synchronous requests:
-  val ethSync: EthereumSynchronous = new EthereumSynchronous(web3j)
-  val web3ClientVersion1: String = ethSync.versionWeb3J
+  // Example of a synchronous request:
+  val web3ClientVersion1: String = web3jScala.sync.versionWeb3J
   println(s"Web3J version = $web3ClientVersion1")
 
-  // To send asynchronous requests:
-  val ethASync: EthereumASynchronous = new EthereumASynchronous(web3j)
-  val web3ClientVersion2: String = Await.result(ethASync.versionWeb3J, Duration.Inf)
+  // Contrived example of an asynchronous request, which provides no benefit over using a synchronous request:
+  val web3ClientVersion2: String = Await.result(web3jScala.async.versionWeb3J, Duration.Inf)
   println(s"Web3J version = $web3ClientVersion2")
+
+  // Better example of an asynchronous request:
+  private val promise: Promise[String] = Promise[String]
+  web3jScala.async.versionWeb3J.foreach { web3ClientVersion =>
+    println(s"Web3J version = $web3ClientVersion")
+    promise.complete(scala.util.Success("Done"))
+  }
+  Await.ready(promise.future, Duration.Inf) // pause while the async request completes
 
   val ethereumDir: String = Cmd.home(
     if (isWindows) "~/AppData/Roaming/Ethereum"

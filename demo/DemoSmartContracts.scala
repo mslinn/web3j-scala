@@ -1,9 +1,12 @@
 package demo
 
 import org.web3j.crypto.{Credentials, WalletUtils}
+import scala.concurrent.ExecutionContext
 
 object CreateSmartContracts extends App {
-  new DemoSmartContracts
+  import scala.concurrent.ExecutionContext.Implicits.global
+
+  new DemoSmartContracts(new Demo)
 }
 
 /** web3j can auto-generate smart contract wrapper code to deploy and interact with smart contracts without leaving the JVM.
@@ -13,7 +16,7 @@ object CreateSmartContracts extends App {
   * Run this program before [[Main running the demo]].
   *
   * @see See [[https://web3j.readthedocs.io/en/latest/smart_contracts.html Web3J Smart Contracts]] */
-class DemoSmartContracts(demo: Demo = new Demo) {
+class DemoSmartContracts(demo: Demo) {
   import Demo._, demo._
 
   // To generate the wrapper code, compile the smart contract:

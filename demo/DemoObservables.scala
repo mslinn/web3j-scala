@@ -1,8 +1,8 @@
 package demo
 
+import com.micronautics.web3j.Web3JScala._
 import org.web3j.protocol.core.DefaultBlockParameterName._
 import org.web3j.protocol.core.methods.{request, response}
-import rx.Observable
 
 /** Web3J's functional-reactive nature makes it easy to set up observers that notify subscribers of events taking place on the blockchain.
   * The functional-reactive programming style works really well with Scala.
@@ -11,28 +11,28 @@ import rx.Observable
 class DemoObservables(demo: Demo) {
   import demo._
 
-  //  Display all new blocks as they are added to the blockchain:
-  observe(web3j.blockObservable(false)) { ethBlock =>
+  //  Display the first 2 new blocks as they are added to the blockchain:
+  observe(2)(web3j.blockObservable(false)) { ethBlock =>
     println(format(ethBlock))
   }
 
-  //  Display only the first 5 new transactions as they are added to the blockchain:
-  observe(5)(web3j.transactionObservable) { tx =>
+  // Display only the first 2 new transactions as they are added to the blockchain:
+  observe(2)(web3j.transactionObservable) { tx =>
     println(format(tx))
   }
 
-  //  Display all pending transactions as they are submitted to the network, before they have been grouped into a block:
+  // Display all pending transactions as they are submitted to the network, before they have been grouped into a block:
   web3j.pendingTransactionObservable.subscribe { tx =>
     println(format(tx))
   }
 
-  //  Replay all blocks to the most current, and be notified of new subsequent blocks being created:
+  // Replay all blocks to the most current, and be notified of new subsequent blocks being created:
   web3j.catchUpToLatestAndSubscribeToNewBlocksObservable(EARLIEST, false).subscribe { ethBlock =>
     println(format(ethBlock))
   }
 
-  //  Topic Filter Demo
-  //  Filters are not supported on the Infura network.
+  // Topic Filter Demo
+  // Filters are not supported on the Infura network.
   val contractAddress = "todo something intelligent here"
 
   val ethFilter: request.EthFilter =
@@ -124,17 +124,4 @@ class DemoObservables(demo: Demo) {
        |  Raw transaction index = ${ tx.getTransactionIndexRaw }
        |  Raw value             = ${ tx.getValueRaw }
        |""".stripMargin
-
-  /** Invokes fn on all elements observed from the given Observable[T] */
-  protected def observe[T](observable: Observable[T])
-                          (fn: T => Unit): Unit =
-    observable.subscribe(fn(_))
-
-  /** Only runs fn on the first n elements observed from the given Observable[T] */
-  protected def observe[T](n: Int)
-                          (observable: Observable[T])
-                          (fn: T => Unit): Unit =
-    observable.limit(n).doOnEach { t =>
-      fn(t.getValue.asInstanceOf[T])
-    }
 }
