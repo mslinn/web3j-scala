@@ -2,7 +2,7 @@
 
 mkdir -p logs/
 
-# geth -h  # displays help message, previously saved in geth.md
+# geth -h  # displays the geth help message, previously saved in geth.md
 
 geth \
   --datadir .ethereum \
@@ -16,5 +16,5 @@ geth \
   2>&1 logs/geth.log &
 
 sbt \
-  "test:runMain demo.DemoSmartContracts" \
+  "test:runMain demo.CreateSmartContracts" \
   "test:runMain demo.Main"

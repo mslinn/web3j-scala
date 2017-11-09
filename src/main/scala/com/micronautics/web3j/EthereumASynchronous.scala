@@ -19,7 +19,6 @@ import scala.concurrent.{ExecutionContext, Future}
   *           [[scala.concurrent.ExecutionContext]] is used. */
 class EthereumASynchronous(val web3j: Web3j)
                           (implicit val ec: ExecutionContext = defaultExecutionContext) {
-  Ethereum.verifyConnection(web3j)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_accounts eth_accounts]] JSON-RPC endpoint.
     * @return the list of addresses owned by the client */

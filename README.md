@@ -33,11 +33,11 @@ The `bin/run` bash script performs all of the following steps:
    $ mkdir logs/
    $ geth --datadir .ethereum --rpc --shh --rinkeby --ipcpath geth.ipc > logs/geth.log
    ```
-2. Create the smart contract JVM wrapper by running `demo/DemoSmartContracts.scala`.
+2. Create the smart contract JVM wrapper by running `CreateSmartContracts` defined in `demo/DemoSmartContracts.scala`.
    If you did not create a log file, then the shell that you used will continuously scroll output as you proceed through these instructions, 
    so type the following into another shell:
    ```
-   $ sbt "test:runMain demo.DemoSmartContracts"
+   $ sbt "test:runMain demo.CreateSmartContracts"
    ```
 3. Run the demo in `demo/Main.scala`:
    ```
@@ -48,7 +48,8 @@ The `bin/run` bash script performs all of the following steps:
 ### API Documentation
 * [This library's Scaladoc is here](http://mslinn.github.io/web3j-scala/latest/api/com/micronautics/web3j/index.html).
 
-* [The Web3J JavaDoc is here](https://jar-download.com/java-documentation-javadoc.php?a=core&g=org.web3j&v=3.0.2).
+* [The Web3J JavaDoc is here](https://jar-download.com/java-documentation-javadoc.php?a=core&g=org.web3j&v=3.0.2),
+  and here is the [Web3J gitter channel](https://gitter.im/web3j/web3j).
 
 ### Publishing
 Publish a new version of this library, including source code and Scaladoc with this command:
@@ -57,11 +58,11 @@ Publish a new version of this library, including source code and Scaladoc with t
    
 Publish the Scaladoc for this project with this command:
 
-    sbt ";doc ;ghpagesPushSite"
+    sbt ";test:doc ;ghpagesPushSite"
 
 Do all of the above with this command:
 
-    sbt ";publish ;doc ;ghpagesPushSite"
+    sbt ";publish ;test:doc ;ghpagesPushSite"
 
 ## Sponsor
 <img src='https://www.micronauticsresearch.com/images/robotCircle400shadow.png' align='right' width='15%'>

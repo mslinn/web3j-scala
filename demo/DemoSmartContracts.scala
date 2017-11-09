@@ -2,13 +2,21 @@ package demo
 
 import org.web3j.crypto.{Credentials, WalletUtils}
 
-/** Working with smart contracts with Java smart contract wrappers.
-  * Create the smart contract wrapper before running the demo */
-object DemoSmartContracts extends App {
-  val cmd = new Cmd()
+object CreateSmartContracts extends App {
+  new DemoSmartContracts
+}
 
-  // web3j can auto-generate smart contract wrapper code to deploy and interact with smart contracts without leaving the JVM.
-  // To generate the wrapper code, compile your smart contract:
+/** web3j can auto-generate smart contract wrapper code to deploy and interact with smart contracts without leaving the JVM.
+  * This program creates a smart contract wrapper around a [[../src/test/resources/basic_info_getter.sol sample smart contract]]
+  * and demonstrates how to work with smart contracts using JVM wrappers.
+  *
+  * Run this program before [[Main running the demo]].
+  *
+  * @see See [[https://web3j.readthedocs.io/en/latest/smart_contracts.html Web3J Smart Contracts]] */
+class DemoSmartContracts(demo: Demo = new Demo) {
+  import Demo._, demo._
+
+  // To generate the wrapper code, compile the smart contract:
   val solcOutput: String = cmd.getOutputFrom(
     "solc",
     "test/resources/basic_info_getter.sol",
@@ -18,23 +26,17 @@ object DemoSmartContracts extends App {
   )
   println(solcOutput)
 
-  // Generate the wrapper code using web3j’s Command Line Tools
+  // Generate the wrapper code using web3j’s command-line tools
   val makeWrapperOutput: String = cmd.getOutputFrom(
     "web3j", "solidity",
-      "generate", "basic_info_getter.bin", "abi/basic_info_getter.abi",
+      "generate", "basic_info_getter.bin", "abi/basic_info_getter.abi", // todo should a directory be created for the bin file?
       "-o", "abi/",
       "-p", "com.micronautics.solidity"
   )
-
   println(makeWrapperOutput)
-}
-
-/** Create and deploy smart contracts */
-class DemoSmartContracts(demo: Demo) {
-  import Demo._, demo._
 
   try {
-    // todo java.io.FileNotFoundException: /home/mslinn/.ethereum (Is a directory)
+    // todo java.io.FileNotFoundException: /home/mslinn/.ethereum (is a directory)
     val credentials: Credentials = WalletUtils.loadCredentials("password", walletDir)
 
   //  val contract1 = YourSmartContract.deploy(web3j, credentials, gasPrice, gasLimit, param1, paramN).send()

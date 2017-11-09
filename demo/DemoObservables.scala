@@ -5,7 +5,9 @@ import org.web3j.protocol.core.methods.{request, response}
 import rx.Observable
 
 /** Web3J's functional-reactive nature makes it easy to set up observers that notify subscribers of events taking place on the blockchain.
-  * The functional-reactive programming style works really well with Scala. */
+  * The functional-reactive programming style works really well with Scala.
+  *
+  * Other transaction and block replay [[org.web3j.utils.Observables]] are described in [[https://docs.web3j.io/filters.html Filters and Events]]. */
 class DemoObservables(demo: Demo) {
   import demo._
 
@@ -29,17 +31,15 @@ class DemoObservables(demo: Demo) {
     println(format(ethBlock))
   }
 
-  //  Other transaction and block replay Observables are described in [[https://docs.web3j.io/filters.html Filters and Events]].
-
   //  Topic Filter Demo
   //  Filters are not supported on the Infura network.
-  val contractAddress = "todo do something intelligent here"
+  val contractAddress = "todo something intelligent here"
 
   val ethFilter: request.EthFilter =
     new request
       .EthFilter(EARLIEST, LATEST, contractAddress)
-      .addSingleTopic("???")
-      .addOptionalTopics("???", "???")
+      .addSingleTopic("todo specify a topic")
+      .addOptionalTopics("todo specify an optional topic", "todo specify another optional topic")
 
   web3j.ethLogObservable(ethFilter).subscribe { log =>
     println(format(log))
@@ -125,12 +125,12 @@ class DemoObservables(demo: Demo) {
        |  Raw value             = ${ tx.getValueRaw }
        |""".stripMargin
 
-  /** Invokes fn on all elements streamed from the given Observable[T] */
+  /** Invokes fn on all elements observed from the given Observable[T] */
   protected def observe[T](observable: Observable[T])
                           (fn: T => Unit): Unit =
     observable.subscribe(fn(_))
 
-  /** Only runs fn on the first n elements streamed from the given Observable[T] */
+  /** Only runs fn on the first n elements observed from the given Observable[T] */
   protected def observe[T](n: Int)
                           (observable: Observable[T])
                           (fn: T => Unit): Unit =

@@ -14,7 +14,7 @@ package com.micronautics
   *    For example, [[scala.collection.immutable.List]]
   *
   * The [[https://github.com/ethereum/wiki/wiki/JSON-RPC Ethereum JSON-RPC documentation]]
-  * was the source of many comments.
+  * was the source of many the comments incorporated into this Scaladoc.
   *
   * The JSON-RPC [[https://github.com/ethereum/wiki/wiki/JSON-RPC#the-default-block-parameter default block parameter]]
   * can represent a `QUANTITY` or a `TAG`.
@@ -23,10 +23,10 @@ package com.micronautics
   * performs the same function as the underlying JSON-RPC implementation.
   *
   * [[https://github.com/ethereum/wiki/wiki/Whisper Whisper]]
-  * is a communication protocol of the Ethereum P2P protocol suite that allows
+  * is an experimental communication protocol of the Ethereum P2P protocol suite that allows
   * for messaging between users' DApps (Ethereum Distributed Applications).
   * Whisper uses the same network that the blockchain runs on.
-  * The protocol is separate from the blockchain, so smart contracts do not have access to whispers.
+  * The protocol is separate from the blockchain, so smart contracts do not have access to whispered messages.
   *
   * [[https://jar-download.com/javaDoc/org.web3j/core/3.0.2/index.html?org/web3j/protocol/core/methods/response/EthBlock.html EthBlock]]
   * and its internal types such as
