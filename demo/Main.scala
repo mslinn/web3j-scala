@@ -13,6 +13,6 @@ package demo
 object Main extends App {
   val demo = new Demo
   new DemoSmartContracts(demo)
-  new DemoFilters(demo)
+  new DemoObservables(demo)
   new DemoTransaction(demo)
 }

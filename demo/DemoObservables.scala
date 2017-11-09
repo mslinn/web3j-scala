@@ -4,17 +4,18 @@ import org.web3j.protocol.core.DefaultBlockParameterName._
 import org.web3j.protocol.core.methods.{request, response}
 import rx.Observable
 
-/** Web3J's functional-reactive nature makes it easy to set up observers that notify subscribers of events taking place on the blockchain */
-class DemoFilters(demo: Demo) {
+/** Web3J's functional-reactive nature makes it easy to set up observers that notify subscribers of events taking place on the blockchain.
+  * The functional-reactive programming style works really well with Scala. */
+class DemoObservables(demo: Demo) {
   import demo._
 
   //  Display all new blocks as they are added to the blockchain:
-  subscribe(5)(web3j.blockObservable(false)) { ethBlock =>
+  observe(5)(web3j.blockObservable(false)) { ethBlock =>
     println(formatEthBlock(ethBlock))
   }
 
   //  Display all new transactions as they are added to the blockchain:
-  subscribe(5)(web3j.transactionObservable) { tx =>
+  observe(5)(web3j.transactionObservable) { tx =>
     println(formatTx(tx))
   }
 
@@ -123,10 +124,15 @@ class DemoFilters(demo: Demo) {
        |  Raw value             = ${ tx.getValueRaw }
        |""".stripMargin
 
+  /** Utility method that invokes fn on the given Observable[T] */
+  protected def observe[T](observable: Observable[T])
+                          (fn: T => Unit): Unit =
+    observable.subscribe(fn(_))
+
   /** Utility method that only runs fn n times on the given Observable[T] */
-  protected def subscribe[T](n: Long)
-                            (observable: Observable[T])
-                            (fn: T => Unit): Unit =
+  protected def observe[T](n: Long)
+                          (observable: Observable[T])
+                          (fn: T => Unit): Unit =
     observable.repeat(n).doOnEach { t =>
       fn(t.getValue.asInstanceOf[T])
     }
