@@ -2,9 +2,11 @@
 *.sublime-*
 *~
 .cache
+.ethereum/
 .idea/
 .idea_modules/
 .project
+.history
 .settings/
 *.iml
 *.stackdump

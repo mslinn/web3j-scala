@@ -21,9 +21,9 @@ Only Scala 2.12 with JDK 8 is supported at present; this is a limitation of the 
 The `bin/run` bash script performs all of the following steps:
 
 1. Before running the demo program, start up an Ethereum client if you don’t already have one running, such as `geth`.
-   Below  the command line invocation of `geth` with the following options:
+   The `bin/runGeth` script invokes `geth` with the following options:
      - The Ethereum data directory is set `.ethereum` within the current directory, which will be created if required.
-     - JSON-RPC is enabled.
+     - HTTP-RPC is enabled.
      - Ethereum's experimental Whisper message facility is enabled.
      - The Rinkeby test network is used; no actual money will be risked for this test.
      - Inter-process communication will be via a virtual file located at `.ethereum/geth.ipc`.
@@ -31,8 +31,21 @@ The `bin/run` bash script performs all of the following steps:
        the `log/` directory will be if it does not already exist.
    ```
    $ mkdir logs/
-   $ geth --datadir .ethereum --rpc --shh --rinkeby --ipcpath geth.ipc > logs/geth.log
+   $ geth \
+      #--datadir .ethereum/devnet --dev \      # boots quickly but has no deployed contracts from others
+      --datadir .ethereum/rinkeby --rinkeby \  # takes about 15 minutes to boot, but has contracts
+      --rpc \
+      --fast \
+      --ipcpath geth.ipc \
+      --verbosity 2 \
+      --ws \
+      --shh \
+      --metrics \
+      console
    ```
+   You will see the message `No etherbase set and no accounts found as default`.
+   Etherbase is the index into `personal.listAccounts` which determines the account to send Ether too.
+   You can specify this value with the option `--etherbase 0`.
 2. Create the smart contract JVM wrapper by running `CreateSmartContracts` defined in `demo/DemoSmartContracts.scala`.
    If you did not create a log file, then the shell that you used will continuously scroll output as you proceed through these instructions, 
    so type the following into another shell:
@@ -57,7 +70,7 @@ The `bin/run` bash script performs all of the following steps:
    ```
    $ git add -a && git commit -m "Comment here"
    ```
-3. Publish a new version of this library, including commiting changes and updating the Scaladoc with this command:
+3. Publish a new version of this library, including committing changes and updating the Scaladoc with this command:
    ```
    $ sbt publishAndTag
    ```
@@ -67,10 +80,10 @@ If you just want to republish the Scaladoc for this project, without creating a 
 
     $ sbt scaladoc
 
-### Updating Scaladoc and Commiting Changes Without Publishing a New Version
+### Updating Scaladoc and Committing Changes Without Publishing a New Version
 This task rebuilds the docs, commits the git repository, and publishes the updated Scaladoc without publishing a new version:
 
-    $ sbt commitAndPublish
+    $ sbt commitAndDoc
 
 ## Sponsor
 <img src='https://www.micronauticsresearch.com/images/robotCircle400shadow.png' align='right' width='15%'>

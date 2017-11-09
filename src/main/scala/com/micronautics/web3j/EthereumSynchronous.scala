@@ -8,6 +8,7 @@ import org.web3j.protocol.core.methods.request
 import org.web3j.protocol.core.methods.request.ShhFilter
 import org.web3j.protocol.core.methods.response.{EthBlock, EthCompileSolidity, EthGetWork, EthLog, ShhMessages, Transaction, TransactionReceipt}
 import scala.collection.JavaConverters._
+import scala.collection.immutable.List
 
 /** All of the methods in this class block until a value is ready to be returned to the caller.
   * @param web3j can be shared with [[EthereumASynchronous]] */

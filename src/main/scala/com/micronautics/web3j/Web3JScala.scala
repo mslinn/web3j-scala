@@ -16,7 +16,9 @@ object Web3JScala {
     web3j
   }
 
-  /** @see See [[https://docs.web3j.io/infura.html Using Infura with web3j]]
+  /** @see See [[http://www.ziggify.com/blog/blockchain-stack-1-installing-ethereum-geth-smart-contract/ Installing Ethereum Geth and your first smart contract]]
+    * @see See the [[http://faucet.ropsten.be:3001/ Ethereum Ropsten Faucet]]
+    * @see See [[https://docs.web3j.io/infura.html Using Infura with web3j]]
     * @param network defaults to the Ropsten test network */
   def fromInfura(token: String, network: InfuraNetwork = ROPSTEN): Web3j = {
     val web3j = Web3j.build(new InfuraHttpService(s"https://${ network.name }.infura.io/$token"))

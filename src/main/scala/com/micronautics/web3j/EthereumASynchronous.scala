@@ -212,7 +212,7 @@ class EthereumASynchronous(val web3j: Web3j)
     *
     * Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#shh_newfilter shh_newfilter]] JSON-RPC endpoint.
     * @return The newly created filter as a BigInteger */
-  def newFilter(shhFilter: ShhFilter): Future[BigInteger] =
+  def newFilter(shhFilter: request.ShhFilter): Future[BigInteger] =
     web3j.shhNewFilter(shhFilter).sendAsync.toScala.map(_.getFilterId)
 
   /** New Whisper group.

@@ -1,5 +1,7 @@
 package com.micronautics
 
+import org.web3j.protocol.core.methods.response
+
 /** <img src='https://docs.web3j.io/_static/web3j.png' align='right' height='100px' />
   * This project is an idiomatic Scala wrapper around [[https://www.web3j.io Web3J]] for Ethereum.
   * This project is built with Scala 2.12, and requires the Java 8 runtime; it is not yet compatible with Java 9.
@@ -36,4 +38,9 @@ package com.micronautics
   * are returned by the following methods of [[com.micronautics.web3j.EthereumSynchronous]] and [[com.micronautics.web3j.EthereumASynchronous]]:
   * `blockByHash`, `blockByNumber`, `uncleByBlockHashAndIndex`, `uncleByBlockNumberAndIndex`.
   * */
-package object web3j
+package object web3j {
+  /** Enriches `response.EthBlock.Block` with convenience methods */
+  implicit class RichBlock(block: response.EthBlock.Block) {
+    def javaTime = new java.util.Date(block.getTimestamp.longValue * 1000)
+  }
+}
