@@ -6,6 +6,7 @@ import java.util.regex.Pattern
 import org.slf4j.Logger
 import scala.sys.process._
 
+/** Command-line invocation / process control */
 object Cmd {
   val logger: Logger = org.slf4j.LoggerFactory.getLogger("gitStats")
 

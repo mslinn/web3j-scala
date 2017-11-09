@@ -11,22 +11,22 @@ class DemoObservables(demo: Demo) {
 
   //  Display all new blocks as they are added to the blockchain:
   observe(web3j.blockObservable(false)) { ethBlock =>
-    println(formatEthBlock(ethBlock))
+    println(format(ethBlock))
   }
 
   //  Display only the first 5 new transactions as they are added to the blockchain:
   observe(5)(web3j.transactionObservable) { tx =>
-    println(formatTx(tx))
+    println(format(tx))
   }
 
   //  Display all pending transactions as they are submitted to the network, before they have been grouped into a block:
   web3j.pendingTransactionObservable.subscribe { tx =>
-    println(formatTx(tx))
+    println(format(tx))
   }
 
   //  Replay all blocks to the most current, and be notified of new subsequent blocks being created:
   web3j.catchUpToLatestAndSubscribeToNewBlocksObservable(EARLIEST, false).subscribe { ethBlock =>
-    println(formatEthBlock(ethBlock))
+    println(format(ethBlock))
   }
 
   //  Other transaction and block replay Observables are described in Filters and Events.
@@ -41,11 +41,11 @@ class DemoObservables(demo: Demo) {
       .addOptionalTopics("???", "???")
 
   web3j.ethLogObservable(filter).subscribe { log =>
-    println(formatLog(log))
+    println(format(log))
   }
 
 
-  protected def formatEthBlock(ethBlock: response.EthBlock): String = {
+  protected def format(ethBlock: response.EthBlock): String = {
     val block = ethBlock.getBlock
     s"""ETH block:
        |  Author               = ${ block.getAuthor }
@@ -81,7 +81,7 @@ class DemoObservables(demo: Demo) {
        |""".stripMargin
   }
 
-  protected def formatLog(log: response.Log): String =
+  protected def format(log: response.Log): String =
     s"""Response Log:
        |  Address               = ${ log.getAddress }
        |  Block hash            = ${ log.getBlockHash }
@@ -98,7 +98,7 @@ class DemoObservables(demo: Demo) {
        |  Raw transaction index = ${ log.getTransactionIndexRaw }
        |""".stripMargin
 
-  protected def formatTx(tx: response.Transaction): String =
+  protected def format(tx: response.Transaction): String =
     s"""Transaction:
        |  Block hash            = ${ tx.getBlockHash }
        |  Block number          = ${ tx.getBlockNumber }
