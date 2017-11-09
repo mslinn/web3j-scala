@@ -57,20 +57,20 @@ The `bin/run` bash script performs all of the following steps:
    ```
    $ git add -a && git commit -m "Comment here"
    ```
-3. Publish a new version of this library, including source code and Scaladoc with this command:
+3. Publish a new version of this library, including commiting changes and updating the Scaladoc with this command:
    ```
-   sbt publishAndTag
+   $ sbt publishAndTag
    ```
 
 ### Updating Scaladoc
 If you just want to republish the Scaladoc for this project, without creating a new version, use this command:
 
-    sbt scaladoc
+    $ sbt scaladoc
 
 ### Updating Scaladoc and Commiting Changes Without Publishing a New Version
 This task rebuilds the docs, commits the git repository, and publishes the updated Scaladoc without publishing a new version:
 
-    sbt commitAndPublish
+    $ sbt commitAndPublish
 
 ## Sponsor
 <img src='https://www.micronauticsresearch.com/images/robotCircle400shadow.png' align='right' width='15%'>
