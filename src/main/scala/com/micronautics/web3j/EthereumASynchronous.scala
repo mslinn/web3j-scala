@@ -8,13 +8,14 @@ import org.web3j.protocol.core.methods.request
 import org.web3j.protocol.core.methods.request.ShhFilter
 import org.web3j.protocol.core.methods.response.{EthBlock, EthCompileSolidity, EthGetWork, EthLog, ShhMessages, Transaction, TransactionReceipt}
 import scala.collection.JavaConverters._
+import scala.collection.immutable.List
 import scala.compat.java8.FutureConverters._
 import scala.concurrent.ExecutionContext.{global => defaultExecutionContext}
 import scala.concurrent.{ExecutionContext, Future}
 
 /** All of the methods in this class return a [[scala.concurrent.Future]] and do not block.
   * @param web3j can be shared with [[EthereumSynchronous]]
-  * @param ec if no [[ExecutionContext]] is implicitly available, the default Scala
+  * @param ec if no [[scala.concurrent.ExecutionContext]] is implicitly available, the default Scala
   *           [[scala.concurrent.ExecutionContext]] is used. */
 class EthereumASynchronous(val web3j: Web3j)
                           (implicit val ec: ExecutionContext = defaultExecutionContext) {

@@ -18,11 +18,19 @@ Add this to your SBT project's `build.sbt`:
 Only Scala 2.12 with JDK 8 is supported at present; this is a limitation of the Scala ecosystem as of November 7, 2017.
 
 ## Run the demo.Demo Program
+The `bin/run` bash script performs all of the following steps:
+
 1. Before running the demo program, start up an Ethereum client if you don’t already have one running, such as `geth`:
    ```
    $ geth --rpcapi personal,db,eth,net,web3 --rpc --rinkeby --ipcpath "geth.ipc"
    ```
-2. Create the smart contract JVM wrapper by running `demo/DemoSmartContracts.scala`:
+   You can create a log file for the geth output if you like:
+   ```
+   $ mkdir logs/
+   $ geth --datadir "./.ethereum" --rpc --shh --rinkeby --ipcpath "geth.ipc" > logs/geth.log
+   ```
+2. Create the smart contract JVM wrapper by running `demo/DemoSmartContracts.scala`.
+   If you did not create a log file, then type the following into another shell:
    ```
    $ sbt "test:runMain demo.DemoSmartContracts"
    ```

@@ -1,0 +1,21 @@
+#!/bin/bash
+
+mkdir -p logs/
+
+# geth -h  # displays help message, saved in geth.md
+
+geth \
+  # --rpcapi personal,db,eth,net,web3 \
+  --datadir "./.ethereum" \
+  --rpc \
+  --rinkeby \
+  --ipcpath "geth.ipc" \
+  --verbosity warn \
+  --ws \
+  --shh \
+  --metrics \
+  2>&1 logs/geth.log &
+
+sbt \
+  "test:runMain demo.DemoSmartContracts" \
+  "test:runMain demo.Main"
