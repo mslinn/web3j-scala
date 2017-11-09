@@ -29,10 +29,10 @@ class DemoFilters(demo: Demo) {
     println(formatEthBlock(ethBlock))
   }
 
-  //  There are a number of other transaction and block replay Observables described in Filters and Events.
-  //  Note: filters are not supported on the Infura network.
+  //  Other transaction and block replay Observables are described in Filters and Events.
 
   //  Demo of topic filters
+  //  Filters are not supported on the Infura network.
   val contractAddress = "todo do something intelligent here"
 
   val filter: request.EthFilter =
@@ -41,18 +41,9 @@ class DemoFilters(demo: Demo) {
       .addOptionalTopics("???", "???")
 
   web3j.ethLogObservable(filter).subscribe { log =>
-    println(reportLog(log))
+    println(formatLog(log))
   }
 
-
-  /** Utility method that only runs fn n times on the given Observable[T] */
-  protected def subscribe[T](n: Long)
-                            (observable: Observable[T])
-                            (fn: T => Unit): Unit = {
-    observable.repeat(n).doOnEach { t =>
-      fn(t.getValue.asInstanceOf[T])
-    }
-  }
 
   protected def formatEthBlock(ethBlock: response.EthBlock): String = {
     val block = ethBlock.getBlock
@@ -90,7 +81,7 @@ class DemoFilters(demo: Demo) {
        |""".stripMargin
   }
 
-  protected def reportLog(log: response.Log): String =
+  protected def formatLog(log: response.Log): String =
     s"""Response Log:
        |  Address               = ${ log.getAddress }
        |  Block hash            = ${ log.getBlockHash }
@@ -132,4 +123,13 @@ class DemoFilters(demo: Demo) {
        |  Raw transaction index = ${ tx.getTransactionIndexRaw }
        |  Raw value             = ${ tx.getValueRaw }
        |""".stripMargin
+
+  /** Utility method that only runs fn n times on the given Observable[T] */
+  protected def subscribe[T](n: Long)
+                            (observable: Observable[T])
+                            (fn: T => Unit): Unit = {
+    observable.repeat(n).doOnEach { t =>
+      fn(t.getValue.asInstanceOf[T])
+    }
+  }
 }
