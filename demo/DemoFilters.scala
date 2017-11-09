@@ -1,41 +1,60 @@
 package demo
 
+import org.web3j.protocol.core.DefaultBlockParameterName._
 import org.web3j.protocol.core.methods.response
+import org.web3j.protocol.core.methods.request
 import rx.{Observable, Subscription}
 
+/** Web3J's functional-reactive nature makes it easy to set up observers that notify subscribers of events taking place on the blockchain */
 class DemoFilters(demo: Demo) {
   import demo._
 
-  //  web3j functional-reactive nature makes it really simple to setup observers that notify subscribers of events taking place on the blockchain.
-  //  To receive all new blocks as they are added to the blockchain:
+  //  Display all new blocks as they are added to the blockchain:
   subscribe(5)(web3j.blockObservable(false)) { ethBlock =>
-    println(reportEthBlock(ethBlock))
+    println(formatEthBlock(ethBlock))
   }
 
-//  To receive all new transactions as they are added to the blockchain:
-  subscribe(5)(web3j.transactionObservable) { ethBlock =>
-    println(reportEthBlock(ethBlock))
+  //  Display all new transactions as they are added to the blockchain:
+  subscribe(5)(web3j.transactionObservable) { tx =>
+    println(formatTx(tx))
   }
 
-  //  To receive all pending transactions as they are submitted to the network (i.e. before they have been grouped into a block together):
+  //  Display all pending transactions as they are submitted to the network, before they have been grouped into a block:
   web3j.pendingTransactionObservable.subscribe { tx =>
-    println(reportTx(tx))
+    println(formatTx(tx))
   }
+
+  //  Replay all blocks to the most current, and be notified of new subsequent blocks being created:
+  web3j.catchUpToLatestAndSubscribeToNewBlocksObservable(EARLIEST, false).subscribe { ethBlock =>
+    println(formatEthBlock(ethBlock))
+  }
+
+  //  There are a number of other transaction and block replay Observables described in Filters and Events.
+  //  Note: filters are not supported on the Infura network.
+
+  //  Demo of topic filters
+  val contractAddress = "todo do something intelligent here"
+
+  val filter: request.EthFilter =
+    new request.EthFilter(EARLIEST, LATEST, contractAddress)
+      .addSingleTopic("???")
+      .addOptionalTopics("???", "???")
+
+  web3j.ethLogObservable(filter).subscribe { log =>
+    println(reportLog(log))
+  }
+
 
   /** Utility method that only runs fn n times on the given Observable[T] */
-  def subscribe[T](n: Int)
-                  (observable: Observable[T])
-                  (fn: response.EthBlock => Unit): Subscription = {
-    var counter = n
-    val subscription: Subscription = observable.subscribe { t: T =>
-        fn(t)
-        counter = counter - 1
-        if (counter<=0) subscription.unsubscribe()
+  protected def subscribe[T](n: Long)
+                            (observable: Observable[T])
+                            (fn: T => Unit): Unit = {
+    observable.repeat(n).doOnEach { t =>
+      fn(t.getValue.asInstanceOf[T])
     }
-    subscription
   }
 
-  def reportEthBlock(ethBlock: response.EthBlock): String = {
+  protected def formatEthBlock(ethBlock: response.EthBlock): String = {
     val block = ethBlock.getBlock
     s"""ETH block:
        |  Author               = ${ block.getAuthor }
@@ -71,7 +90,24 @@ class DemoFilters(demo: Demo) {
        |""".stripMargin
   }
 
-  def reportTx(tx: response.Transaction): String =
+  protected def reportLog(log: response.Log): String =
+    s"""Response Log:
+       |  Address               = ${ log.getAddress }
+       |  Block hash            = ${ log.getBlockHash }
+       |  Block number          = ${ log.getBlockNumber }
+       |  Data                  = ${ log.getData }
+       |  Log index             = ${ log.getLogIndex }
+       |  Topics                = ${ log.getTopics }
+       |  Transaction hash      = ${ log.getTransactionHash }
+       |  Transaction index     = ${ log.getTransactionIndex }
+       |  Type                  = ${ log.getType }
+       |  Removed               = ${ log.isRemoved }
+       |  Raw block number      = ${ log.getBlockNumberRaw }
+       |  Raw log index         = ${ log.getLogIndexRaw }
+       |  Raw transaction index = ${ log.getTransactionIndexRaw }
+       |""".stripMargin
+
+  protected def formatTx(tx: response.Transaction): String =
     s"""Transaction:
        |  Block hash            = ${ tx.getBlockHash }
        |  Block number          = ${ tx.getBlockNumber }
@@ -96,21 +132,4 @@ class DemoFilters(demo: Demo) {
        |  Raw transaction index = ${ tx.getTransactionIndexRaw }
        |  Raw value             = ${ tx.getValueRaw }
        |""".stripMargin
-
-
-  //  Or, if you’d rather replay all blocks to the most current, and be notified of new subsequent blocks being created:
-  //  val subscription = web3j.catchUpToLatestAndSubscribeToNewBlocksObservable(startBlockNumber, fullTxObjects).subscribe { block =>
-  //    ???
-  //  }
-
-  //  There are a number of other transaction and block replay Observables described in Filters and Events.
-  //  Topic filters are also supported:
-  //  val filter = new EthFilter(DefaultBlockParameterName.EARLIEST, DefaultBlockParameterName.LATEST, contractAddress)
-  //               .addSingleTopic("???") // .addOptionalTopics("???", "???)
-  //  web3j.ethLogObservable(filter).subscribe { log =>
-  //    ???
-  //  }
-
-  //  Note: filters are not supported on Infura.
-  //  For further information refer to Filters and Events and the Web3jRx interface.
 }
