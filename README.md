@@ -21,13 +21,14 @@ Only Scala 2.12 with JDK 8 is supported at present; this is a limitation of the 
 The `bin/run` bash script performs all of the following steps:
 
 1. Before running the demo program, start up an Ethereum client if you don’t already have one running, such as `geth`.
-   The following creates the `log/` directory if it does not already exist, and starts `geth` with the following options:
-     - The Ethereum data directory is set `.ethereum` within the current directory; this will be created if required
-     - JSON-RPC is enabled
-     - The experimental Whisper message facility is enabled
-     - The Rinkeby test network is used
-     - Interprocess communication will be via a virtual file located at `.ethereum/geth.ipc`
-     - A log file for the `geth` output will be written, or overwritten, in `logs/geth.log`
+   The following starts `geth` with the following options:
+     - The Ethereum data directory is set `.ethereum` within the current directory; this will be created if required.
+     - JSON-RPC is enabled.
+     - The experimental Whisper message facility is enabled.
+     - The Rinkeby test network is used.
+     - Interprocess communication will be via a virtual file located at `.ethereum/geth.ipc`.
+     - A log file for the `geth` output will be written, or overwritten, in `logs/geth.log`;
+       the `log/` directory will be if it does not already exist.
    ```
    $ mkdir logs/
    $ geth --datadir .ethereum --rpc --shh --rinkeby --ipcpath geth.ipc > logs/geth.log
