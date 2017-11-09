@@ -22,11 +22,11 @@ The `bin/run` bash script performs all of the following steps:
 
 1. Before running the demo program, start up an Ethereum client if you don’t already have one running, such as `geth`.
    Below  the command line invocation of `geth` with the following options:
-     - The Ethereum data directory is set `.ethereum` within the current directory; this will be created if required.
+     - The Ethereum data directory is set `.ethereum` within the current directory, which will be created if required.
      - JSON-RPC is enabled.
      - Ethereum's experimental Whisper message facility is enabled.
      - The Rinkeby test network is used; no actual money will be risked for this test.
-     - Interprocess communication will be via a virtual file located at `.ethereum/geth.ipc`.
+     - Inter-process communication will be via a virtual file located at `.ethereum/geth.ipc`.
      - A log file for the `geth` output will be written, or overwritten, in `logs/geth.log`;
        the `log/` directory will be if it does not already exist.
    ```
