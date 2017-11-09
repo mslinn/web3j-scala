@@ -1,6 +1,5 @@
 package demo
 
-import demo.Cmd.{isMac, isWindows}
 import org.web3j.crypto.{Credentials, WalletUtils}
 
 /** Working with smart contracts with Java smart contract wrappers.
