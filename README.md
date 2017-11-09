@@ -54,7 +54,9 @@ The `bin/run` bash script performs all of the following steps:
 ### Publishing
 1. Update the version string in `build.sbt` and in this `README.md` before attempting to publish to Bintray.
 2. Commit changes with a descriptive comment:
+   ```
    $ git add -a && git commit -m "Comment here"
+   ```
 3. Publish a new version of this library, including source code and Scaladoc with this command:
    ```
    sbt publishAndTag
