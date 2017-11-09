@@ -10,11 +10,11 @@ class DemoObservables(demo: Demo) {
   import demo._
 
   //  Display all new blocks as they are added to the blockchain:
-  observe(5)(web3j.blockObservable(false)) { ethBlock =>
+  observe(web3j.blockObservable(false)) { ethBlock =>
     println(formatEthBlock(ethBlock))
   }
 
-  //  Display all new transactions as they are added to the blockchain:
+  //  Display only the first 5 new transactions as they are added to the blockchain:
   observe(5)(web3j.transactionObservable) { tx =>
     println(formatTx(tx))
   }
@@ -124,16 +124,16 @@ class DemoObservables(demo: Demo) {
        |  Raw value             = ${ tx.getValueRaw }
        |""".stripMargin
 
-  /** Utility method that invokes fn on the given Observable[T] */
+  /** Invokes fn on all elements streamed from the given Observable[T] */
   protected def observe[T](observable: Observable[T])
                           (fn: T => Unit): Unit =
     observable.subscribe(fn(_))
 
-  /** Utility method that only runs fn n times on the given Observable[T] */
-  protected def observe[T](n: Long)
+  /** Only runs fn on the first n elements streamed from the given Observable[T] */
+  protected def observe[T](n: Int)
                           (observable: Observable[T])
                           (fn: T => Unit): Unit =
-    observable.repeat(n).doOnEach { t =>
+    observable.limit(n).doOnEach { t =>
       fn(t.getValue.asInstanceOf[T])
     }
 }
