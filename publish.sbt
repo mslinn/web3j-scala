@@ -15,13 +15,14 @@ commitAndPublish := {
   publish.value
 }
 
-/** Be sure to update the version string in build.sbt before running this task */
+/** Publish a new version of this library to BinTray.
+  * Be sure to update the version string in build.sbt before running this task. */
 val publishAndTag =
   taskKey[Unit]("Invokes commitAndPublish, then creates a git tag for the version string defined in build.sbt")
 
 publishAndTag := {
-  commitAndPublish.value
-  s"""git tag -a "${ version.value }" -m "v${ version.value }"""".!!
+  commitAndPublish.in(Compile).value
+  s"""git tag -a ${ version.value } -m ${ version.value }""".!!
   s"""git push origin --tags""".!!
 }
 
