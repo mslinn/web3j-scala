@@ -1,9 +1,8 @@
 package demo
 
 import org.web3j.protocol.core.DefaultBlockParameterName._
-import org.web3j.protocol.core.methods.response
-import org.web3j.protocol.core.methods.request
-import rx.{Observable, Subscription}
+import org.web3j.protocol.core.methods.{request, response}
+import rx.Observable
 
 /** Web3J's functional-reactive nature makes it easy to set up observers that notify subscribers of events taking place on the blockchain */
 class DemoFilters(demo: Demo) {
@@ -127,9 +126,8 @@ class DemoFilters(demo: Demo) {
   /** Utility method that only runs fn n times on the given Observable[T] */
   protected def subscribe[T](n: Long)
                             (observable: Observable[T])
-                            (fn: T => Unit): Unit = {
+                            (fn: T => Unit): Unit =
     observable.repeat(n).doOnEach { t =>
       fn(t.getValue.asInstanceOf[T])
     }
-  }
 }
