@@ -18,10 +18,10 @@ class DemoTransaction(demo: Demo) {
     Transfer.sendFunds(web3j, credentials, "0x...", BigDecimal.valueOf(0.01).bigDecimal, ETHER).send
   println(format(transactionReceipt))
 
-  // To create a custom transaction, get the next available nonce
+  // Before creating a custom transaction, first get the next available nonce
   val nonce: BigInteger = web3j.ethGetTransactionCount("address", LATEST).send.getTransactionCount
 
-  // Create a transaction
+  // Create a custom transaction
   val rawTransaction: RawTransaction =
     RawTransaction.createEtherTransaction(nonce, gasPrice, gasLimit, "toAddress", BigInt(1).bigInteger)
   println(format(rawTransaction))
