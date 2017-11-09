@@ -8,5 +8,6 @@
 .settings/
 *.iml
 *.stackdump
+logs/
 project/target/
 target/
