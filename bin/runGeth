@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# This script invokes geth with the following options:
+#  - The Ethereum data directory is set .ethereum within the current directory, which will be created if required.
+#  - HTTP-RPC is enabled.
+#  - Ethereum's experimental Whisper message facility is enabled.
+#  - The Rinkeby test network is used; no actual money will be risked for this test.
+#  - Inter-process communication will be via a virtual file located at .ethereum/geth.ipc.
+#  - A log file for the `geth` output will be written, or overwritten, in logs/geth.log;
+#    the log/ directory will be if it does not already exist.
+#
+# You will see the message "No etherbase set and no accounts found as default".
+# Etherbase is the index into personal.listAccounts which determines the account to send Ether too.
+# You can specify this value with the option --etherbase 0
+
+# geth -h  # displays the geth help message, previously saved in geth.md
+
+mkdir -p logs/
+
+geth \
+  #--datadir .ethereum/devnet --dev \        # boots quickly but has no deployed contracts from others
+  --datadir .ethereum/rinkeby --rinkeby \  # takes about 15 minutes to boot, but has contracts
+  --rpc \
+  --fast \
+  --ipcpath geth.ipc \
+  --verbosity 2 \
+  --ws \
+  --shh \
+  --metrics \
+  console

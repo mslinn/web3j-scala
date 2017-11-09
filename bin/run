@@ -1,20 +1,4 @@
 #!/bin/bash
 
-mkdir -p logs/
-
-# geth -h  # displays the geth help message, previously saved in geth.md
-
-geth \
-  --datadir .ethereum \
-  --rpc \
-  --rinkeby \
-  --ipcpath geth.ipc \
-  --verbosity warn \
-  --ws \
-  --shh \
-  --metrics \
-  2>&1 logs/geth.log &
-
-sbt \
-  "test:runMain demo.CreateSmartContracts" \
-  "test:runMain demo.Main"
+sbt "test:runMain demo.CreateSmartContracts" \
+    "test:runMain demo.Main"
