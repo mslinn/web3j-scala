@@ -20,18 +20,21 @@ class DemoSmartContracts(demo: Demo) {
   import Demo._, demo._
 
   // To generate the wrapper code, compile the smart contract:
+  // solc --bin --abi --optimize --overwrite -o abi/ src/test/resources/basic_info_getter.sol
   val solcOutput: String = cmd.getOutputFrom(
     "solc",
-    "test/resources/basic_info_getter.sol",
-    "--bin", "--abi",
-    "--optimize",
-    "-o", "abi/"
+      "--bin",
+      "--abi",
+      "--optimize",
+      "--overwrite",
+      "-o", "abi/",
+      "src/test/resources/basic_info_getter.sol"
   )
   println(solcOutput)
 
   // Generate the wrapper code using web3j’s command-line tools
   val makeWrapperOutput: String = cmd.getOutputFrom(
-    "web3j", "solidity",
+    "bin/web3j", "solidity",
       "generate", "basic_info_getter.bin", "abi/basic_info_getter.abi", // todo should a directory be created for the bin file?
       "-o", "abi/",
       "-p", "com.micronautics.solidity"
