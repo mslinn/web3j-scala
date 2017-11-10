@@ -1,25 +1,72 @@
 #!/bin/bash
 
-# This script invokes geth with the following options:
-#  - The Ethereum data directory is set .ethereum within the current directory, which will be created if required.
-#  - HTTP-RPC is enabled.
-#  - Ethereum's experimental Whisper message facility is enabled.
-#  - The Rinkeby test network is used; no actual money will be risked for this test.
-#  - Inter-process communication will be via a virtual file located at .ethereum/geth.ipc.
-#  - A log file for the `geth` output will be written, or overwritten, in logs/geth.log;
-#    the log/ directory will be if it does not already exist.
-#
-# You will see the message "No etherbase set and no accounts found as default".
-# Etherbase is the index into personal.listAccounts which determines the account to send Ether too.
-# You can specify this value with the option --etherbase 0
+ETHEREUM_HOME="~/.ethereum"
 
-# geth -h  # displays the geth help message, previously saved in geth.md
+function help {
+  echo "
+Usage: $0 [Network] [Options]
+Network defaults to dev. Other supported values are: main, rinkeby and ropsten.
+Options can be any geth command-line options that do not conflict or duplicate existing options used.
 
-mkdir -p logs/
+This script invokes geth with the following options:
+ - The Ethereum data directory is set to $ETHEREUM_HOME, or a subdirectory that depends on the network chosen; the directory will be created if required.
+ - HTTP-RPC is enabled.
+ - Ethereum's experimental Whisper message facility is enabled.
+ - Inter-process communication will be via a virtual file located at $ETHEREUM_HOME/geth.ipc.
+ - A log file for the geth output will be written, or overwritten, in logs/geth.log;
+   the log/ directory will be if it does not already exist.
+
+You will see the message 'No etherbase set and no accounts found as default'.
+Etherbase is the index into personal.listAccounts which determines the account to send Ether too.
+You can specify this value with this option: --etherbase 0
+
+geth -h  # displays the geth help message; the help message for geth v1.7.3 is available in geth.md.
+"
+  exit 1
+}
+
+if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then help; fi
+
+switch "$1" {
+  case main)   # Live network, takes hours to boot, real money is at risk with this choice
+    ETHEREUM_NETWORK=mainnet
+    ETHEREUM_HOME="$ETHEREUM_HOME"
+    DATADIR="--datadir $ETHEREUM_HOME"
+    shift
+    ;;
+
+  case rinkeby)  # This test network takes about 15 minutes to boot, and has contracts
+    ETHEREUM_NETWORK=$1
+    ETHEREUM_HOME="$ETHEREUM_HOME/$ETHEREUM_NETWORK"
+    DATADIR="--datadir $ETHEREUM_HOME/rinkeby --$$ETHEREUM_NETWORK"
+    shift
+    ;;
+
+  case ropsten)  # This test network takes about 15 minutes to boot, and has contracts
+    ETHEREUM_NETWORK=$1
+    ETHEREUM_HOME="$ETHEREUM_HOME/$ETHEREUM_NETWORK"
+    DATADIR="--datadir $ETHEREUM_HOME/ropsten --$1"
+    shift
+    ;;
+
+  case dev)
+    shift
+    # Fall through to dev case
+
+  case "") # Generic development network; boots very quickly but has no deployed contracts from others
+    ETHEREUM_NETWORK=devnet
+    ETHEREUM_HOME="$ETHEREUM_HOME/$ETHEREUM_NETWORK"
+    DATADIR="--datadir $ETHEREUM_HOME/devnet --dev"
+    ;;
+}
+
+echo "Using $ETHEREUM_NETWORK Ethereum network, with home $ETHEREUM_HOME"
+
+mkdir -p "$ETHEREUM_HOME"
+#mkdir -p logs/
 
 geth \
-  #--datadir .ethereum/devnet --dev \        # boots quickly but has no deployed contracts from others
-  --datadir .ethereum/rinkeby --rinkeby \  # takes about 15 minutes to boot, but has contracts
+  $DATADIR
   --rpc \
   --fast \
   --ipcpath geth.ipc \
@@ -27,4 +74,5 @@ geth \
   --ws \
   --shh \
   --metrics \
+  "$*" \
   console
