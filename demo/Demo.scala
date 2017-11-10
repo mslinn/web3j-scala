@@ -49,7 +49,7 @@ class Demo(implicit ec: ExecutionContext) {
     case Nil => println("No accounts found.")
     case accounts =>
       accounts.foreach {
-        account => println(s"$account balance is ${ eSync.balance(account, LATEST) }")
+        account => println(s"The balance of $account is ${ eSync.balance(account, LATEST) } Wei")
       }
   }
 
@@ -57,7 +57,7 @@ class Demo(implicit ec: ExecutionContext) {
     if (isWindows) "~/AppData/Roaming/Ethereum"
     else if (isMac) "~/Library/Ethereum/"
     else "~/.ethereum/"
-  ) + "rinkeby/" // todo figure out how to append the ethereum name
+  ) + "devnet/" // todo discover the ethereum name at runtime
 
   // Web3J supports fast inter-process communication (IPC) via file sockets to clients running on the same host as Web3J.
   // To connect simply use the relevant IpcService implementation instead of HttpService when you create your service:

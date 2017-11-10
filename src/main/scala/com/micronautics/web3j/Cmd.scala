@@ -27,7 +27,7 @@ object Cmd {
 
   @inline protected def whichOrThrow(program: String): Path =
     which(program) match {
-      case None => sys.error(program + " not found on path")
+      case None => sys.error(program + " not found on PATH")
       case Some(programPath) => programPath
     }
 

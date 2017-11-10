@@ -7,6 +7,9 @@ import org.web3j.protocol.core.DefaultBlockParameter
 import org.web3j.protocol.core.methods.request
 import org.web3j.protocol.core.methods.request.ShhFilter
 import org.web3j.protocol.core.methods.response.{EthBlock, EthCompileSolidity, EthGetWork, EthLog, ShhMessages, Transaction, TransactionReceipt}
+import org.web3j.utils.Convert
+import org.web3j.utils.Convert.Unit
+import org.web3j.utils.Convert.Unit._
 import scala.collection.JavaConverters._
 import scala.collection.immutable.List
 
@@ -27,9 +30,13 @@ class EthereumSynchronous(val web3j: Web3j) {
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getbalance eth_getbalance]] JSON-RPC endpoint.
     * @param defaultBlockParameter either an integer block number, or the string "latest", "earliest" or "pending".
     * See the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#the-default-block-parameter specification]].
-    * @return the balance of the account of given address */
+    * @return the balance of the account at given address in Wei */
   def balance(address: String, defaultBlockParameter: DefaultBlockParameter): BigInteger =
     web3j.ethGetBalance(address, defaultBlockParameter).send.getBalance
+
+  /** Obtains the balance in the given Unit */
+  def balance(address: String, defaultBlockParameter: DefaultBlockParameter, unit: Unit): java.math.BigDecimal =
+    Convert.fromWei(balance(address, defaultBlockParameter).toString, unit)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getblockbyhash eth_getblockbyhash]] JSON-RPC endpoint.
     * @return Some(block object), or None if no block was found */

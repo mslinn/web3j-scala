@@ -1,6 +1,7 @@
 package demo
 
 import org.web3j.crypto.{Credentials, WalletUtils}
+import org.web3j.protocol.core.RemoteCall
 
 object CreateSmartContracts extends App {
   import scala.concurrent.ExecutionContext.Implicits.global
@@ -17,6 +18,7 @@ object CreateSmartContracts extends App {
   * @see See [[https://web3j.readthedocs.io/en/latest/smart_contracts.html Web3J Smart Contracts]] */
 class DemoSmartContracts(demo: Demo) {
   import com.micronautics.web3j.Web3JScala.{solc,wrapAbi}
+  import com.micronautics.solidity._
   import Demo._
 
   // Compile the smart contract before generating the wrapper code
@@ -24,16 +26,18 @@ class DemoSmartContracts(demo: Demo) {
   println(wrapAbi("basic_info_getter"))
 
   try {
-    // todo java.io.FileNotFoundException: /home/mslinn/.ethereum (is a directory)
     val credentials: Credentials = WalletUtils.loadCredentials("password", walletDir)
 
-  //  val contract1 = YourSmartContract.deploy(web3j, credentials, gasPrice, gasLimit, param1, paramN).send()
+    val basicInfoGetter: RemoteCall[BasicInfoGetter] = BasicInfoGetter.deploy(demo.web3j, credentials, gasPrice, gasLimit)
+    val x: BasicInfoGetter = basicInfoGetter.send
+    println(x)
 
     // Or use an existing contract:
-  //  val contract2 = YourSmartContract.load( "0x<address>", web3j, credentials, gasPrice, gasLimit)
+    // val contract2 = YourSmartContract.load( "0x<address>", web3j, credentials, gasPrice, gasLimit)
 
-    // To transact with a smart contract:
-  //  val result = contract1.someMethod(param1, paramN).send()
+    // Transact with a smart contract
+//    val result = basicInfoGetter.send().getContractAddress.send()
+//    println(s"basicInfoGetter.getContractAddress = $result")
   } catch {
     case e: Throwable =>
       System.err.println(e.getMessage)

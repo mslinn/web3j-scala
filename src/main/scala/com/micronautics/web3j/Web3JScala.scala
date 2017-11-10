@@ -41,7 +41,9 @@ object Web3JScala {
       fn(t.getValue.asInstanceOf[T])
     }
 
-  /** Compile the smart contract
+  /** Compile the smart contract.
+    * Note that `solc` generates [[https://en.wikipedia.org/wiki/Camel_case camelCase]] names from
+    * [[https://en.wikipedia.org/wiki/Snake_case snake_case]] names.
     * {{{solc --bin --abi --optimize --overwrite -o abi/ src/test/resources/basic_info_getter.sol}}} */
   def solc(solCFileName: String, outputDirectory: String="abi/"): String = cmd.getOutputFrom(
     "solc",
@@ -74,10 +76,16 @@ object Web3JScala {
     outputDirectory: String = "abiWrapper/"
   ): String = cmd.getOutputFrom(
     "bin/web3j", "solidity",
-      "generate", s"$inputDirectory/$filename.bin", s"$inputDirectory/$filename.abi",
+      "generate", s"$inputDirectory/${ toCamelCase(filename) }.bin", s"$inputDirectory/${ toCamelCase(filename) }.abi",
       "-o", outputDirectory,
       "-p", packageName
   )
+
+  protected def toCamelCase(s: String): String = {
+    val words = s.split("_")
+    val tail = words.tail.map { word => word.head.toUpper + word.tail }
+    words.head + tail.mkString
+  }
 }
 
 /** Wrapper for Web3J */
