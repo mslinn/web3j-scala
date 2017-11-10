@@ -13,6 +13,7 @@ This script invokes geth with the following options:
  - HTTP-RPC is enabled.
  - Ethereum's experimental Whisper message facility is enabled.
  - Inter-process communication will be via a virtual file located at $ETHEREUM_HOME/geth.ipc.
+ - Warning verbosity is specified.
  - A log file for the geth output will be written, or overwritten, in logs/geth.log;
    the log/ directory will be if it does not already exist.
 
@@ -38,14 +39,14 @@ case "$1" in
   rinkeby)  # This test network takes about 15 minutes to boot, and has contracts
     ETHEREUM_NETWORK=$1
     ETHEREUM_HOME="$ETHEREUM_HOME/$ETHEREUM_NETWORK"
-    DATADIR="--datadir $ETHEREUM_HOME/rinkeby --$$ETHEREUM_NETWORK"
+    DATADIR="--datadir $ETHEREUM_HOME --$ETHEREUM_NETWORK"
     shift
     ;;
 
   ropsten)  # This test network takes about 15 minutes to boot, and has contracts
     ETHEREUM_NETWORK=$1
     ETHEREUM_HOME="$ETHEREUM_HOME/$ETHEREUM_NETWORK"
-    DATADIR="--datadir $ETHEREUM_HOME/ropsten --$1"
+    DATADIR="--datadir $ETHEREUM_HOME --$1"
     shift
     ;;
 
@@ -53,17 +54,17 @@ case "$1" in
     shift
     ETHEREUM_NETWORK=devnet
     ETHEREUM_HOME="$ETHEREUM_HOME/$ETHEREUM_NETWORK"
-    DATADIR="--datadir $ETHEREUM_HOME/devnet --dev"
+    DATADIR="--datadir $ETHEREUM_HOME --dev"
     ;;
 
   "")  # Generic development network; boots very quickly but has no deployed contracts from others
     ETHEREUM_NETWORK=devnet
     ETHEREUM_HOME="$ETHEREUM_HOME/$ETHEREUM_NETWORK"
-    DATADIR="--datadir $ETHEREUM_HOME/devnet --dev"
+    DATADIR="--datadir $ETHEREUM_HOME --dev"
     ;;
 esac
 
-echo "Using $ETHEREUM_NETWORK Ethereum network with home $ETHEREUM_HOME"
+echo "Using $ETHEREUM_NETWORK Ethereum network with home $ETHEREUM_HOME at timestamp `date`"
 
 mkdir -p "$ETHEREUM_HOME"
 #mkdir -p logs/
