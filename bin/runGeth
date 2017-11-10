@@ -10,9 +10,10 @@ Options can be any geth command-line options that do not conflict or duplicate e
 
 This script invokes geth with the following options:
  - The Ethereum data directory is set to $ETHEREUM_HOME, or a subdirectory that depends on the network chosen; the directory will be created if required.
- - HTTP-RPC is enabled.
+ - HTTP-RPC and WS-RPC are enabled, and all APIs are allowed.
  - Ethereum's experimental Whisper message facility is enabled.
  - Inter-process communication will be via a virtual file located at $ETHEREUM_HOME/geth.ipc.
+ - WS-RPC server at localhost:8546 enabled
  - Warning verbosity is specified.
  - A log file for the geth output will be written, or overwritten, in logs/geth.log;
    the log/ directory will be if it does not already exist.
@@ -46,7 +47,7 @@ case "$1" in
   ropsten)  # This test network takes about 15 minutes to boot, and has contracts
     ETHEREUM_NETWORK=$1
     ETHEREUM_HOME="$ETHEREUM_HOME/$ETHEREUM_NETWORK"
-    DATADIR="--datadir $ETHEREUM_HOME --$1"
+    DATADIR="--datadir $ETHEREUM_HOME --testnet"
     shift
     ;;
 
@@ -67,16 +68,46 @@ esac
 echo "Using $ETHEREUM_NETWORK Ethereum network with home $ETHEREUM_HOME at timestamp `date`"
 
 mkdir -p "$ETHEREUM_HOME"
-#mkdir -p logs/
+mkdir -p logs/
 
+# All geth options are defined here: https://github.com/ethereum/go-ethereum/blob/master/cmd/utils/flags.go#L105
+# Seems --ipcapi is no longer supported. Wonder what that means?
+APIS_MIN=eth,net,web3
+export APIS="$APIS_MIN,clique,debug,eth,miner,personal,rpc,ssh,txpool"  # Edit this if desired
+
+set -xv
 geth \
-  $DATADIR
-  --rpc \
-  --fast \
+  $DATADIR \
   --ipcpath geth.ipc \
-  --verbosity 2 \
-  --ws \
-  --shh \
   --metrics \
-  "$*" \
-  console
+  --rpc \
+  --rpcapi $APIS \
+  --shh \
+  --ws \
+  --wsapi $APIS \
+  --verbosity 3 \
+  "$*" 2> logs/geth.log
+set +xv
+
+# Discover the APIs provided by invoking the modules JSON-RPC method
+# See https://github.com/ethereum/go-ethereum/wiki/Management-APIs
+echo '{"jsonrpc":"2.0","method":"rpc_modules","params":[],"id":1}' | nc -U /home/mslinn/.ethereum/devnet/geth.ipc
+# Typical response:
+# {
+#     "jsonrpc":"2.0",
+#     "id":1,
+#     "result":{
+#        "admin":"1.0",
+#        "clique":"1.0",
+#        "debug":"1.0",
+#        "eth":"1.0",
+#        "miner":"1.0",
+#        "net":"1.0",
+#        "personal":"1.0",
+#        "rpc":"1.0",
+#        "shh":"1.0",
+#        "txpool":"1.0",
+#        "web3":"1.0"
+#     }
+#  }
+
