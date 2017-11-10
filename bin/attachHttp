@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Attach to the JavaScript console of a running instance
+# Attach to a running geth instance and open a JavaScript console
 
 geth attach http://localhost:8545
 

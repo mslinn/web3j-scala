@@ -44,25 +44,31 @@ To run the demo:
    $ geth \
       #--datadir .ethereum/devnet --dev \      # boots quickly but has no deployed contracts from others
       --datadir .ethereum/rinkeby --rinkeby \  # takes about 15 minutes to boot, but has contracts
-      --rpc \
-      --fast \
       --ipcpath geth.ipc \
-      --verbosity 2 \
-      --ws \
-      --shh \
       --metrics \
-      console
+      --rpc \
+      --rpcapi $APIS \
+      --shh \
+      --ws \
+      --wsapi $APIS \
+      --verbosity 3
    ```
    You will see the message `No etherbase set and no accounts found as default`.
    Etherbase is the index into `personal.listAccounts` which determines the account to send Ether too.
    You can specify this value with the option `--etherbase 0`.
-2. If you did not create a log file, then the shell that you used will continuously scroll output as you proceed through these instructions, 
+2. The shell that you just used will continuously scroll output so long as `geth` continues to run,
    so type the following into another shell:
    ```
    $ bin/demo
    ```
 3. The `bin/web3j` script runs the Web3J command-line console.
    The script builds a fat jar the first time it is run, so the command runs quickly on subsequent invocations.
+4. More scripts are provided in the `bin/` directory, including:
+   - `bin/attachHttp` - Attach to a running geth instance via HTTP and open a JavaScript console
+   - `bin/attachIpc`  - Attach to a running geth instance via IPC and open a JavaScript console.
+     This script might need to be edited if a network other than `devnet` is used.
+   - `bin/getApis`    - Reports the available APIs exposed by this `geth` instance.
+   - `bin/isGethListening` - Verify that `geth` is listening on HTTP port 8545
    
 ## Developers
 ### API Documentation
