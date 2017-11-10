@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 
 # Sample usage:
-# bin/run -j [entryPoint]
+# bin/web3j -j
 #
 # -j option forces rebuild of jar
-# entryPoint defaults to "org.web3j.console.Runner"
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/.."
 cd "$DIR"
@@ -38,10 +37,4 @@ if [ "$1" == -j ] || [ ! -f $JAR ]; then
   if [ "$1" == -j ]; then shift; fi
 fi
 
-if [ "$1" ]; then
-  ENTRY="$1"
-else
-  ENTRY=org.web3j.console.Runner
-fi
-
-java -cp "$JAR" "$ENTRY" "$@"
+java -cp "$JAR" org.web3j.console.Runner "$@"
