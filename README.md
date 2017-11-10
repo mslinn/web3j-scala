@@ -7,6 +7,10 @@
 
 `web3j-scala` is an idiomatic Scala wrapper around [Web3J](https://www.web3j.io) for Ethereum.
 Web3J is a lightweight, reactive, type safe Java and Android library for integrating with nodes on Ethereum blockchains.
+Web3J features RxJava extensions, and `web3j-scala` wraps that syntax in Scala goodness.
+For example, the `web3j-scala` [observable methods](http://mslinn.github.io/web3j-scala/latest/api/com/micronautics/web3j/Web3JScala$.html)
+provide [simple and efficient application code](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoObservables.scala#L14-L22).
+
 
 ## Use As a Library
 Add this to your SBT project's `build.sbt`:
