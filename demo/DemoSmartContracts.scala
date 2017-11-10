@@ -9,7 +9,7 @@ object CreateSmartContracts extends App {
   new DemoSmartContracts(new Demo)
 }
 
-/** web3j can auto-generate smart contract wrapper code to deploy and interact with smart contracts without leaving the JVM.
+/** Web3J can auto-generate smart contract wrapper code to deploy and interact with smart contracts without leaving the JVM.
   * This program creates a smart contract wrapper around a [[../src/test/resources/basic_info_getter.sol sample smart contract]]
   * and demonstrates how to work with smart contracts using JVM wrappers.
   *
@@ -17,29 +17,12 @@ object CreateSmartContracts extends App {
   *
   * @see See [[https://web3j.readthedocs.io/en/latest/smart_contracts.html Web3J Smart Contracts]] */
 class DemoSmartContracts(demo: Demo) {
-  import Demo._, demo._
+  import com.micronautics.web3j.Web3JScala.{solc,wrapAbi}
+  import Demo._
 
-  // To generate the wrapper code, compile the smart contract:
-  // solc --bin --abi --optimize --overwrite -o abi/ src/test/resources/basic_info_getter.sol
-  val solcOutput: String = cmd.getOutputFrom(
-    "solc",
-      "--bin",
-      "--abi",
-      "--optimize",
-      "--overwrite",
-      "-o", "abi/",
-      "src/test/resources/basic_info_getter.sol"
-  )
-  println(solcOutput)
-
-  // Generate the wrapper code using web3j’s command-line tools
-  val makeWrapperOutput: String = cmd.getOutputFrom(
-    "bin/web3j", "solidity",
-      "generate", "basic_info_getter.bin", "abi/basic_info_getter.abi", // todo should a directory be created for the bin file?
-      "-o", "abi/",
-      "-p", "com.micronautics.solidity"
-  )
-  println(makeWrapperOutput)
+  // Compile the smart contract before generating the wrapper code
+  println(solc("src/test/resources/basic_info_getter.sol"))
+  println(wrapAbi("basic_info_getter"))
 
   try {
     // todo java.io.FileNotFoundException: /home/mslinn/.ethereum (is a directory)

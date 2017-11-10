@@ -11,6 +11,7 @@
 *.iml
 *.stackdump
 abi/
+abiWrapper/
 logs/
 project/target/
 target/

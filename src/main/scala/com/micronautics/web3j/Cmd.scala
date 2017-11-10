@@ -1,4 +1,4 @@
-package demo
+package com.micronautics.web3j
 
 import java.io.File
 import java.nio.file.{Files, Path, Paths}
@@ -35,7 +35,7 @@ object Cmd {
 }
 
 class Cmd(cwd: File = new File("."), showOutput: Boolean=true, verbose: Boolean=false) {
-  import demo.Cmd._
+  import Cmd._
 
   @inline def apply(cmd: String*): ProcessBuilder = {
     val command: List[String] = whichOrThrow(cmd(0)).toString :: cmd.tail.toList.map(home)

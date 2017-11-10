@@ -9,6 +9,8 @@ import scala.concurrent.ExecutionContext
 
 /** [[https://www.web3j.io Web3J]] builders and stateless methods. */
 object Web3JScala {
+  lazy val cmd: Cmd = new Cmd
+
   /** @see See [[https://docs.web3j.io/management_apis.html?highlight=httpservice Management APIs]] */
   def fromHttp(url: String = "http://localhost:8545"): Web3j = {
     val web3j = Web3j.build(new HttpService(url))
@@ -39,6 +41,18 @@ object Web3JScala {
       fn(t.getValue.asInstanceOf[T])
     }
 
+  /** Compile the smart contract
+    * {{{solc --bin --abi --optimize --overwrite -o abi/ src/test/resources/basic_info_getter.sol}}} */
+  def solc(solCFileName: String, outputDirectory: String="abi/"): String = cmd.getOutputFrom(
+    "solc",
+      "--bin",
+      "--abi",
+      "--optimize",
+      "--overwrite",
+      "-o", outputDirectory,
+      solCFileName
+  )
+
   /** Verify web3j is connected to a JSON-RPC endpoint */
   def verifyConnection(web3j: Web3j): Boolean = try {
       web3j.web3ClientVersion.send.getWeb3ClientVersion
@@ -49,6 +63,21 @@ object Web3JScala {
         System.exit(0)
         false
     }
+
+  /** Generate the wrapper code from the compiled smart contract using web3j’s command-line tools
+    * The `bin` and `abi` files are both read from the same directory, specified by `-o`.
+    * {{{bin/web3j solidity generate abi/basic_info_getter.bin abi/basic_info_getter.abi -o abiWrapper/ -p com.micronautics.solidity}}} */
+  def wrapAbi(
+    filename: String,
+    packageName: String = "com.micronautics.solidity",
+    inputDirectory: String = "abi/",
+    outputDirectory: String = "abiWrapper/"
+  ): String = cmd.getOutputFrom(
+    "bin/web3j", "solidity",
+      "generate", s"$inputDirectory/$filename.bin", s"$inputDirectory/$filename.abi",
+      "-o", outputDirectory,
+      "-p", packageName
+  )
 }
 
 /** Wrapper for Web3J */

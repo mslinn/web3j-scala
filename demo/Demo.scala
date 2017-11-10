@@ -1,8 +1,8 @@
 package demo
 
 import java.math.BigInteger
-import com.micronautics.web3j.Web3JScala
-import demo.Cmd.{isMac, isWindows}
+import com.micronautics.web3j.{Cmd, Web3JScala}
+import Cmd.{isMac, isWindows}
 import org.web3j.protocol.Web3j
 import org.web3j.protocol.ipc.{UnixIpcService, WindowsIpcService}
 import scala.concurrent.duration.Duration
