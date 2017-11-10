@@ -64,6 +64,15 @@ To run the demo:
    ```
    $ bin/demo
    ```
+   The demo has two major components:
+   1. [Create a JVM wrapper](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoSmartContracts.scala)
+      for the [sample smart contract](https://github.com/mslinn/web3j-scala/blob/master/src/test/resources/basic_info_getter.sol).
+   2. The second portion of the demo consists of the following:
+      - Examples of using `web3j-scala`'s [synchrounous and asynchronous APIs](https://github.com/mslinn/web3j-scala/blob/master/demo/Demo.scala)
+      - Examples of working with RxJava's [Observables from Scala](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoObservables.scala)
+      - Examples of working with JVM [wrappers around Ethereum smart contracts](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoSmartContracts.scala).
+      - Examples of using [transactions](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoTransaction.scala) 
+        with Ethereum wallet files and the Ethereum client.
 3. The `bin/web3j` script runs the Web3J command-line console.
    The script builds a fat jar the first time it is run, so the command runs quickly on subsequent invocations.
 4. More scripts are provided in the `bin/` directory, including:
