@@ -10,13 +10,13 @@ Options can be any geth command-line options that do not conflict or duplicate e
 
 This script invokes geth with the following options:
  - The Ethereum data directory is set to $ETHEREUM_HOME, or a subdirectory that depends on the network chosen; the directory will be created if required.
- - HTTP-RPC and WS-RPC are enabled, and all APIs are allowed.
+ - HTTP-RPC server at localhost:8545 is enabled, and all APIs are allowed.
  - Ethereum's experimental Whisper message facility is enabled.
  - Inter-process communication will be via a virtual file located at $ETHEREUM_HOME/geth.ipc.
- - WS-RPC server at localhost:8546 enabled
- - Warning verbosity is specified.
+ - WS-RPC server at localhost:8546 is enabled, and all APIs are allowed.
+ - Info verbosity is specified.
  - A log file for the geth output will be written, or overwritten, in logs/geth.log;
-   the log/ directory will be if it does not already exist.
+   the log/ directory will be created  if it does not already exist.
 
 You will see the message 'No etherbase set and no accounts found as default'.
 Etherbase is the index into personal.listAccounts which determines the account to send Ether too.

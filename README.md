@@ -32,13 +32,16 @@ The demo program performs the following:
 To run the demo:
 1. Start up an Ethereum client if you don’t already have one running, such as `geth`.
    The `bin/runGeth` script invokes `geth` with the following options:
-     - The Ethereum data directory is set `.ethereum` within the current directory, which will be created if required.
-     - HTTP-RPC is enabled.
+     - The Ethereum data directory is set `.ethereum` within the current directory, 
+       or a subdirectory that depends on the network chosen; the directory will be created if required.
+     - HTTP-RPC server at localhost:8545 is enabled, and all APIs are allowed.
      - Ethereum's experimental Whisper message facility is enabled.
-     - The Rinkeby test network is used; no actual money will be risked for this test.
-     - Inter-process communication will be via a virtual file located at `.ethereum/geth.ipc`.
+     - Inter-process communication will be via a virtual file called `geth.ipc`, 
+       located at `~/.ethereum` or a subdirectory.
+     - WS-RPC server at localhost:8546 is enabled, and all APIs are allowed.
+     - Info verbosity is specified.
      - A log file for the `geth` output will be written, or overwritten, in `logs/geth.log`;
-       the `log/` directory will be if it does not already exist.
+       the `log/` directory will be created if it does not already exist.
    ```
    $ mkdir logs/
    $ geth \
@@ -47,11 +50,11 @@ To run the demo:
       --ipcpath geth.ipc \
       --metrics \
       --rpc \
-      --rpcapi $APIS \
+      --rpcapi eth,net,web3,clique,debug,eth,miner,personal,rpc,ssh,txpool \
       --shh \
       --ws \
-      --wsapi $APIS \
-      --verbosity 3
+      --wsapi eth,net,web3,clique,debug,eth,miner,personal,rpc,ssh,txpool \
+      --verbosity 2
    ```
    You will see the message `No etherbase set and no accounts found as default`.
    Etherbase is the index into `personal.listAccounts` which determines the account to send Ether too.
@@ -64,7 +67,7 @@ To run the demo:
 3. The `bin/web3j` script runs the Web3J command-line console.
    The script builds a fat jar the first time it is run, so the command runs quickly on subsequent invocations.
 4. More scripts are provided in the `bin/` directory, including:
-   - `bin/attachHttp` - Attach to a running geth instance via HTTP and open a JavaScript console
+   - `bin/attachHttp` - Attach to a running geth instance via HTTP and open a [JavaScript console](https://godoc.org/github.com/robertkrimen/otto)
    - `bin/attachIpc`  - Attach to a running geth instance via IPC and open a JavaScript console.
      This script might need to be edited if a network other than `devnet` is used.
    - `bin/getApis`    - Reports the available APIs exposed by this `geth` instance.
