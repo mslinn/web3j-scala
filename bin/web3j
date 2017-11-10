@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+# Sample usage:
+# bin/run -j [entryPoint]
+#
+# -j option forces rebuild of jar
+# entryPoint defaults to "org.web3j.console.Runner"
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/.."
+cd "$DIR"
+
+# Scan build.sbt for program name, Scala version and program version
+function findValue {
+  echo "$( grep "$1 :=" build.sbt | cut -d' ' -f 3 | tr -d \" )"
+}
+
+SCALA_VERSION() {
+  V=`grep "scalaVersion :=" build.sbt |  cut -d' ' -f 3 | tr -d \"`
+   case $V in
+    2.10.*) echo 2.10 ;;
+    2.11.*) echo 2.11 ;;
+    2.12.*) echo 2.12 ;;
+    2.13.*) echo 2.13 ;;
+     3.0.*)  echo 3.0 ;;
+     3.1.*)  echo 3.1 ;;
+         *) echo UNKNOWN ;;
+  esac
+}
+
+NAME="$( findValue name )"
+VERSION="$( findValue version )"
+JAR=target/scala-`SCALA_VERSION`/$NAME-assembly-$VERSION.jar
+
+if [ "$1" == -j ] || [ ! -f $JAR ]; then
+  echo "Building $JAR"
+  sbt assembly
+
+  if [ "$1" == -j ]; then shift; fi
+fi
+
+if [ "$1" ]; then
+  ENTRY="$1"
+else
+  ENTRY=org.web3j.console.Runner
+fi
+
+java -cp "$JAR" "$ENTRY" "$@"
