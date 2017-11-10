@@ -23,29 +23,6 @@ Etherbase is the index into personal.listAccounts which determines the account t
 You can specify this value with this option: --etherbase 0
 
 geth -h  # displays the geth help message; the help message for geth v1.7.3 is available in geth.md.
-
-Verify that geth is listening on port 8545:
-  $ sudo netstat -pan | grep 8545
-  tcp        0      0 127.0.0.1:8545          0.0.0.0:*               LISTEN      22296/geth
-
-Verify that geth is listing via IPC:
-  $ geth attach ipc:$HOME/.ethereum/devnet/geth.ipc
-  Welcome to the Geth JavaScript console!
-
-  instance: Geth/v1.7.3-unstable-3ee86a57/linux-amd64/go1.9.1
-  coinbase: 0x549d692ea074df8a9585b16775117e732a17f444
-  at block: 0 (Wed, 31 Dec 1969 16:00:00 PST)
-   datadir: /home/mslinn/.ethereum/devnet
-   modules: admin:1.0 clique:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 shh:1.0 txpool:1.0 web3:1.0
-
-Attach to the JavaScript console of a running instance by typing the following into another shell;
-  $ geth attach http://localhost:8545
-  Welcome to the Geth JavaScript console!
-
-  instance: Geth/v1.7.3-unstable-3ee86a57/linux-amd64/go1.9.1
-  coinbase: 0x549d692ea074df8a9585b16775117e732a17f444
-  at block: 0 (Wed, 31 Dec 1969 16:00:00 PST)
-   modules: clique:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
 "
   exit 1
 }
@@ -119,26 +96,3 @@ geth \
   --verbosity 3 \
   "$*" 2> logs/geth.log
 set +xv
-
-# Discover the APIs provided by invoking the modules JSON-RPC method
-# See https://github.com/ethereum/go-ethereum/wiki/Management-APIs
-echo '{"jsonrpc":"2.0","method":"rpc_modules","params":[],"id":1}' | nc -U /home/mslinn/.ethereum/devnet/geth.ipc
-# Typical response:
-# {
-#     "jsonrpc":"2.0",
-#     "id":1,
-#     "result":{
-#        "admin":"1.0",
-#        "clique":"1.0",
-#        "debug":"1.0",
-#        "eth":"1.0",
-#        "miner":"1.0",
-#        "net":"1.0",
-#        "personal":"1.0",
-#        "rpc":"1.0",
-#        "shh":"1.0",
-#        "txpool":"1.0",
-#        "web3":"1.0"
-#     }
-#  }
-
