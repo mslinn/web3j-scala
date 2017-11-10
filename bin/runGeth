@@ -4,7 +4,7 @@ ETHEREUM_HOME="~/.ethereum"
 
 function help {
   echo "
-Usage: $0 [Network] [Options]
+Usage: $0 [Network [Options]]
 Network defaults to dev. Other supported values are: main, rinkeby and ropsten.
 Options can be any geth command-line options that do not conflict or duplicate existing options used.
 
@@ -27,40 +27,43 @@ geth -h  # displays the geth help message; the help message for geth v1.7.3 is a
 
 if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then help; fi
 
-switch "$1" {
-  case main)   # Live network, takes hours to boot, real money is at risk with this choice
+case "$1" in
+  main)   # Live network, takes hours to boot, real money is at risk with this choice
     ETHEREUM_NETWORK=mainnet
     ETHEREUM_HOME="$ETHEREUM_HOME"
     DATADIR="--datadir $ETHEREUM_HOME"
     shift
     ;;
 
-  case rinkeby)  # This test network takes about 15 minutes to boot, and has contracts
+  rinkeby)  # This test network takes about 15 minutes to boot, and has contracts
     ETHEREUM_NETWORK=$1
     ETHEREUM_HOME="$ETHEREUM_HOME/$ETHEREUM_NETWORK"
     DATADIR="--datadir $ETHEREUM_HOME/rinkeby --$$ETHEREUM_NETWORK"
     shift
     ;;
 
-  case ropsten)  # This test network takes about 15 minutes to boot, and has contracts
+  ropsten)  # This test network takes about 15 minutes to boot, and has contracts
     ETHEREUM_NETWORK=$1
     ETHEREUM_HOME="$ETHEREUM_HOME/$ETHEREUM_NETWORK"
     DATADIR="--datadir $ETHEREUM_HOME/ropsten --$1"
     shift
     ;;
 
-  case dev)
+  dev)  # Generic development network; boots very quickly but has no deployed contracts from others
     shift
-    # Fall through to dev case
-
-  case "") # Generic development network; boots very quickly but has no deployed contracts from others
     ETHEREUM_NETWORK=devnet
     ETHEREUM_HOME="$ETHEREUM_HOME/$ETHEREUM_NETWORK"
     DATADIR="--datadir $ETHEREUM_HOME/devnet --dev"
     ;;
-}
 
-echo "Using $ETHEREUM_NETWORK Ethereum network, with home $ETHEREUM_HOME"
+  "")  # Generic development network; boots very quickly but has no deployed contracts from others
+    ETHEREUM_NETWORK=devnet
+    ETHEREUM_HOME="$ETHEREUM_HOME/$ETHEREUM_NETWORK"
+    DATADIR="--datadir $ETHEREUM_HOME/devnet --dev"
+    ;;
+esac
+
+echo "Using $ETHEREUM_NETWORK Ethereum network with home $ETHEREUM_HOME"
 
 mkdir -p "$ETHEREUM_HOME"
 #mkdir -p logs/
