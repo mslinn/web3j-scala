@@ -1,5 +1,6 @@
 package demo
 
+import com.micronautics.web3j._
 import com.micronautics.web3j.Web3JScala._
 import org.web3j.protocol.core.DefaultBlockParameterName._
 import org.web3j.protocol.core.methods.{request, response}
@@ -21,25 +22,37 @@ class DemoObservables(demo: Demo) {
     println(format(tx))
   }
 
-  // Display all pending transactions as they are submitted to the network, before they have been grouped into a block:
-  web3j.pendingTransactionObservable.subscribe { tx =>
+  // Display the first 2 pending transactions as they are submitted to the network, before they have been grouped into a block:
+  observe(2)(web3j.pendingTransactionObservable) { tx =>
     println(format(tx))
   }
 
-  // Replay all blocks to the most current, and be notified of new subsequent blocks being created:
+  // Replay all blocks to the most current, and be notified of new subsequent blocks being created
+  // Display minimal information about old blocks, show detailed information for new blocks
+  val now: Long = System.currentTimeMillis
+  var count = 0
   web3j.catchUpToLatestAndSubscribeToNewBlocksObservable(EARLIEST, false).subscribe { ethBlock =>
-    println(format(ethBlock))
+    val block = ethBlock.getBlock
+    if (block.getTimestamp.longValue<now) {
+      count = count + 1
+      print(s"\rSkipped $count blocks. ")
+//      println(s"Skipping ${ block.getNumber }: ${ block.javaTime }")
+    } else println(format(ethBlock))
   }
 
   // Topic Filter Demo
   // Filters are not supported on the Infura network.
-  val contractAddress = "todo something intelligent here"
+  val contractAddress = "0x8888f1f195afa192cfee860698584c030f4c9db1" // todo relate this bogus contract to something in the demo
 
+  // See https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_newfilter
   val ethFilter: request.EthFilter =
     new request
       .EthFilter(EARLIEST, LATEST, contractAddress)
-      .addSingleTopic("todo specify a topic")
-      .addOptionalTopics("todo specify an optional topic", "todo specify another optional topic")
+      .addSingleTopic("0x000000000000000000000000a94f5374fce5edbc8e2a8697c15331677e6ebf0b") // todo relate this bogus topic to something in the demo
+      .addOptionalTopics( // todo relate these bogus topics to something in the demo
+        "0x000000000000000000000000a94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+        "0x0000000000000000000000000aff3454fce5edbc8cca8697c15331677e6ebccc"
+      )
 
   web3j.ethLogObservable(ethFilter).subscribe { log =>
     println(format(log))
@@ -50,12 +63,13 @@ class DemoObservables(demo: Demo) {
     val block = ethBlock.getBlock
     s"""ETH block:
        |  Author               = ${ block.getAuthor }
+       |  Bloom logs           = ${ block.getLogsBloom }
        |  Difficulty           = ${ block.getDifficulty }
        |  Extra data           = ${ block.getExtraData }
        |  Gas limit            = ${ block.getGasLimit }
        |  Gas used             = ${ block.getGasUsed }
        |  Hash                 = ${ block.getHash }
-       |  Bloom logs           = ${ block.getLogsBloom }
+       |  Java time            = ${ block.javaTime }
        |  Miner                = ${ block.getMiner }
        |  Mix hash             = ${ block.getMixHash }
        |  Nonce                = ${ block.getNonce }

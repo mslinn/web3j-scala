@@ -1,12 +1,13 @@
 package demo
 
 import java.math.BigInteger
-import com.micronautics.web3j.{Cmd, Web3JScala}
+import com.micronautics.web3j.{Cmd, EthereumSynchronous, Web3JScala}
 import Cmd.{isMac, isWindows}
 import org.web3j.protocol.Web3j
 import org.web3j.protocol.ipc.{UnixIpcService, WindowsIpcService}
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContext, Promise}
+import org.web3j.protocol.core.DefaultBlockParameterName._
 
 object Demo {
   val gasPrice: BigInteger = BigInt(1).bigInteger
@@ -42,6 +43,15 @@ class Demo(implicit ec: ExecutionContext) {
     promise.complete(scala.util.Success("Done"))
   }
   Await.ready(promise.future, Duration.Inf) // pause while the async request completes
+
+  val eSync: EthereumSynchronous = web3jScala.sync
+  eSync.accounts match {
+    case Nil => println("No accounts found.")
+    case accounts =>
+      accounts.foreach {
+        account => println(s"$account balance is ${ eSync.balance(account, LATEST) }")
+      }
+  }
 
   val ethereumDir: String = Cmd.home(
     if (isWindows) "~/AppData/Roaming/Ethereum"

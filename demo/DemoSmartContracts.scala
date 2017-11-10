@@ -1,7 +1,6 @@
 package demo
 
 import org.web3j.crypto.{Credentials, WalletUtils}
-import scala.concurrent.ExecutionContext
 
 object CreateSmartContracts extends App {
   import scala.concurrent.ExecutionContext.Implicits.global

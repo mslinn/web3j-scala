@@ -10,7 +10,7 @@ import org.web3j.protocol.http.HttpService
 import org.web3j.tx.Transfer
 import org.web3j.utils.Convert.Unit.{ETHER, WEI}
 
-/** web3j provides support for both working with Ethereum wallet files (recommended) and Ethereum client admin commands
+/** Web3J provides support for both working with Ethereum wallet files (recommended) and Ethereum client admin commands
   * for sending transactions. */
 class DemoTransaction(demo: Demo) {
   import Demo._, demo._
@@ -45,7 +45,7 @@ class DemoTransaction(demo: Demo) {
        // todo send a transaction
   }
 
-  // To make use of Parity’s Personal, Trace, or Geth’s Personal client APIs, use the org.web3j:parity and org.web3j:geth modules respectively.
+  // Todo demonstrate the use of Parity’s Personal, Trace, or Geth’s Personal client APIs, by using the org.web3j:parity and org.web3j:geth modules respectively.
 
 
   protected def format(tx: RawTransaction): String =
