@@ -17,8 +17,8 @@ Add this to your SBT project's `build.sbt`:
 
 Only Scala 2.12 with JDK 8 is supported at present; this is a limitation of the Scala ecosystem as of November 7, 2017.
 
-## Run the demo.Demo Program
-The demo performs the following:
+## Run the Demo Program
+The demo program performs the following:
  - Follows the outline of the [Web3J Getting Started](https://docs.web3j.io/getting_started.html#start-sending-requests) documentation, 
    adapted for Web3J-Scala, including synchronous and asynchronous versions of the available methods.
  - Compiles an example Solidity program that defines a smart contract.
