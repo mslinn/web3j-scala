@@ -18,9 +18,14 @@ Add this to your SBT project's `build.sbt`:
 Only Scala 2.12 with JDK 8 is supported at present; this is a limitation of the Scala ecosystem as of November 7, 2017.
 
 ## Run the demo.Demo Program
-The `bin/run` bash script performs all of the following steps:
+The demo performs the following:
+ - Follows the outline of the [Web3J Getting Started](https://docs.web3j.io/getting_started.html#start-sending-requests) documentation, 
+   adapted for Web3J-Scala, including synchronous and asynchronous versions of the available methods.
+ - Compiles an example Solidity program that defines a smart contract.
+ - Creates a JVM wrapper from an example smart contract.
 
-1. Before running the demo program, start up an Ethereum client if you don’t already have one running, such as `geth`.
+To run the demo:
+1. Start up an Ethereum client if you don’t already have one running, such as `geth`.
    The `bin/runGeth` script invokes `geth` with the following options:
      - The Ethereum data directory is set `.ethereum` within the current directory, which will be created if required.
      - HTTP-RPC is enabled.
@@ -46,16 +51,13 @@ The `bin/run` bash script performs all of the following steps:
    You will see the message `No etherbase set and no accounts found as default`.
    Etherbase is the index into `personal.listAccounts` which determines the account to send Ether too.
    You can specify this value with the option `--etherbase 0`.
-2. Create the smart contract JVM wrapper by running `CreateSmartContracts` defined in `demo/DemoSmartContracts.scala`.
-   If you did not create a log file, then the shell that you used will continuously scroll output as you proceed through these instructions, 
+2. If you did not create a log file, then the shell that you used will continuously scroll output as you proceed through these instructions, 
    so type the following into another shell:
    ```
-   $ sbt "test:runMain demo.CreateSmartContracts"
+   $ bin/demo
    ```
-3. Run the demo in `demo/Main.scala`:
-   ```
-   $ sbt "test:runMain demo.Main"
-   ```
+3. The `bin/web3j` script runs the Web3J command-line console.
+   The script builds a fat jar the first time it is run, so the command runs quickly on subsequent invocations.
    
 ## Developers
 ### API Documentation
