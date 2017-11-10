@@ -73,14 +73,19 @@ To run the demo:
       - Examples of working with [JVM wrappers around Ethereum smart contracts](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoSmartContracts.scala).
       - Examples of using [transactions](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoTransaction.scala) 
         with Ethereum wallet files and the Ethereum client.
-3. The `bin/web3j` script runs the Web3J command-line console.
+3. The `bin/web3j` script runs the [Web3J command-line console](https://docs.web3j.io/command_line.html).
    The script builds a fat jar the first time it is run, so the command runs quickly on subsequent invocations.
 4. More scripts are provided in the `bin/` directory, including:
-   - `bin/attachHttp` - Attach to a running geth instance via HTTP and open a [JavaScript console](https://godoc.org/github.com/robertkrimen/otto)
-   - `bin/attachIpc`  - Attach to a running geth instance via IPC and open a JavaScript console.
+   - [bin/attachHttp](https://github.com/mslinn/web3j-scala/blob/master/bin/attachHttp) - 
+     Attach to a running geth instance via HTTP and open a 
+     [JavaScript console](https://godoc.org/github.com/robertkrimen/otto)
+   - [bin/attachIpc](https://github.com/mslinn/web3j-scala/blob/master/bin/attachIpc) - 
+     Attach to a running geth instance via IPC and open a JavaScript console.
      This script might need to be edited if a network other than `devnet` is used.
-   - `bin/getApis`    - Reports the available APIs exposed by this `geth` instance.
-   - `bin/isGethListening` - Verify that `geth` is listening on HTTP port 8545
+   - [bin/getApis](https://github.com/mslinn/web3j-scala/blob/master/bin/gethApis) - 
+     Reports the available APIs exposed by this `geth` instance.
+   - [bin/isGethListening](https://github.com/mslinn/web3j-scala/blob/master/bin/isGethListening) - 
+     Verifies that `geth` is listening on HTTP port 8545
    
 ## Developers
 ### API Documentation
