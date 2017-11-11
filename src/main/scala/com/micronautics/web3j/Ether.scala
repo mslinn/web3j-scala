@@ -91,7 +91,7 @@ object Ether {
   * Unless special care is taken, [[scala.BigDecimal]] should not be used for Ether computations, just for formatting of output.
   *
   * Common arithmetic operators used in financial applications are directly implemented; if you need an operator that is not provided,
-  * the underlying BigInt probably supports it. */
+  * the underlying [[BigInt]] probably supports it. */
 class Ether(val wei: BigInt) extends Ordered[Ether] {
   import Ether._
 
