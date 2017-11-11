@@ -6,7 +6,6 @@ import org.web3j.protocol.Web3j
 import org.web3j.protocol.core.DefaultBlockParameter
 import org.web3j.protocol.core.DefaultBlockParameterName.LATEST
 import org.web3j.protocol.core.methods.request
-import org.web3j.protocol.core.methods.request.ShhFilter
 import org.web3j.protocol.core.methods.response.{EthBlock, EthCompileSolidity, EthGetWork, EthLog, ShhMessages, Transaction, TransactionReceipt}
 import scala.collection.JavaConverters._
 import scala.collection.immutable.List
@@ -23,14 +22,15 @@ class EthereumASynchronous(val web3j: Web3j)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_accounts eth_accounts]] JSON-RPC endpoint.
     * @return the list of addresses owned by the client */
-  def accounts: Future[List[String]] = web3j.ethAccounts.sendAsync.toScala.map(_.getAccounts.asScala.toList)
+  def accounts: Future[List[Address]] =
+    web3j.ethAccounts.sendAsync.toScala.map(_.getAccounts.asScala.toList.map(Address))
 
   /** Add the given identity address to the Whisper group.
     *
     * Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#shh_addtogroup shh_addtogroup]] JSON-RPC endpoint.
     * @return true if the identity was successfully added to the group */
-  def addToGroup(identityAddress: String): Future[Boolean] =
-    web3j.shhAddToGroup(identityAddress).sendAsync.toScala.map(_.addedToGroup)
+  def addToGroup(identityAddress: Address): Future[Boolean] =
+    web3j.shhAddToGroup(identityAddress.value).sendAsync.toScala.map(_.addedToGroup)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getbalance eth_getbalance]] JSON-RPC endpoint.
     * @param defaultBlockParameter either an integer block number, or the string "latest", "earliest" or "pending".
@@ -41,14 +41,14 @@ class EthereumASynchronous(val web3j: Web3j)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getblockbyhash eth_getblockbyhash]] JSON-RPC endpoint.
     * @return Option[EthBlock.Block] */
-  def blockByHash(blockHash: String, returnFullTransactionObjects: Boolean): Future[Option[EthBlock.Block]] =
-    web3j.ethGetBlockByHash(blockHash, returnFullTransactionObjects).sendAsync.toScala.map(x => Option(x.getBlock))
+  def blockByHash(blockHash: Hash, returnFullTransactionObjects: Boolean): Future[Option[EthBlock.Block]] =
+    web3j.ethGetBlockByHash(blockHash.value, returnFullTransactionObjects).sendAsync.toScala.map(x => Option(x.getBlock))
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getblockbyhash eth_getblockbyhash]] JSON-RPC endpoint.
     * @return Some(block object), or None if no block was found */
   def blockByNumber(
     defaultBlockParameter: DefaultBlockParameter,
-    returnFullTransactionObjects: Boolean
+    returnFullTransactionObjects: Boolean = false
   ): Future[Option[EthBlock.Block]] =
     web3j
       .ethGetBlockByNumber(defaultBlockParameter, returnFullTransactionObjects)
@@ -78,26 +78,27 @@ class EthereumASynchronous(val web3j: Web3j)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_coinbase eth_coinbase]] JSON-RPC endpoint.
     * @return the client coinbase address */
-  def coinbaseAddress: Future[String] = web3j.ethCoinbase.sendAsync.toScala.map(_.getAddress)
+  def coinbaseAddress: Future[Address] = web3j.ethCoinbase.sendAsync.toScala.map(x => Address(x.getAddress))
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_compilelll eth_compilelll]] JSON-RPC endpoint.
     * @return compiled LLL code */
-  def compileLLL(sourceCode: String): Future[String] =
-    web3j.ethCompileLLL(sourceCode).sendAsync.toScala.map(_.getCompiledSourceCode)
+  def compileLLL(sourceCode: LLLSource): Future[LLLCompiled] =
+    web3j.ethCompileLLL(sourceCode.value).sendAsync.toScala.map(x => LLLCompiled(x.getCompiledSourceCode))
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_compileserpent eth_compileserpent]] JSON-RPC endpoint.
     * @return compiled Serpent code */
-  def compileSerpent(sourceCode: String): Future[String] =
-    web3j.ethCompileSerpent(sourceCode).sendAsync.toScala.map(_.getCompiledSourceCode)
+  def compileSerpent(sourceCode: SerpentSource): Future[SerpentCompiled] =
+    web3j.ethCompileSerpent(sourceCode.value).sendAsync.toScala.map(x => SerpentCompiled(x.getCompiledSourceCode))
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_compilesolidity eth_compilesolidity]] JSON-RPC endpoint.
     * @return compiled Solidity code */
-  def compileSolidity(sourceCode: String): Future[Map[String, EthCompileSolidity.Code]] =
-    web3j.ethCompileSolidity(sourceCode).sendAsync.toScala.map(_.getCompiledSolidity.asScala.toMap)
+  def compileSolidity(sourceCode: SoliditySource): Future[Map[String, EthCompileSolidity.Code]] =
+    web3j.ethCompileSolidity(sourceCode.value).sendAsync.toScala.map(_.getCompiledSolidity.asScala.toMap)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getcompilers eth_getcompilers]] JSON-RPC endpoint.
     * @return a list of available compilers found by the underlying Web3J library */
-  def compilers: Future[List[String]] = web3j.ethGetCompilers.sendAsync.toScala.map(_.getCompilers.asScala.toList)
+  def compilers: Future[List[Compiler]] =
+    web3j.ethGetCompilers.sendAsync.toScala.map(_.getCompilers.asScala.toList.map(Compiler))
 
   /** Makes a call or transaction, which won't be added to the blockchain and returns the used gas, which can be used
     * for estimating the used gas.
@@ -110,8 +111,8 @@ class EthereumASynchronous(val web3j: Web3j)
     *
     * Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getfilterchanges eth_getfilterchanges]] JSON-RPC endpoint.
     * @return List of log items since last poll, could be Nil if nothing changed since the last poll */
-  def filterChangesEth(filterId: BigInteger): Future[List[EthLog.LogResult[_]]] =
-    web3j.ethGetFilterChanges(filterId).sendAsync.toScala.map(_.getLogs.asScala.toList)
+  def filterChangesEth(filterId: FilterId): Future[List[EthLog.LogResult[_]]] =
+    web3j.ethGetFilterChanges(filterId.value).sendAsync.toScala.map(_.getLogs.asScala.toList)
 
   /** Polling method for a Whisper filter.
     *
@@ -119,8 +120,8 @@ class EthereumASynchronous(val web3j: Web3j)
     *
     * Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#shh_getfilterchanges shh_getfilterchanges]] JSON-RPC endpoint.
     * @return List of messages since the last poll; could be Nil if nothing changed since the last poll */
-  def filterChangesShh(filterId: BigInteger): Future[List[ShhMessages.SshMessage]] =
-    web3j.shhGetFilterChanges(filterId).sendAsync.toScala.map(_.getMessages.asScala.toList)
+  def filterChangesShh(filterId: FilterId): Future[List[ShhMessages.SshMessage]] =
+    web3j.shhGetFilterChanges(filterId.value).sendAsync.toScala.map(_.getMessages.asScala.toList)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gasprice eth_gasprice]] JSON-RPC endpoint.
     * @return the current price per gas in wei */
@@ -141,8 +142,8 @@ class EthereumASynchronous(val web3j: Web3j)
     *
     * Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#shh_hasidentity shh_hasidentity]] JSON-RPC endpoint.
     * @return returns true if this client holds the private key for that identity */
-  def hasIdentity(identityAddress: String): Future[Boolean] =
-    web3j.shhHasIdentity(identityAddress).sendAsync.toScala.map(_.hasPrivateKeyForIdentity)
+  def hasIdentity(identityAddress: Address): Future[Boolean] =
+    web3j.shhHasIdentity(identityAddress.value).sendAsync.toScala.map(_.hasPrivateKeyForIdentity)
 
   /** Retrieves binary data from the local database.
     *
@@ -177,23 +178,24 @@ class EthereumASynchronous(val web3j: Web3j)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getfilterlogs eth_getfilterlogs]] JSON-RPC endpoint.
     * @return List of all log items with the matching filter id */
-  def logs(filterId: BigInteger): Future[List[EthLog.LogResult[_]]] =
-    web3j.ethGetFilterLogs(filterId).sendAsync.toScala.map(_.getLogs.asScala.toList)
+  def logs(filterId: FilterId): Future[List[EthLog.LogResult[_]]] =
+    web3j.ethGetFilterLogs(filterId.value).sendAsync.toScala.map(_.getLogs.asScala.toList)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#shh_getmessages shh_getmessages]] JSON-RPC endpoint.
     * @return all Whisper messages matching a filter */
-  def messages(filterId: BigInteger): Future[List[ShhMessages.SshMessage]] =
-    web3j.shhGetMessages(filterId).sendAsync.toScala.map(_.getMessages.asScala.toList)
+  def messages(filterId: FilterId): Future[List[ShhMessages.SshMessage]] =
+    web3j.shhGetMessages(filterId.value).sendAsync.toScala.map(_.getMessages.asScala.toList)
 
   /** Creates a filter in the node, to notify when the state changes (logs).
     * To check if the state has changed, call `filterChanges`.
     *
     * Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_newblockfilter eth_newblockfilter]] JSON-RPC endpoint.
     * @return filter id */
-  def newBlockFilter: Future[BigInteger] = web3j.ethNewBlockFilter.sendAsync.toScala.map(_.getFilterId)
+  def newBlockFilter: Future[FilterId] = web3j.ethNewBlockFilter.sendAsync.toScala.map(x => FilterId(x.getFilterId))
 
   /** Get the next available nonce before creating a transaction */
-  def nextNonce(address: Address): Future[BigInteger] = transactionCount(address, LATEST)
+  // todo should a Nonce type be created?
+  def nextNonce(address: Address): Future[Nonce] = nonce(address, LATEST)
 
   /** Creates a filter object, based on filter options, to notify when the state changes (logs).
     * To check if the state has changed, call `filterChanges`.
@@ -209,28 +211,34 @@ class EthereumASynchronous(val web3j: Web3j)
     *
     * Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_newfilter eth_newfilter]] JSON-RPC endpoint.
     * @return filter id */
-  def newFilter(ethFilter: request.EthFilter): Future[BigInteger] =
-    web3j.ethNewFilter(ethFilter).sendAsync.toScala.map(_.getFilterId)
+  def newFilter(ethFilter: request.EthFilter): Future[FilterId] =
+    web3j.ethNewFilter(ethFilter).sendAsync.toScala.map(x => FilterId(x.getFilterId))
 
   /** Create filter that notifies the client when whisper message is received that matches the filter options.
     *
     * Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#shh_newfilter shh_newfilter]] JSON-RPC endpoint.
     * @return The newly created filter as a BigInteger */
-  def newFilter(shhFilter: request.ShhFilter): Future[BigInteger] =
-    web3j.shhNewFilter(shhFilter).sendAsync.toScala.map(_.getFilterId)
+  def newFilter(shhFilter: request.ShhFilter): Future[FilterId] =
+    web3j.shhNewFilter(shhFilter).sendAsync.toScala.map(x => FilterId(x.getFilterId))
 
   /** New Whisper group.
     *
     * Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#shh_newgroup shh_newgroup]] JSON-RPC endpoint.
     * @return address of the new group */
-  def newGroup: Future[String] = web3j.shhNewGroup.sendAsync.toScala.map(_.getAddress)
+  def newGroup: Future[Address] = web3j.shhNewGroup.sendAsync.toScala.map(x =>  Address(x.getAddress))
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#shh_newidentity shh_newidentity]] JSON-RPC endpoint.
     * @return address of the new whisper identity */
-  def newIdentity: Future[String] = web3j.shhNewIdentity.sendAsync.toScala.map(_.getAddress)
+  def newIdentity: Future[Address] = web3j.shhNewIdentity.sendAsync.toScala.map(x => Address(x.getAddress))
 
-  def newPendingTransactionFilter: Future[BigInteger] =
-    web3j.ethNewPendingTransactionFilter.sendAsync.toScala.map(_.getFilterId)
+  def newPendingTransactionFilter: Future[FilterId] =
+    web3j.ethNewPendingTransactionFilter.sendAsync.toScala.map(x => FilterId(x.getFilterId))
+
+  /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactioncount eth_gettransactioncount]] JSON-RPC endpoint.
+    * @see See [[https://github.com/ethereum/wiki/wiki/Glossary Glossary]]
+    * @return the number of transactions sent from an address */
+  def nonce(address: Address, defaultBlockParameter: DefaultBlockParameter): Future[Nonce] =
+    web3j.ethGetTransactionCount(address.value, defaultBlockParameter).sendAsync.toScala.map(x => Nonce(x.getTransactionCount))
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#net_peercount net_peercount]] JSON-RPC endpoint.
     * @return number of peers currently connected to this client */
@@ -244,18 +252,18 @@ class EthereumASynchronous(val web3j: Web3j)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_sendrawtransaction eth_sendrawtransaction]] JSON-RPC endpoint.
     * @return new message call transaction or a contract creation for signed transactions */
-  def sendRawTransaction(signedTransactionData: String): Future[String] =
-    web3j.ethSendRawTransaction(signedTransactionData).sendAsync.toScala.map(_.getTransactionHash)
+  def sendRawTransaction(signedTransactionData: String): Future[Hash] =
+    web3j.ethSendRawTransaction(signedTransactionData).sendAsync.toScala.map(x => Hash(x.getTransactionHash))
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_sendtransaction eth_sendtransaction]] JSON-RPC endpoint.
     * @return a new contract if the {{{Transaction.data}}} field contains code, else return a new transaction */
-  def sendTransaction(transaction: request.Transaction): Future[String] =
-    web3j.ethSendTransaction(transaction).sendAsync.toScala.map(_.getTransactionHash)
+  def sendTransaction(transaction: request.Transaction): Future[Hash] =
+    web3j.ethSendTransaction(transaction).sendAsync.toScala.map(x => Hash(x.getTransactionHash))
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#web3_sha3 web3_sha3]] JSON-RPC endpoint.
     * @param data the data to convert into an SHA3 hash
     * @return Keccak-256 hash (not the standardized SHA3-256 hash) of the given data */
-  def sha3(data: String): Future[String] = web3j.web3Sha3(data).sendAsync.toScala.map(_.getResult)
+  def sha3(data: String): Future[Keccak256Hash] = web3j.web3Sha3(data).sendAsync.toScala.map(x => Keccak256Hash(x.getResult))
 
   /** Calculates an Ethereum-specific signature with:
     * {{{sign(keccak256("\x19Ethereum Signed Message:\n" + len(message) + message)))}}}
@@ -267,8 +275,8 @@ class EthereumASynchronous(val web3j: Web3j)
     *
     * Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_sign eth_sign]] JSON-RPC endpoint.
     * @return Signature */
-  def sign(address: Address, sha3HashOfDataToSign: String): Future[String] =
-    web3j.ethSign(address.value, sha3HashOfDataToSign).sendAsync.toScala.map(_.getSignature)
+  def sign(address: Address, sha3HashOfDataToSign: Keccak256Hash): Future[Signature] =
+    web3j.ethSign(address.value, sha3HashOfDataToSign.value).sendAsync.toScala.map(x => Signature(x.getSignature))
 
   /** Obtains a string from the local database.
     *
@@ -293,8 +301,8 @@ class EthereumASynchronous(val web3j: Web3j)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactionbyblockhashandindex eth_gettransactionbyblockhashandindex]] JSON-RPC endpoint.
     * @return Some containing transaction information by block hash and transaction index position, or None if no matching transaction was found */
-  def transactionByBlockHashAndIndex(blockHash: String, transactionIndex: BigInteger): Future[Optional[Transaction]] =
-    web3j.ethGetTransactionByBlockHashAndIndex(blockHash, transactionIndex).sendAsync.toScala.map(_.getTransaction)
+  def transactionByBlockHashAndIndex(blockHash: Hash, transactionIndex: BigInteger): Future[Optional[Transaction]] =
+    web3j.ethGetTransactionByBlockHashAndIndex(blockHash.value, transactionIndex).sendAsync.toScala.map(_.getTransaction)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactionbyblocknumberandindex eth_gettransactionbyblocknumberandindex]] JSON-RPC endpoint.
     * @return Some containing transaction information by block hash and transaction index position, or None if no matching transaction was found */
@@ -310,23 +318,18 @@ class EthereumASynchronous(val web3j: Web3j)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactionbyhash eth_gettransactionbyhash]] JSON-RPC endpoint.
     * @return Future containing Some(transaction object), or None when no transaction was found */
-  def transactionByHash(transactionHash: String): Future[Optional[Transaction]] =
-    web3j.ethGetTransactionByHash(transactionHash).sendAsync.toScala.map(_.getTransaction)
-
-  /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactioncount eth_gettransactioncount]] JSON-RPC endpoint.
-    * @return the number of transactions sent from an address */
-  def transactionCount(address: Address, defaultBlockParameter: DefaultBlockParameter): Future[BigInteger] =
-    web3j.ethGetTransactionCount(address.value, defaultBlockParameter).sendAsync.toScala.map(_.getTransactionCount)
+  def transactionByHash(transactionHash: Hash): Future[Optional[Transaction]] =
+    web3j.ethGetTransactionByHash(transactionHash.value).sendAsync.toScala.map(_.getTransaction)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactionreceipt eth_gettransactionreceipt]] JSON-RPC endpoint.
     * @return the receipt of a transaction, identified by transaction hash. (Note: receipts are not available for pending transactions.) */
-  def transactionReceipt(transactionHash: String): Future[Optional[TransactionReceipt]] =
-    web3j.ethGetTransactionReceipt(transactionHash).sendAsync.toScala.map(_.getTransactionReceipt)
+  def transactionReceipt(transactionHash: Hash): Future[Optional[TransactionReceipt]] =
+    web3j.ethGetTransactionReceipt(transactionHash.value).sendAsync.toScala.map(_.getTransactionReceipt)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getunclecountbyblockhash eth_getunclecountbyblockhash]] JSON-RPC endpoint.
     * @return the number of uncles in a block from a block matching the given block hash */
-  def uncleCountByBlockHash(blockHash: String): Future[BigInteger] =
-    web3j.ethGetUncleCountByBlockHash(blockHash).sendAsync.toScala.map(_.getUncleCount)
+  def uncleCountByBlockHash(blockHash: Hash): Future[BigInteger] =
+    web3j.ethGetUncleCountByBlockHash(blockHash.value).sendAsync.toScala.map(_.getUncleCount)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getunclecountbyblocknumber eth_getunclecountbyblocknumber]] JSON-RPC endpoint.
     * @return the number of uncles in a block from a block matching the given block number */
@@ -343,8 +346,8 @@ class EthereumASynchronous(val web3j: Web3j)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getunclebyblockhashandindex eth_getunclebyblockhashandindex]] JSON-RPC endpoint.
     * @return information about a uncle of a block by hash and uncle index position */
-  def uncleByBlockHashAndIndex(blockHash: String, transactionIndex: BigInteger): Future[EthBlock.Block] =
-    web3j.ethGetUncleByBlockHashAndIndex(blockHash, transactionIndex).sendAsync.toScala.map(_.getBlock)
+  def uncleByBlockHashAndIndex(blockHash: Hash, transactionIndex: BigInteger): Future[EthBlock.Block] =
+    web3j.ethGetUncleByBlockHashAndIndex(blockHash.value, transactionIndex).sendAsync.toScala.map(_.getBlock)
 
   /** Uninstalls a filter with the given id.
     * Should always be called when watch is no longer needed.
@@ -353,8 +356,8 @@ class EthereumASynchronous(val web3j: Web3j)
     *
     * Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_uninstallfilter eth_uninstallfilter]] JSON-RPC endpoint.
     * @return true if the filter was successfully uninstalled */
-  def uninstallFilter(filterId: BigInteger): Future[Boolean] =
-    web3j.ethUninstallFilter(filterId).sendAsync.toScala.map(_.isUninstalled)
+  def uninstallFilter(filterId: FilterId): Future[Boolean] =
+    web3j.ethUninstallFilter(filterId.value).sendAsync.toScala.map(_.isUninstalled)
 
   /** Uninstalls a Whisper filter with the given id.
     * Should always be called when watch is no longer needed.
@@ -363,8 +366,8 @@ class EthereumASynchronous(val web3j: Web3j)
     *
     * Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#shh_uninstallfilter shh_uninstallfilter]] JSON-RPC endpoint.
     * @return true if the filter was successfully uninstalled */
-  def uninstallShhFilter(filterId: BigInteger): Future[Boolean] =
-    web3j.shhUninstallFilter(filterId).sendAsync.toScala.map(_.isUninstalled)
+  def uninstallShhFilter(filterId: FilterId): Future[Boolean] =
+    web3j.shhUninstallFilter(filterId.value).sendAsync.toScala.map(_.isUninstalled)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#web3_clientversion web3_clientversion]] JSON-RPC endpoint.
     * @return the Web3J client version used by this client */
@@ -395,6 +398,6 @@ class EthereumASynchronous(val web3j: Web3j)
     *
     * Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_submitwork eth_submitwork]] JSON-RPC endpoint.
     * @return true if the provided solution is valid */
-  def work(nonce: String, headerPowHash: String, mixDigest: String): Future[Boolean] =
-    web3j.ethSubmitWork(nonce, headerPowHash, mixDigest).sendAsync.toScala.map(_.solutionValid)
+  def work(nonce: Nonce, headerPowHash: Hash, mixDigest: Digest): Future[Boolean] =
+    web3j.ethSubmitWork(nonce.toString, headerPowHash.value, mixDigest.value).sendAsync.toScala.map(_.solutionValid)
 }

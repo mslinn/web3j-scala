@@ -1,7 +1,7 @@
 package demo
 
 import java.math.BigInteger
-import com.micronautics.web3j.Address
+import com.micronautics.web3j.{Address, Nonce}
 import org.web3j.crypto.{Credentials, RawTransaction, TransactionEncoder, WalletUtils}
 import org.web3j.protocol.admin.Admin
 import org.web3j.protocol.admin.methods.response.PersonalUnlockAccount
@@ -23,11 +23,11 @@ class DemoTransaction(demo: Demo) {
   println(format(transactionReceipt))
 
   // Before creating a custom transaction, first get the next available nonce
-  val nonce: BigInteger = demo.web3jScala.sync.nextNonce(Address("address"))
+  val nonce: Nonce = demo.web3jScala.sync.nextNonce(Address("address"))
 
   // Create a custom transaction
   val rawTransaction: RawTransaction =
-    RawTransaction.createEtherTransaction(nonce, gasPrice.bigInteger, gasLimit, "toAddress", BigInt(1).bigInteger)
+    RawTransaction.createEtherTransaction(nonce.bigInteger, gasPrice.bigInteger, gasLimit, "toAddress", BigInt(1).bigInteger)
   println(format(rawTransaction))
 
   // Sign & send the transaction
