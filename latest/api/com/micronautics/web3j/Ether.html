@@ -165,8 +165,8 @@ are returned by the following methods of <a href="EthereumSynchronous.html" clas
                         <a href="EtHash.html" title="">EtHash</a>
                       </li><li class="current-entities indented3">
                         <a class="object" href="Ether$.html" title=""></a>
-                        <a class="class" href="" title="Wei are the smallest unit of currency and are always integers, never fractional quantities"></a>
-                        <a href="" title="Wei are the smallest unit of currency and are always integers, never fractional quantities">Ether</a>
+                        <a class="class" href="" title="Wei are the smallest unit of currency and are always integers, never fractional quantities."></a>
+                        <a href="" title="Wei are the smallest unit of currency and are always integers, never fractional quantities.">Ether</a>
                       </li><li class="current-entities indented3">
                         <span class="separator"></span>
                         <a class="class" href="EthereumASynchronous.html" title="All of the methods in this class return a scala.concurrent.Future and do not block."></a>
@@ -277,7 +277,10 @@ are returned by the following methods of <a href="EthereumSynchronous.html" clas
       </h4>
 
       
-          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Wei are the smallest unit of currency and are always integers, never fractional quantities</p></div><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/mslinn/web3j-scala/tree/master/src/main/scala/com/micronautics/web3j/Ether.scala" target="_blank">Ether.scala</a></dd></dl><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Wei are the smallest unit of currency and are always integers, never fractional quantities.
+An <code>Ether</code> is 10<sup><sup>18 Wei ... a huge dynamic range.
+But that is not all, because Ether has 54 orders of magnitude (+/- 10</sup></sup>27).</p><p>This class stores and computes in Wei (like cents, they are the smallest currency denomination).
+Unless special care is taken, BigDecimal should not be used for Ether computations, just for formatting of output</p></div><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/mslinn/web3j-scala/tree/master/src/main/scala/com/micronautics/web3j/Ether.scala" target="_blank">Ether.scala</a></dd></dl><div class="toggleContainer block">
           <span class="toggle">
             Linear Supertypes
           </span>
@@ -846,9 +849,9 @@ are returned by the following methods of <a href="EthereumSynchronous.html" clas
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Ordered</dd></dl></div>
     </li><li name="com.micronautics.web3j.Ether#asEther" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="asEther:BigDecimal"></a>
+      <a id="asEther(scale:Int):BigDecimal"></a><a id="asEther(Int):BigDecimal"></a>
       <span class="permalink">
-      <a href="../../../com/micronautics/web3j/Ether.html#asEther:BigDecimal" title="Permalink">
+      <a href="../../../com/micronautics/web3j/Ether.html#asEther(scale:Int):BigDecimal" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -857,17 +860,18 @@ are returned by the following methods of <a href="EthereumSynchronous.html" clas
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">asEther</span><span class="result">: <span class="extype" name="scala.BigDecimal">BigDecimal</span></span>
+        <span class="name">asEther</span><span class="params">(<span name="scale">scale: <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/Int.html#scala.Int" class="extype" name="scala.Int">Int</a> = <span class="symbol">16</span></span>)</span><span class="result">: <span class="extype" name="scala.BigDecimal">BigDecimal</span></span>
       </span>
       
-      <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Do not use the return value for computations unless special care is token.</p><div class="fullcomment"><div class="comment cmt"><p>Do not use the return value for computations unless special care is token.</p></div><dl class="paramcmts block"><dt class="param">scale</dt><dd class="cmt"><p>used when constructing the <a href="https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html" class="extype" name="java.math.BigDecimal">java.math.BigDecimal</a> return value; defaults to 16.
+This class is intended for output formatting only.</p></dd></dl><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@inline</span><span class="args">()</span>
               
         </dd></dl></div>
     </li><li name="com.micronautics.web3j.Ether#asFinney" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="asFinney:BigDecimal"></a>
+      <a id="asFinney(scale:Int):BigDecimal"></a><a id="asFinney(Int):BigDecimal"></a>
       <span class="permalink">
-      <a href="../../../com/micronautics/web3j/Ether.html#asFinney:BigDecimal" title="Permalink">
+      <a href="../../../com/micronautics/web3j/Ether.html#asFinney(scale:Int):BigDecimal" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -876,17 +880,18 @@ are returned by the following methods of <a href="EthereumSynchronous.html" clas
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">asFinney</span><span class="result">: <span class="extype" name="scala.BigDecimal">BigDecimal</span></span>
+        <span class="name">asFinney</span><span class="params">(<span name="scale">scale: <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/Int.html#scala.Int" class="extype" name="scala.Int">Int</a> = <span class="symbol">16</span></span>)</span><span class="result">: <span class="extype" name="scala.BigDecimal">BigDecimal</span></span>
       </span>
       
-      <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Do not use the return value for computations unless special care is token.</p><div class="fullcomment"><div class="comment cmt"><p>Do not use the return value for computations unless special care is token.</p></div><dl class="paramcmts block"><dt class="param">scale</dt><dd class="cmt"><p>used when constructing the <a href="https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html" class="extype" name="java.math.BigDecimal">java.math.BigDecimal</a> return value; defaults to 16.
+This class is intended for output formatting only.</p></dd></dl><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@inline</span><span class="args">()</span>
               
         </dd></dl></div>
     </li><li name="com.micronautics.web3j.Ether#asGEther" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="asGEther:BigDecimal"></a>
+      <a id="asGEther(scale:Int):BigDecimal"></a><a id="asGEther(Int):BigDecimal"></a>
       <span class="permalink">
-      <a href="../../../com/micronautics/web3j/Ether.html#asGEther:BigDecimal" title="Permalink">
+      <a href="../../../com/micronautics/web3j/Ether.html#asGEther(scale:Int):BigDecimal" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -895,17 +900,18 @@ are returned by the following methods of <a href="EthereumSynchronous.html" clas
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">asGEther</span><span class="result">: <span class="extype" name="scala.BigDecimal">BigDecimal</span></span>
+        <span class="name">asGEther</span><span class="params">(<span name="scale">scale: <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/Int.html#scala.Int" class="extype" name="scala.Int">Int</a> = <span class="symbol">16</span></span>)</span><span class="result">: <span class="extype" name="scala.BigDecimal">BigDecimal</span></span>
       </span>
       
-      <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Do not use the return value for computations unless special care is token.</p><div class="fullcomment"><div class="comment cmt"><p>Do not use the return value for computations unless special care is token.</p></div><dl class="paramcmts block"><dt class="param">scale</dt><dd class="cmt"><p>used when constructing the <a href="https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html" class="extype" name="java.math.BigDecimal">java.math.BigDecimal</a> return value; defaults to 16.
+This class is intended for output formatting only.</p></dd></dl><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@inline</span><span class="args">()</span>
               
         </dd></dl></div>
     </li><li name="com.micronautics.web3j.Ether#asGWei" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="asGWei:BigDecimal"></a>
+      <a id="asGWei(scale:Int):BigDecimal"></a><a id="asGWei(Int):BigDecimal"></a>
       <span class="permalink">
-      <a href="../../../com/micronautics/web3j/Ether.html#asGWei:BigDecimal" title="Permalink">
+      <a href="../../../com/micronautics/web3j/Ether.html#asGWei(scale:Int):BigDecimal" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -914,10 +920,11 @@ are returned by the following methods of <a href="EthereumSynchronous.html" clas
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">asGWei</span><span class="result">: <span class="extype" name="scala.BigDecimal">BigDecimal</span></span>
+        <span class="name">asGWei</span><span class="params">(<span name="scale">scale: <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/Int.html#scala.Int" class="extype" name="scala.Int">Int</a> = <span class="symbol">16</span></span>)</span><span class="result">: <span class="extype" name="scala.BigDecimal">BigDecimal</span></span>
       </span>
       
-      <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Do not use the return value for computations unless special care is token.</p><div class="fullcomment"><div class="comment cmt"><p>Do not use the return value for computations unless special care is token.</p></div><dl class="paramcmts block"><dt class="param">scale</dt><dd class="cmt"><p>used when constructing the <a href="https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html" class="extype" name="java.math.BigDecimal">java.math.BigDecimal</a> return value; defaults to 16.
+This class is intended for output formatting only.</p></dd></dl><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@inline</span><span class="args">()</span>
               
         </dd></dl></div>
@@ -938,9 +945,9 @@ are returned by the following methods of <a href="EthereumSynchronous.html" clas
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
     </li><li name="com.micronautics.web3j.Ether#asKEther" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="asKEther:BigDecimal"></a>
+      <a id="asKEther(scale:Int):BigDecimal"></a><a id="asKEther(Int):BigDecimal"></a>
       <span class="permalink">
-      <a href="../../../com/micronautics/web3j/Ether.html#asKEther:BigDecimal" title="Permalink">
+      <a href="../../../com/micronautics/web3j/Ether.html#asKEther(scale:Int):BigDecimal" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -949,17 +956,18 @@ are returned by the following methods of <a href="EthereumSynchronous.html" clas
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">asKEther</span><span class="result">: <span class="extype" name="scala.BigDecimal">BigDecimal</span></span>
+        <span class="name">asKEther</span><span class="params">(<span name="scale">scale: <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/Int.html#scala.Int" class="extype" name="scala.Int">Int</a> = <span class="symbol">16</span></span>)</span><span class="result">: <span class="extype" name="scala.BigDecimal">BigDecimal</span></span>
       </span>
       
-      <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Do not use the return value for computations unless special care is token.</p><div class="fullcomment"><div class="comment cmt"><p>Do not use the return value for computations unless special care is token.</p></div><dl class="paramcmts block"><dt class="param">scale</dt><dd class="cmt"><p>used when constructing the <a href="https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html" class="extype" name="java.math.BigDecimal">java.math.BigDecimal</a> return value; defaults to 16.
+This class is intended for output formatting only.</p></dd></dl><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@inline</span><span class="args">()</span>
               
         </dd></dl></div>
     </li><li name="com.micronautics.web3j.Ether#asKWei" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="asKWei:BigDecimal"></a>
+      <a id="asKWei(scale:Int):BigDecimal"></a><a id="asKWei(Int):BigDecimal"></a>
       <span class="permalink">
-      <a href="../../../com/micronautics/web3j/Ether.html#asKWei:BigDecimal" title="Permalink">
+      <a href="../../../com/micronautics/web3j/Ether.html#asKWei(scale:Int):BigDecimal" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -968,17 +976,18 @@ are returned by the following methods of <a href="EthereumSynchronous.html" clas
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">asKWei</span><span class="result">: <span class="extype" name="scala.BigDecimal">BigDecimal</span></span>
+        <span class="name">asKWei</span><span class="params">(<span name="scale">scale: <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/Int.html#scala.Int" class="extype" name="scala.Int">Int</a> = <span class="symbol">16</span></span>)</span><span class="result">: <span class="extype" name="scala.BigDecimal">BigDecimal</span></span>
       </span>
       
-      <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Do not use the return value for computations unless special care is token.</p><div class="fullcomment"><div class="comment cmt"><p>Do not use the return value for computations unless special care is token.</p></div><dl class="paramcmts block"><dt class="param">scale</dt><dd class="cmt"><p>used when constructing the <a href="https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html" class="extype" name="java.math.BigDecimal">java.math.BigDecimal</a> return value; defaults to 16.
+This class is intended for output formatting only.</p></dd></dl><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@inline</span><span class="args">()</span>
               
         </dd></dl></div>
     </li><li name="com.micronautics.web3j.Ether#asMEther" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="asMEther:BigDecimal"></a>
+      <a id="asMEther(scale:Int):BigDecimal"></a><a id="asMEther(Int):BigDecimal"></a>
       <span class="permalink">
-      <a href="../../../com/micronautics/web3j/Ether.html#asMEther:BigDecimal" title="Permalink">
+      <a href="../../../com/micronautics/web3j/Ether.html#asMEther(scale:Int):BigDecimal" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -987,17 +996,18 @@ are returned by the following methods of <a href="EthereumSynchronous.html" clas
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">asMEther</span><span class="result">: <span class="extype" name="scala.BigDecimal">BigDecimal</span></span>
+        <span class="name">asMEther</span><span class="params">(<span name="scale">scale: <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/Int.html#scala.Int" class="extype" name="scala.Int">Int</a> = <span class="symbol">16</span></span>)</span><span class="result">: <span class="extype" name="scala.BigDecimal">BigDecimal</span></span>
       </span>
       
-      <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Do not use the return value for computations unless special care is token.</p><div class="fullcomment"><div class="comment cmt"><p>Do not use the return value for computations unless special care is token.</p></div><dl class="paramcmts block"><dt class="param">scale</dt><dd class="cmt"><p>used when constructing the <a href="https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html" class="extype" name="java.math.BigDecimal">java.math.BigDecimal</a> return value; defaults to 16.
+This class is intended for output formatting only.</p></dd></dl><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@inline</span><span class="args">()</span>
               
         </dd></dl></div>
     </li><li name="com.micronautics.web3j.Ether#asMWei" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="asMWei:BigDecimal"></a>
+      <a id="asMWei(scale:Int):BigDecimal"></a><a id="asMWei(Int):BigDecimal"></a>
       <span class="permalink">
-      <a href="../../../com/micronautics/web3j/Ether.html#asMWei:BigDecimal" title="Permalink">
+      <a href="../../../com/micronautics/web3j/Ether.html#asMWei(scale:Int):BigDecimal" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -1006,17 +1016,18 @@ are returned by the following methods of <a href="EthereumSynchronous.html" clas
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">asMWei</span><span class="result">: <span class="extype" name="scala.BigDecimal">BigDecimal</span></span>
+        <span class="name">asMWei</span><span class="params">(<span name="scale">scale: <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/Int.html#scala.Int" class="extype" name="scala.Int">Int</a> = <span class="symbol">16</span></span>)</span><span class="result">: <span class="extype" name="scala.BigDecimal">BigDecimal</span></span>
       </span>
       
-      <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Do not use the return value for computations unless special care is token.</p><div class="fullcomment"><div class="comment cmt"><p>Do not use the return value for computations unless special care is token.</p></div><dl class="paramcmts block"><dt class="param">scale</dt><dd class="cmt"><p>used when constructing the <a href="https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html" class="extype" name="java.math.BigDecimal">java.math.BigDecimal</a> return value; defaults to 16.
+This class is intended for output formatting only.</p></dd></dl><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@inline</span><span class="args">()</span>
               
         </dd></dl></div>
     </li><li name="com.micronautics.web3j.Ether#asSzabo" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="asSzabo:BigDecimal"></a>
+      <a id="asSzabo(scale:Int):BigDecimal"></a><a id="asSzabo(Int):BigDecimal"></a>
       <span class="permalink">
-      <a href="../../../com/micronautics/web3j/Ether.html#asSzabo:BigDecimal" title="Permalink">
+      <a href="../../../com/micronautics/web3j/Ether.html#asSzabo(scale:Int):BigDecimal" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -1025,17 +1036,18 @@ are returned by the following methods of <a href="EthereumSynchronous.html" clas
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">asSzabo</span><span class="result">: <span class="extype" name="scala.BigDecimal">BigDecimal</span></span>
+        <span class="name">asSzabo</span><span class="params">(<span name="scale">scale: <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/Int.html#scala.Int" class="extype" name="scala.Int">Int</a> = <span class="symbol">16</span></span>)</span><span class="result">: <span class="extype" name="scala.BigDecimal">BigDecimal</span></span>
       </span>
       
-      <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Do not use the return value for computations unless special care is token.</p><div class="fullcomment"><div class="comment cmt"><p>Do not use the return value for computations unless special care is token.</p></div><dl class="paramcmts block"><dt class="param">scale</dt><dd class="cmt"><p>used when constructing the <a href="https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html" class="extype" name="java.math.BigDecimal">java.math.BigDecimal</a> return value; defaults to 16.
+This class is intended for output formatting only.</p></dd></dl><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@inline</span><span class="args">()</span>
               
         </dd></dl></div>
     </li><li name="com.micronautics.web3j.Ether#asWei" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="asWei:BigInt"></a>
+      <a id="asWei(scale:Int):BigDecimal"></a><a id="asWei(Int):BigDecimal"></a>
       <span class="permalink">
-      <a href="../../../com/micronautics/web3j/Ether.html#asWei:BigInt" title="Permalink">
+      <a href="../../../com/micronautics/web3j/Ether.html#asWei(scale:Int):BigDecimal" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -1044,17 +1056,18 @@ are returned by the following methods of <a href="EthereumSynchronous.html" clas
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">asWei</span><span class="result">: <span class="extype" name="scala.BigInt">BigInt</span></span>
+        <span class="name">asWei</span><span class="params">(<span name="scale">scale: <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/Int.html#scala.Int" class="extype" name="scala.Int">Int</a> = <span class="symbol">16</span></span>)</span><span class="result">: <span class="extype" name="scala.BigDecimal">BigDecimal</span></span>
       </span>
       
-      <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
+      <p class="shortcomment cmt">Do not use the return value for computations unless special care is token.</p><div class="fullcomment"><div class="comment cmt"><p>Do not use the return value for computations unless special care is token.</p></div><dl class="paramcmts block"><dt class="param">scale</dt><dd class="cmt"><p>used when constructing the <a href="https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html" class="extype" name="java.math.BigDecimal">java.math.BigDecimal</a> return value; defaults to 16.
+This class is intended for output formatting only.</p></dd></dl><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@inline</span><span class="args">()</span>
               
         </dd></dl></div>
     </li><li name="com.micronautics.web3j.Ether#bigDecimal" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="bigDecimal(wei:BigInt):java.math.BigDecimal"></a><a id="bigDecimal(BigInt):BigDecimal"></a>
+      <a id="bigDecimal(wei:BigInt,scale:Int):java.math.BigDecimal"></a><a id="bigDecimal(BigInt,Int):BigDecimal"></a>
       <span class="permalink">
-      <a href="../../../com/micronautics/web3j/Ether.html#bigDecimal(wei:BigInt):java.math.BigDecimal" title="Permalink">
+      <a href="../../../com/micronautics/web3j/Ether.html#bigDecimal(wei:BigInt,scale:Int):java.math.BigDecimal" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -1063,10 +1076,10 @@ are returned by the following methods of <a href="EthereumSynchronous.html" clas
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">bigDecimal</span><span class="params">(<span name="wei">wei: <span class="extype" name="scala.BigInt">BigInt</span></span>)</span><span class="result">: <a href="https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html#java.math.BigDecimal" class="extype" name="java.math.BigDecimal">BigDecimal</a></span>
+        <span class="name">bigDecimal</span><span class="params">(<span name="wei">wei: <span class="extype" name="scala.BigInt">BigInt</span></span>, <span name="scale">scale: <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/Int.html#scala.Int" class="extype" name="scala.Int">Int</a> = <span class="symbol">16</span></span>)</span><span class="result">: <a href="https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html#java.math.BigDecimal" class="extype" name="java.math.BigDecimal">BigDecimal</a></span>
       </span>
       
-      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>Amount of Ether corresponding to the given wei value</p></dd></dl><dl class="attributes block"> <dt>Annotations</dt><dd>
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">scale</dt><dd class="cmt"><p>used when constructing the <a href="https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html" class="extype" name="java.math.BigDecimal">java.math.BigDecimal</a> return value</p></dd><dt>returns</dt><dd class="cmt"><p>Amount of Ether corresponding to the given wei value</p></dd></dl><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@inline</span><span class="args">()</span>
               
         </dd></dl></div>
@@ -1085,7 +1098,7 @@ are returned by the following methods of <a href="EthereumSynchronous.html" clas
         <span class="name">bigInteger</span><span class="result">: <a href="https://docs.oracle.com/javase/8/docs/api/java/math/BigInteger.html#java.math.BigInteger" class="extype" name="java.math.BigInteger">BigInteger</a></span>
       </span>
       
-      <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>the underlying <a href="https://docs.oracle.com/javase/8/docs/api/java/math/BigInteger.html" class="extype" name="java.math.BigInteger">java.math.BigInteger</a></p></dd></dl><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@inline</span><span class="args">()</span>
               
         </dd></dl></div>
