@@ -278,9 +278,10 @@ are returned by the following methods of <a href="EthereumSynchronous.html" clas
 
       
           <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Wei are the smallest unit of currency and are always integers, never fractional quantities.
-An <code>Ether</code> is 10<sup><sup>18 Wei ... a huge dynamic range.
-But that is not all, because Ether has 54 orders of magnitude (+/- 10</sup></sup>27).</p><p>This class stores and computes in Wei (like cents, they are the smallest currency denomination).
-Unless special care is taken, BigDecimal should not be used for Ether computations, just for formatting of output</p></div><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/mslinn/web3j-scala/tree/master/src/main/scala/com/micronautics/web3j/Ether.scala" target="_blank">Ether.scala</a></dd></dl><div class="toggleContainer block">
+An <code>Ether</code> is 10<sup><sup>18
+Wei ... a huge dynamic range.
+But that is not all, because Ether has 54 orders of magnitude (+/- 10</sup></sup>27).</p><p>This class stores and computes in Wei (like cents, they are the smallest currency denomination), using <span class="extype" name="BigInt">BigInt</span>.
+Unless special care is taken, <span class="extype" name="BigDecimal">BigDecimal</span> should not be used for Ether computations, just for formatting of output.</p></div><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/mslinn/web3j-scala/tree/master/src/main/scala/com/micronautics/web3j/Ether.scala" target="_blank">Ether.scala</a></dd></dl><div class="toggleContainer block">
           <span class="toggle">
             Linear Supertypes
           </span>
