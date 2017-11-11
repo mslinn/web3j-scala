@@ -1,6 +1,6 @@
 package demo
 
-import com.micronautics.web3j.{Password, Wallet}
+import com.micronautics.web3j.{Address, Password, Wallet}
 import org.web3j.crypto.Credentials
 import org.web3j.protocol.core.RemoteCall
 
@@ -31,16 +31,19 @@ class DemoSmartContracts(demo: Demo) {
     val password = Password("bogus") // todo make this real
     val credentials: Credentials = Wallet.loadCredentials(password, walletDir)
 
-    val basicInfoGetter: RemoteCall[BasicInfoGetter] = BasicInfoGetter.deploy(demo.web3j, credentials, gasPrice.bigInteger, gasLimit)
-    val x: BasicInfoGetter = basicInfoGetter.send
-    println(x)
+    val basicInfoContract: RemoteCall[BasicInfoGetter] = BasicInfoGetter.deploy(demo.web3j, credentials, gasPrice.bigInteger, gasLimit)
+    val wtf: BasicInfoGetter = basicInfoContract.send
+    println(wtf)
 
     // Or use an existing contract:
-    // val contract2 = YourSmartContract.load( "0x<address>", web3j, credentials, gasPrice, gasLimit)
+    val address = Address("address")  // todo make this real
+     val basicInfoContract2 = BasicInfoGetter.load(address.value, demo.web3j, credentials, gasPrice.wei.bigInteger, gasLimit)
 
-    // Transact with a smart contract
-//    val result = basicInfoGetter.send.getContractAddress.send
-//    println(s"basicInfoGetter.getContractAddress = $result")
+    // Transact with a smart contract; e.g. obtain the address of the contract.
+    // Would be nice to generate a Scala wrapper instead of a Java wrapper!
+    // Force the implicit conversion from String to Address by specifying the desired type
+    val basicInfoContractAddress: Address = basicInfoContract.send.getContractAddress
+    println(s"basicInfoGetter.getContractAddress = $basicInfoContractAddress")
   } catch {
     case e: Throwable =>
       System.err.println(e.getMessage)

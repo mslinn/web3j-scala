@@ -15,7 +15,7 @@ class DemoTransaction(demo: Demo) {
   import Demo._, demo._
 
   //  Send Ether to another party using your Ethereum wallet file
-  val password = Password("bogus") // todo make this real
+  val password: Password = Password("bogus") // todo make this real
   val credentials: Credentials = Wallet.loadCredentials(password, walletDir)
   val transactionReceipt: TransactionReceipt =
     Transfer.sendFunds(web3j, credentials, "0x...", BigDecimal.valueOf(0.01).bigDecimal, ETHER).send

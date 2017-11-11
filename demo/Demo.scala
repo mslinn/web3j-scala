@@ -11,7 +11,7 @@ import org.web3j.protocol.core.DefaultBlockParameterName._
 
 object Demo {
   val gasPrice: Ether = Ether(1)
-  val gasLimit: BigInteger = BigInt(2).bigInteger
+  val gasLimit: BigInteger = BigInteger.valueOf(2)
 
   val walletDir: String = Cmd.home(
     if (isWindows) s"${ sys.props("user.home") }\\AppData\\Roaming\\Ethereum\\"
@@ -21,12 +21,12 @@ object Demo {
 }
 
 class Demo(implicit ec: ExecutionContext) {
-  // Setup for running command lines from Scala
-  val cmd = new Cmd()
-
   // Instantiate an instance of the underlying Web3J library:
   val web3j: Web3j = Web3JScala.fromHttp()  // defaults to http://localhost:8545/
   val web3jScala: Web3JScala = new Web3JScala(web3j)
+
+  // Setup for running command lines from Scala
+  val cmd = new Cmd()
 
   // Example of a synchronous request:
   val web3ClientVersion1: String = web3jScala.sync.versionWeb3J

@@ -17,7 +17,7 @@ class EthereumSynchronous(val web3j: Web3j) {
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_accounts eth_accounts]] JSON-RPC endpoint.
     * @return the list of addresses owned by the client */
-  def accounts: List[Address] = web3j.ethAccounts.send.getAccounts.asScala.toList.map(Address)
+  def accounts: List[Address] = web3j.ethAccounts.send.getAccounts.asScala.toList.map(Address.stringToAddress)
 
   /** Add the given identity address to the Whisper group.
     *
@@ -83,7 +83,7 @@ class EthereumSynchronous(val web3j: Web3j) {
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getcompilers eth_getcompilers]] JSON-RPC endpoint.
     * @return a list of available compilers found by the underlying Web3J library */
-  def compilers: List[Compiler] = web3j.ethGetCompilers.send.getCompilers.asScala.toList.map(Compiler)
+  def compilers: List[Compiler] = web3j.ethGetCompilers.send.getCompilers.asScala.toList.map(Compiler.stringToCompiler)
 
   /** Makes a call or transaction, which won't be added to the blockchain and returns the used gas, which can be used
     * for estimating the used gas.
