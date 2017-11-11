@@ -4,6 +4,7 @@ import java.math.BigInteger
 import java.util.Optional
 import org.web3j.protocol.Web3j
 import org.web3j.protocol.core.DefaultBlockParameter
+import org.web3j.protocol.core.DefaultBlockParameterName.LATEST
 import org.web3j.protocol.core.methods.request
 import org.web3j.protocol.core.methods.request.ShhFilter
 import org.web3j.protocol.core.methods.response.{EthBlock, EthCompileSolidity, EthGetWork, EthLog, ShhMessages, Transaction, TransactionReceipt}
@@ -28,8 +29,8 @@ class EthereumSynchronous(val web3j: Web3j) {
     * @param defaultBlockParameter either an integer block number, or the string "latest", "earliest" or "pending".
     * See the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#the-default-block-parameter specification]].
     * @return the balance of the account at given address */
-  def balance(address: String, defaultBlockParameter: DefaultBlockParameter): Ether =
-    Ether(web3j.ethGetBalance(address, defaultBlockParameter).send.getBalance)
+  def balance(address: Address, defaultBlockParameter: DefaultBlockParameter): Ether =
+    Ether(web3j.ethGetBalance(address.value, defaultBlockParameter).send.getBalance)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getblockbyhash eth_getblockbyhash]] JSON-RPC endpoint.
     * @return Some(block object), or None if no block was found */
@@ -59,8 +60,8 @@ class EthereumSynchronous(val web3j: Web3j) {
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getcode eth_getcode]] JSON-RPC endpoint.
     * @return code at a given address */
-  def code(address: String, defaultBlockParameter: DefaultBlockParameter): String =
-    web3j.ethGetCode(address, defaultBlockParameter).send.getCode
+  def code(address: Address, defaultBlockParameter: DefaultBlockParameter): String =
+    web3j.ethGetCode(address.value, defaultBlockParameter).send.getCode
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_coinbase eth_coinbase]] JSON-RPC endpoint.
     * @return the client coinbase address */
@@ -209,6 +210,9 @@ class EthereumSynchronous(val web3j: Web3j) {
 
   def newPendingTransactionFilter: BigInteger = web3j.ethNewPendingTransactionFilter.send.getFilterId
 
+  /** Get the next available nonce before creating a transaction */
+  def nextNonce(address: Address): BigInteger = transactionCount(address, LATEST)
+
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#net_peercount net_peercount]] JSON-RPC endpoint.
     * @return number of peers currently connected to this client */
   def peerCount: BigInteger = web3j.netPeerCount.send.getQuantity
@@ -244,8 +248,8 @@ class EthereumSynchronous(val web3j: Web3j) {
     *
     * Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_sign eth_sign]] JSON-RPC endpoint.
     * @return Signature */
-  def sign(address: String, sha3HashOfDataToSign: String): String =
-    web3j.ethSign(address, sha3HashOfDataToSign).send.getSignature
+  def sign(address: Address, sha3HashOfDataToSign: String): String =
+    web3j.ethSign(address.value, sha3HashOfDataToSign).send.getSignature
 
   /** Obtains a string from the local database.
     *
@@ -265,8 +269,8 @@ class EthereumSynchronous(val web3j: Web3j) {
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getstorageat eth_getstorageat]] JSON-RPC endpoint.
     * @return the value from a storage position at a given address */
-  def storageAt(address: String, position: BigInteger, defaultBlockParameter: DefaultBlockParameter): String =
-    web3j.ethGetStorageAt(address, position, defaultBlockParameter).send.getData
+  def storageAt(address: Address, position: BigInteger, defaultBlockParameter: DefaultBlockParameter): String =
+    web3j.ethGetStorageAt(address.value, position, defaultBlockParameter).send.getData
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactionbyblockhashandindex eth_gettransactionbyblockhashandindex]] JSON-RPC endpoint.
     * @return Some containing transaction information by block hash and transaction index position, or None if no matching transaction was found */
@@ -288,8 +292,8 @@ class EthereumSynchronous(val web3j: Web3j) {
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactioncount eth_gettransactioncount]] JSON-RPC endpoint.
     * @return the number of transactions sent from an address */
-  def transactionCount(address: String, defaultBlockParameter: DefaultBlockParameter): BigInteger =
-    web3j.ethGetTransactionCount(address, defaultBlockParameter).send.getTransactionCount
+  def transactionCount(address: Address, defaultBlockParameter: DefaultBlockParameter): BigInteger =
+    web3j.ethGetTransactionCount(address.value, defaultBlockParameter).send.getTransactionCount
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactionreceipt eth_gettransactionreceipt]] JSON-RPC endpoint.
     * @return the receipt of a transaction, identified by transaction hash. (Note: receipts are not available for pending transactions.) */

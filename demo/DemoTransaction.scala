@@ -1,6 +1,7 @@
 package demo
 
 import java.math.BigInteger
+import com.micronautics.web3j.Address
 import org.web3j.crypto.{Credentials, RawTransaction, TransactionEncoder, WalletUtils}
 import org.web3j.protocol.admin.Admin
 import org.web3j.protocol.admin.methods.response.PersonalUnlockAccount
@@ -15,14 +16,14 @@ import org.web3j.utils.Convert.Unit.{ETHER, WEI}
 class DemoTransaction(demo: Demo) {
   import Demo._, demo._
 
-  //  To send Ether to another party using your Ethereum wallet file:
+  //  Send Ether to another party using your Ethereum wallet file
   val credentials: Credentials = WalletUtils.loadCredentials("password", walletDir)
   val transactionReceipt: TransactionReceipt =
     Transfer.sendFunds(web3j, credentials, "0x...", BigDecimal.valueOf(0.01).bigDecimal, ETHER).send
   println(format(transactionReceipt))
 
   // Before creating a custom transaction, first get the next available nonce
-  val nonce: BigInteger = web3j.ethGetTransactionCount("address", LATEST).send.getTransactionCount
+  val nonce: BigInteger = demo.web3jScala.sync.nextNonce(Address("address"))
 
   // Create a custom transaction
   val rawTransaction: RawTransaction =
@@ -45,9 +46,8 @@ class DemoTransaction(demo: Demo) {
        // todo send a transaction
   }
 
-  // Todo demonstrate the use of Parity’s Personal, Trace, or Geth’s Personal client APIs, by using the org.web3j:parity and org.web3j:geth modules respectively.
+  // Todo demonstrate the use of Parity’s Personal, Trace, or geth’s personal client APIs, by using the org.web3j:parity and org.web3j:geth modules respectively.
 
-import org.web3j.utils.Convert
   protected def format(tx: RawTransaction): String =
     s"""Raw transaction:
        |  Data         = ${ tx.getData }

@@ -1,9 +1,9 @@
 package com.micronautics.web3j
 
+import com.micronautics.web3j.InfuraNetwork._
 import org.web3j.protocol.Web3j
 import org.web3j.protocol.http.HttpService
 import org.web3j.protocol.infura.InfuraHttpService
-import InfuraNetwork._
 import rx.Observable
 import scala.concurrent.ExecutionContext
 
