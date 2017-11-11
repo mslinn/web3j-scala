@@ -26,7 +26,7 @@ class DemoTransaction(demo: Demo) {
 
   // Create a custom transaction
   val rawTransaction: RawTransaction =
-    RawTransaction.createEtherTransaction(nonce, gasPrice.wei.bigInteger, gasLimit, "toAddress", BigInt(1).bigInteger)
+    RawTransaction.createEtherTransaction(nonce, gasPrice.asBigInteger, gasLimit, "toAddress", BigInt(1).bigInteger)
   println(format(rawTransaction))
 
   // Sign & send the transaction

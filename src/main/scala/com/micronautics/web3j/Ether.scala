@@ -77,6 +77,8 @@ object Ether {
 class Ether(val wei: BigInt) extends AnyVal {
   import Ether.bigDecimal
 
+
+  @inline def asBigInteger: java.math.BigInteger = wei.bigInteger
   @inline def asWei: BigDecimal    = bigDecimal(wei)
   @inline def asKWei: BigDecimal   = bigDecimal(wei * 1000)
   @inline def asMWei: BigDecimal   = bigDecimal(wei * 1000 * 1000)
