@@ -15,8 +15,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 /** All of the methods in this class return a [[scala.concurrent.Future]] and do not block.
   * @param web3j can be shared with [[EthereumSynchronous]]
-  * @param ec if no [[scala.concurrent.ExecutionContext]] is implicitly available, the default Scala
-  *           [[scala.concurrent.ExecutionContext]] is used. */
+  * @param ec if no [[concurrent.ExecutionContext]] is implicitly available, the default Scala [[concurrent.ExecutionContext]] is used. */
 class EthereumASynchronous(val web3j: Web3j)
                           (implicit val ec: ExecutionContext = defaultExecutionContext) {
 

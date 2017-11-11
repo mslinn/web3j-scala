@@ -174,7 +174,7 @@ object SoliditySource {
   implicit def stringToSoliditySource(value: String): SoliditySource = SoliditySource(value)
 }
 
-/** Web3J already has [[EthCompileSolidity.Code]] to represent Solidity compiled code */
+/** Web3J already has [[org.web3j.protocol.core.methods.response.EthCompileSolidity.Code]] to represent Solidity compiled code */
 case class SoliditySource(value: String) extends AnyVal {
   @inline override def toString: String = value.toString
 }
