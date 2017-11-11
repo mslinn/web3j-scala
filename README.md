@@ -31,14 +31,14 @@ The demo program performs the following:
 
 To run the demo:
 1. Start up an Ethereum client if you don’t already have one running, such as `geth`.
-   The `bin/runGeth` script invokes `geth` with the following options:
+   The `bin/runGeth` script invokes `geth` with the following options, which are convenient for development but not secure enough for production:
      - The Ethereum data directory is set to `~/.ethereum`, or a subdirectory that depends on the network chosen; 
        the directory will be created if required.
-     - HTTP-RPC server at localhost:8545 is enabled, and all APIs are allowed.
+     - HTTP-RPC server at `localhost:8545` is enabled, and all APIs are allowed.
      - Ethereum's experimental Whisper message facility is enabled.
      - Inter-process communication will be via a virtual file called `geth.ipc`, 
        located at `~/.ethereum` or a subdirectory.
-     - WS-RPC server at localhost:8546 is enabled, and all APIs are allowed.
+     - WS-RPC server at `localhost:8546` is enabled, and all APIs are allowed.
      - Info verbosity is specified.
      - A log file for the `geth` output will be written, or overwritten, in `logs/geth.log`;
        the `log/` directory will be created if it does not already exist.
