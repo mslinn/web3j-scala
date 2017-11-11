@@ -28,7 +28,7 @@ class DemoSmartContracts(demo: Demo) {
   try {
     val credentials: Credentials = WalletUtils.loadCredentials("password", walletDir)
 
-    val basicInfoGetter: RemoteCall[BasicInfoGetter] = BasicInfoGetter.deploy(demo.web3j, credentials, gasPrice, gasLimit)
+    val basicInfoGetter: RemoteCall[BasicInfoGetter] = BasicInfoGetter.deploy(demo.web3j, credentials, gasPrice.wei.bigInteger, gasLimit)
     val x: BasicInfoGetter = basicInfoGetter.send
     println(x)
 

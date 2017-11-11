@@ -1,7 +1,7 @@
 package demo
 
 import java.math.BigInteger
-import com.micronautics.web3j.{Cmd, EthereumSynchronous, Web3JScala}
+import com.micronautics.web3j.{Cmd, Ether, EthereumSynchronous, Web3JScala}
 import Cmd.{isMac, isWindows}
 import org.web3j.protocol.Web3j
 import org.web3j.protocol.ipc.{UnixIpcService, WindowsIpcService}
@@ -10,7 +10,7 @@ import scala.concurrent.{Await, ExecutionContext, Promise}
 import org.web3j.protocol.core.DefaultBlockParameterName._
 
 object Demo {
-  val gasPrice: BigInteger = BigInt(1).bigInteger
+  val gasPrice: Ether = Ether(1)
   val gasLimit: BigInteger = BigInt(2).bigInteger
 
   val walletDir: String = Cmd.home(
