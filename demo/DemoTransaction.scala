@@ -1,6 +1,6 @@
 package demo
 
-import com.micronautics.web3j.{Address, Nonce, Wallet}
+import com.micronautics.web3j.{Address, Nonce, Password, Wallet}
 import org.web3j.crypto.{Credentials, RawTransaction, TransactionEncoder}
 import org.web3j.protocol.admin.Admin
 import org.web3j.protocol.admin.methods.response.PersonalUnlockAccount
@@ -15,7 +15,8 @@ class DemoTransaction(demo: Demo) {
   import Demo._, demo._
 
   //  Send Ether to another party using your Ethereum wallet file
-  val credentials: Credentials = Wallet.loadCredentials("password", walletDir)
+  val password = Password("bogus") // todo make this real
+  val credentials: Credentials = Wallet.loadCredentials(password, walletDir)
   val transactionReceipt: TransactionReceipt =
     Transfer.sendFunds(web3j, credentials, "0x...", BigDecimal.valueOf(0.01).bigDecimal, ETHER).send
   println(format(transactionReceipt))

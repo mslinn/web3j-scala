@@ -25,8 +25,8 @@ object Wallet {
   @inline def loadCredentials(password: String, source: File): Credentials =
     WalletUtils.loadCredentials(password, source)
 
-  @inline def loadCredentials(password: String, source: String): Credentials =
-    WalletUtils.loadCredentials(password, source)
+  @inline def loadCredentials(password: Password, source: String): Credentials =
+    WalletUtils.loadCredentials(password.value, source)
 
   @inline def mainnetKeyDirectory: File = new File(WalletUtils.getMainnetKeyDirectory)
 

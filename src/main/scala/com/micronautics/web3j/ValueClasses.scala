@@ -72,6 +72,10 @@ case class Keccak256Hash(value: String) extends AnyVal {
   @inline override def toString: String = value.toString
 }
 
+case class Password(value: String) extends AnyVal {
+  @inline override def toString: String = value.toString
+}
+
 case class Signature(value: String) extends AnyVal {
   @inline override def toString: String = value.toString
 }
