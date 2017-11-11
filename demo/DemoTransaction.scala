@@ -47,7 +47,7 @@ class DemoTransaction(demo: Demo) {
 
   // Todo demonstrate the use of Parity’s Personal, Trace, or Geth’s Personal client APIs, by using the org.web3j:parity and org.web3j:geth modules respectively.
 
-
+import org.web3j.utils.Convert
   protected def format(tx: RawTransaction): String =
     s"""Raw transaction:
        |  Data         = ${ tx.getData }

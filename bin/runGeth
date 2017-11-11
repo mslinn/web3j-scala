@@ -30,6 +30,11 @@ geth -h  # displays the geth help message; the help message for geth v1.7.3 is a
 if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then help; fi
 
 case "$1" in
+  kovan)
+    echo "Error: The Kovan test network is only supported by Parity"
+    exit 1
+    ;;
+    
   main)   # Live network, takes hours to boot, real money is at risk with this choice
     ETHEREUM_NETWORK=mainnet
     ETHEREUM_HOME="$ETHEREUM_HOME"
@@ -37,14 +42,14 @@ case "$1" in
     shift
     ;;
 
-  rinkeby)  # This test network takes about 15 minutes to boot, and has contracts
+  rinkeby)  # This test network takes about 15 minutes to boot, and has contracts. Only supported by geth
     ETHEREUM_NETWORK=$1
     ETHEREUM_HOME="$ETHEREUM_HOME/$ETHEREUM_NETWORK"
     DATADIR="--datadir $ETHEREUM_HOME --$ETHEREUM_NETWORK"
     shift
     ;;
 
-  ropsten)  # This test network takes about 15 minutes to boot, and has contracts
+  ropsten)  # This test network takes about 15 minutes to boot, and has contracts. Supported by geth and Parity.
     ETHEREUM_NETWORK=$1
     ETHEREUM_HOME="$ETHEREUM_HOME/$ETHEREUM_NETWORK"
     DATADIR="--datadir $ETHEREUM_HOME --testnet"

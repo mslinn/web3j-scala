@@ -36,12 +36,12 @@ public final class BasicInfoGetter extends Contract {
         super(BINARY, contractAddress, web3j, transactionManager, gasPrice, gasLimit);
     }
 
-    public RemoteCall<String> getContractAddress() {
+    /*public RemoteCall<String> getContractAddress() {
         Function function = new Function("getContractAddress",
                 Arrays.<Type>asList(),
                 Arrays.<TypeReference<?>>asList(new TypeReference<Address>() {}));
         return executeRemoteCallSingleValueReturn(function, String.class);
-    }
+    }*/
 
     public RemoteCall<TransactionReceipt> kill() {
         Function function = new Function(
