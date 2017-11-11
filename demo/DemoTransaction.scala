@@ -1,11 +1,9 @@
 package demo
 
-import java.math.BigInteger
-import com.micronautics.web3j.{Address, Nonce}
-import org.web3j.crypto.{Credentials, RawTransaction, TransactionEncoder, WalletUtils}
+import com.micronautics.web3j.{Address, Nonce, Wallet}
+import org.web3j.crypto.{Credentials, RawTransaction, TransactionEncoder}
 import org.web3j.protocol.admin.Admin
 import org.web3j.protocol.admin.methods.response.PersonalUnlockAccount
-import org.web3j.protocol.core.DefaultBlockParameterName._
 import org.web3j.protocol.core.methods.response.TransactionReceipt
 import org.web3j.protocol.http.HttpService
 import org.web3j.tx.Transfer
@@ -17,7 +15,7 @@ class DemoTransaction(demo: Demo) {
   import Demo._, demo._
 
   //  Send Ether to another party using your Ethereum wallet file
-  val credentials: Credentials = WalletUtils.loadCredentials("password", walletDir)
+  val credentials: Credentials = Wallet.loadCredentials("password", walletDir)
   val transactionReceipt: TransactionReceipt =
     Transfer.sendFunds(web3j, credentials, "0x...", BigDecimal.valueOf(0.01).bigDecimal, ETHER).send
   println(format(transactionReceipt))

@@ -20,8 +20,6 @@ object Wallet {
 
   @inline def defaultKeyDirectory: String = WalletUtils.getDefaultKeyDirectory
 
-  @inline def isPrivateKey(key: PrivateKey): Boolean = WalletUtils.isValidPrivateKey(key.value)
-
   @inline def isValidAddress(address: Address): Boolean = WalletUtils.isValidAddress(address.value)
 
   @inline def loadCredentials(password: String, source: File): Credentials =

@@ -1,6 +1,7 @@
 package demo
 
-import org.web3j.crypto.{Credentials, WalletUtils}
+import com.micronautics.web3j.Wallet
+import org.web3j.crypto.Credentials
 import org.web3j.protocol.core.RemoteCall
 
 object CreateSmartContracts extends App {
@@ -26,7 +27,7 @@ class DemoSmartContracts(demo: Demo) {
   println(wrapAbi("basic_info_getter"))
 
   try {
-    val credentials: Credentials = WalletUtils.loadCredentials("password", walletDir)
+    val credentials: Credentials = Wallet.loadCredentials("password", walletDir)
 
     val basicInfoGetter: RemoteCall[BasicInfoGetter] = BasicInfoGetter.deploy(demo.web3j, credentials, gasPrice.bigInteger, gasLimit)
     val x: BasicInfoGetter = basicInfoGetter.send
