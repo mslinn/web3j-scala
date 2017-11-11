@@ -10,8 +10,8 @@
 .settings/
 *.iml
 *.stackdump
-abi/
-abiWrapper/
+#abi/
+#abiWrapper/
 logs/
 project/target/
 target/
