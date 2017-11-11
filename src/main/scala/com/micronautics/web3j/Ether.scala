@@ -77,7 +77,12 @@ object Ether {
   @inline def fromGEther(value: BigInt):     Ether = Ether(value * e(27))
 }
 
-/** Wei are the smallest unit of currency and are always integers, never fractional quantities */
+/** Wei are the smallest unit of currency and are always integers, never fractional quantities.
+  * An `Ether` is 10^^18 Wei ... a huge dynamic range.
+  * But that is not all, because Ether has 54 orders of magnitude (+/- 10^^27).
+  *
+  * This class stores and computes in Wei (like cents, they are the smallest currency denomination).
+  * Unless special care is taken, BigDecimal should not be used for Ether computations, just for formatting of output */
 class Ether(val wei: BigInt) extends Ordered[Ether] {
   import Ether._
 
@@ -105,22 +110,64 @@ class Ether(val wei: BigInt) extends Ordered[Ether] {
   @inline def -(value: BigInt): Ether     = Ether(value) - wei
   @inline def -(value: BigDecimal): Ether = Ether(value) - wei
 
+  /** @return the underlying [[java.math.BigInteger]] */
   @inline def bigInteger: java.math.BigInteger = wei.bigInteger
-  @inline def asWei: BigInt        = wei
-  @inline def asKWei: BigDecimal   = bigDecimal(wei / e(3))
-  @inline def asMWei: BigDecimal   = bigDecimal(wei / e(6))
-  @inline def asGWei: BigDecimal   = bigDecimal(wei / e(9))
-  @inline def asSzabo: BigDecimal  = bigDecimal(wei / e(12))
-  @inline def asFinney: BigDecimal = bigDecimal(wei / e(15))
-  @inline def asEther: BigDecimal  = bigDecimal(wei / e(18))
-  @inline def asKEther: BigDecimal = bigDecimal(wei / e(21))
-  @inline def asMEther: BigDecimal = bigDecimal(wei / e(24))
-  @inline def asGEther: BigDecimal = bigDecimal(wei / e(27))
 
-  /** @return Amount of Ether corresponding to the given wei value */
-  @inline def bigDecimal(wei: BigInt): java.math.BigDecimal =
+  /** Do not use the return value for computations unless special care is token.
+    * @param scale used when constructing the [[java.math.BigDecimal]] return value; defaults to 16.
+    * This class is intended for output formatting only. */
+  @inline def asWei(scale: Int = 16): BigDecimal   = bigDecimal(wei, scale)
+
+  /** Do not use the return value for computations unless special care is token.
+    * @param scale used when constructing the [[java.math.BigDecimal]] return value; defaults to 16.
+    * This class is intended for output formatting only. */
+  @inline def asKWei(scale: Int = 16): BigDecimal   = bigDecimal(wei / e(3), scale)
+
+  /** Do not use the return value for computations unless special care is token.
+    * @param scale used when constructing the [[java.math.BigDecimal]] return value; defaults to 16.
+    * This class is intended for output formatting only. */
+  @inline def asMWei(scale: Int = 16): BigDecimal   = bigDecimal(wei / e(6))
+
+  /** Do not use the return value for computations unless special care is token.
+    * @param scale used when constructing the [[java.math.BigDecimal]] return value; defaults to 16.
+    * This class is intended for output formatting only. */
+  @inline def asGWei(scale: Int = 16): BigDecimal   = bigDecimal(wei / e(9))
+
+  /** Do not use the return value for computations unless special care is token.
+    * @param scale used when constructing the [[java.math.BigDecimal]] return value; defaults to 16.
+    * This class is intended for output formatting only. */
+  @inline def asSzabo(scale: Int = 16): BigDecimal  = bigDecimal(wei / e(12))
+
+  /** Do not use the return value for computations unless special care is token.
+    * @param scale used when constructing the [[java.math.BigDecimal]] return value; defaults to 16.
+    * This class is intended for output formatting only. */
+  @inline def asFinney(scale: Int = 16): BigDecimal = bigDecimal(wei / e(15))
+
+  /** Do not use the return value for computations unless special care is token.
+    * @param scale used when constructing the [[java.math.BigDecimal]] return value; defaults to 16.
+    * This class is intended for output formatting only. */
+  @inline def asEther(scale: Int = 16): BigDecimal  = bigDecimal(wei / e(18))
+
+  /** Do not use the return value for computations unless special care is token.
+    * @param scale used when constructing the [[java.math.BigDecimal]] return value; defaults to 16.
+    * This class is intended for output formatting only. */
+  @inline def asKEther(scale: Int = 16): BigDecimal = bigDecimal(wei / e(21))
+
+  /** Do not use the return value for computations unless special care is token.
+    * @param scale used when constructing the [[java.math.BigDecimal]] return value; defaults to 16.
+    * This class is intended for output formatting only. */
+  @inline def asMEther(scale: Int = 16): BigDecimal = bigDecimal(wei / e(24))
+
+  /** Do not use the return value for computations unless special care is token.
+    * @param scale used when constructing the [[java.math.BigDecimal]] return value; defaults to 16.
+    * This class is intended for output formatting only. */
+  @inline def asGEther(scale: Int = 16): BigDecimal = bigDecimal(wei / e(27))
+
+  /** @param scale used when constructing the [[java.math.BigDecimal]] return value
+    * @return Amount of Ether corresponding to the given wei value */
+  @inline def bigDecimal(wei: BigInt, scale: Int=16): java.math.BigDecimal =
     new java.math.BigDecimal(wei.bigInteger)
-      .setScale(16, java.math.BigDecimal.ROUND_DOWN)
+      .setScale(scale, java.math.BigDecimal.ROUND_DOWN)
 
   @inline def compare(that: Ether): Int = this.wei compare that.wei
 
@@ -144,15 +191,15 @@ class Ether(val wei: BigInt) extends Ordered[Ether] {
   @inline def toHex: String = s"0x${ wei.toString(16) }"
 
   override def toString: String = wei.bitLength match {
-    case length if length <=3  => s"$wei Wei"
-    case length if length <=6  => s"$asKWei KWei"
-    case length if length <=9  => s"$asMWei MWei"
-    case length if length <=12 => s"$asGWei GWei"
-    case length if length <=15 => s"$asSzabo Szabo"
-    case length if length <=18 => s"$asFinney Finney"
-    case length if length <=21 => s"$asEther Ether"
-    case length if length <=24 => s"$asKEther KEther"
-    case length if length <=27 => s"$asMEther MEther"
-    case _                     => s"$asGEther GEther"
+    case length if length <=3  => s"${ asWei() } Wei"
+    case length if length <=6  => s"${ asKWei() } KWei"
+    case length if length <=9  => s"${ asMWei() } MWei"
+    case length if length <=12 => s"${ asGWei() } GWei"
+    case length if length <=15 => s"${ asSzabo() } Szabo"
+    case length if length <=18 => s"${ asFinney() } Finney"
+    case length if length <=21 => s"${ asEther() } Ether"
+    case length if length <=24 => s"${ asKEther() } KEther"
+    case length if length <=27 => s"${ asMEther() } MEther"
+    case _                     => s"${ asGEther() } GEther"
   }
 }
