@@ -34,7 +34,7 @@ class EthereumSynchronous(val web3j: Web3j) {
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getblockbyhash eth_getblockbyhash]] JSON-RPC endpoint.
     * @return Some(block object), or None if no block was found */
-  def blockByHash(blockHash: Hash, returnFullTransactionObjects: Boolean): Option[EthBlock.Block] =
+  def blockByHash(blockHash: BlockHash, returnFullTransactionObjects: Boolean): Option[EthBlock.Block] =
     Option(web3j.ethGetBlockByHash(blockHash.value, returnFullTransactionObjects).send.getBlock)
 
   def blockByNumber(
@@ -48,7 +48,7 @@ class EthereumSynchronous(val web3j: Web3j) {
   // todo define a type for BlockNumber?
   def blockNumber: BigInteger = web3j.ethBlockNumber.send.getBlockNumber
 
-  def blockTransactionCountByHash(blockHash: Hash): BigInteger =
+  def blockTransactionCountByHash(blockHash: BlockHash): BigInteger =
     web3j.ethGetBlockTransactionCountByHash(blockHash.value).send.getTransactionCount
 
   def blockTransactionCountByNumber(defaultBlockParameter: DefaultBlockParameter): BigInteger =
@@ -234,14 +234,13 @@ class EthereumSynchronous(val web3j: Web3j) {
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_sendrawtransaction eth_sendrawtransaction]] JSON-RPC endpoint.
     * @return new message call transaction or a contract creation for signed transactions */
-  // todo define a type for SignedData?
-  def sendRawTransaction(signedTransactionData: String): Hash =
-    Hash(web3j.ethSendRawTransaction(signedTransactionData).send.getTransactionHash)
+  def sendRawTransaction(signedTransactionData: SignedData): TransactionHash=
+    TransactionHash(web3j.ethSendRawTransaction(signedTransactionData.value).send.getTransactionHash)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_sendtransaction eth_sendtransaction]] JSON-RPC endpoint.
     * @return a new contract if the {{{Transaction.data}}} field contains code, else return a new transaction */
-  def sendTransaction(transaction: request.Transaction): Hash =
-    Hash(web3j.ethSendTransaction(transaction).send.getTransactionHash)
+  def sendTransaction(transaction: request.Transaction): TransactionHash =
+    TransactionHash(web3j.ethSendTransaction(transaction).send.getTransactionHash)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#web3_sha3 web3_sha3]] JSON-RPC endpoint.
     * @param data the data to convert into an SHA3 hash
@@ -284,7 +283,7 @@ class EthereumSynchronous(val web3j: Web3j) {
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactionbyblockhashandindex eth_gettransactionbyblockhashandindex]] JSON-RPC endpoint.
     * @return Some containing transaction information by block hash and transaction index position, or None if no matching transaction was found */
-  def transactionByBlockHashAndIndex(blockHash: Hash, transactionIndex: BigInteger): Optional[Transaction] =
+  def transactionByBlockHashAndIndex(blockHash: BlockHash, transactionIndex: BigInteger): Optional[Transaction] =
     web3j.ethGetTransactionByBlockHashAndIndex(blockHash.value, transactionIndex).send.getTransaction
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactionbyblocknumberandindex eth_gettransactionbyblocknumberandindex]] JSON-RPC endpoint.
@@ -297,12 +296,12 @@ class EthereumSynchronous(val web3j: Web3j) {
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactionbyhash eth_gettransactionbyhash]] JSON-RPC endpoint.
     * @return Future containing Some(transaction object), or None when no transaction was found */
-  def transactionByHash(transactionHash: Hash): Optional[Transaction] =
+  def transactionByHash(transactionHash: TransactionHash): Optional[Transaction] =
     web3j.ethGetTransactionByHash(transactionHash.value).send.getTransaction
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactionreceipt eth_gettransactionreceipt]] JSON-RPC endpoint.
     * @return the receipt of a transaction, identified by transaction hash. (Note: receipts are not available for pending transactions.) */
-  def transactionReceipt(transactionHash: Hash): Optional[TransactionReceipt] =
+  def transactionReceipt(transactionHash: TransactionHash): Optional[TransactionReceipt] =
     web3j.ethGetTransactionReceipt(transactionHash.value).send.getTransactionReceipt
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getunclebyblocknumberandindex eth_getunclebyblocknumberandindex]] JSON-RPC endpoint.
@@ -312,12 +311,12 @@ class EthereumSynchronous(val web3j: Web3j) {
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getunclebyblockhashandindex eth_getunclebyblockhashandindex]] JSON-RPC endpoint.
     * @return information about a uncle of a block by hash and uncle index position */
-  def uncleByBlockHashAndIndex(blockHash: Hash, transactionIndex: BigInteger): EthBlock.Block =
+  def uncleByBlockHashAndIndex(blockHash: BlockHash, transactionIndex: BigInteger): EthBlock.Block =
     web3j.ethGetUncleByBlockHashAndIndex(blockHash.value, transactionIndex).send.getBlock
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getunclecountbyblockhash eth_getunclecountbyblockhash]] JSON-RPC endpoint.
     * @return the number of uncles in a block from a block matching the given block hash */
-  def uncleCountByBlockHash(blockHash: Hash): BigInteger =
+  def uncleCountByBlockHash(blockHash: BlockHash): BigInteger =
     web3j.ethGetUncleCountByBlockHash(blockHash.value).send.getUncleCount
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getunclecountbyblocknumber eth_getunclecountbyblocknumber]] JSON-RPC endpoint.
@@ -375,6 +374,6 @@ class EthereumSynchronous(val web3j: Web3j) {
     * Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_submitwork eth_submitwork]] JSON-RPC endpoint.
     * @return true if the provided solution is valid */
   // todo what type of Hash should headerPowHash be?
-  def work(nonce: Nonce, headerPowHash: Hash, mixDigest: Digest): Boolean =
+  def work(nonce: Nonce, headerPowHash: Keccak256Hash, mixDigest: Digest): Boolean =
     web3j.ethSubmitWork(nonce.toString, headerPowHash.value, mixDigest.value).send.solutionValid
 }

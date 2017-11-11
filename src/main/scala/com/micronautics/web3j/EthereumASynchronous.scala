@@ -41,7 +41,7 @@ class EthereumASynchronous(val web3j: Web3j)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getblockbyhash eth_getblockbyhash]] JSON-RPC endpoint.
     * @return Option[EthBlock.Block] */
-  def blockByHash(blockHash: Hash, returnFullTransactionObjects: Boolean): Future[Option[EthBlock.Block]] =
+  def blockByHash(blockHash: BlockHash, returnFullTransactionObjects: Boolean): Future[Option[EthBlock.Block]] =
     web3j.ethGetBlockByHash(blockHash.value, returnFullTransactionObjects).sendAsync.toScala.map(x => Option(x.getBlock))
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getblockbyhash eth_getblockbyhash]] JSON-RPC endpoint.
@@ -252,13 +252,13 @@ class EthereumASynchronous(val web3j: Web3j)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_sendrawtransaction eth_sendrawtransaction]] JSON-RPC endpoint.
     * @return new message call transaction or a contract creation for signed transactions */
-  def sendRawTransaction(signedTransactionData: String): Future[Hash] =
-    web3j.ethSendRawTransaction(signedTransactionData).sendAsync.toScala.map(x => Hash(x.getTransactionHash))
+  def sendRawTransaction(signedTransactionData: SignedData): Future[TransactionHash] =
+    web3j.ethSendRawTransaction(signedTransactionData.value).sendAsync.toScala.map(x => TransactionHash(x.getTransactionHash))
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_sendtransaction eth_sendtransaction]] JSON-RPC endpoint.
     * @return a new contract if the {{{Transaction.data}}} field contains code, else return a new transaction */
-  def sendTransaction(transaction: request.Transaction): Future[Hash] =
-    web3j.ethSendTransaction(transaction).sendAsync.toScala.map(x => Hash(x.getTransactionHash))
+  def sendTransaction(transaction: request.Transaction): Future[TransactionHash] =
+    web3j.ethSendTransaction(transaction).sendAsync.toScala.map(x => TransactionHash(x.getTransactionHash))
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#web3_sha3 web3_sha3]] JSON-RPC endpoint.
     * @param data the data to convert into an SHA3 hash
@@ -301,7 +301,7 @@ class EthereumASynchronous(val web3j: Web3j)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactionbyblockhashandindex eth_gettransactionbyblockhashandindex]] JSON-RPC endpoint.
     * @return Some containing transaction information by block hash and transaction index position, or None if no matching transaction was found */
-  def transactionByBlockHashAndIndex(blockHash: Hash, transactionIndex: BigInteger): Future[Optional[Transaction]] =
+  def transactionByBlockHashAndIndex(blockHash: BlockHash, transactionIndex: BigInteger): Future[Optional[Transaction]] =
     web3j.ethGetTransactionByBlockHashAndIndex(blockHash.value, transactionIndex).sendAsync.toScala.map(_.getTransaction)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactionbyblocknumberandindex eth_gettransactionbyblocknumberandindex]] JSON-RPC endpoint.
@@ -318,17 +318,17 @@ class EthereumASynchronous(val web3j: Web3j)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactionbyhash eth_gettransactionbyhash]] JSON-RPC endpoint.
     * @return Future containing Some(transaction object), or None when no transaction was found */
-  def transactionByHash(transactionHash: Hash): Future[Optional[Transaction]] =
+  def transactionByHash(transactionHash: TransactionHash): Future[Optional[Transaction]] =
     web3j.ethGetTransactionByHash(transactionHash.value).sendAsync.toScala.map(_.getTransaction)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactionreceipt eth_gettransactionreceipt]] JSON-RPC endpoint.
     * @return the receipt of a transaction, identified by transaction hash. (Note: receipts are not available for pending transactions.) */
-  def transactionReceipt(transactionHash: Hash): Future[Optional[TransactionReceipt]] =
+  def transactionReceipt(transactionHash: TransactionHash): Future[Optional[TransactionReceipt]] =
     web3j.ethGetTransactionReceipt(transactionHash.value).sendAsync.toScala.map(_.getTransactionReceipt)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getunclecountbyblockhash eth_getunclecountbyblockhash]] JSON-RPC endpoint.
     * @return the number of uncles in a block from a block matching the given block hash */
-  def uncleCountByBlockHash(blockHash: Hash): Future[BigInteger] =
+  def uncleCountByBlockHash(blockHash: BlockHash): Future[BigInteger] =
     web3j.ethGetUncleCountByBlockHash(blockHash.value).sendAsync.toScala.map(_.getUncleCount)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getunclecountbyblocknumber eth_getunclecountbyblocknumber]] JSON-RPC endpoint.
@@ -346,7 +346,7 @@ class EthereumASynchronous(val web3j: Web3j)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getunclebyblockhashandindex eth_getunclebyblockhashandindex]] JSON-RPC endpoint.
     * @return information about a uncle of a block by hash and uncle index position */
-  def uncleByBlockHashAndIndex(blockHash: Hash, transactionIndex: BigInteger): Future[EthBlock.Block] =
+  def uncleByBlockHashAndIndex(blockHash: BlockHash, transactionIndex: BigInteger): Future[EthBlock.Block] =
     web3j.ethGetUncleByBlockHashAndIndex(blockHash.value, transactionIndex).sendAsync.toScala.map(_.getBlock)
 
   /** Uninstalls a filter with the given id.
@@ -398,6 +398,7 @@ class EthereumASynchronous(val web3j: Web3j)
     *
     * Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_submitwork eth_submitwork]] JSON-RPC endpoint.
     * @return true if the provided solution is valid */
-  def work(nonce: Nonce, headerPowHash: Hash, mixDigest: Digest): Future[Boolean] =
+  // fixme What type of hash is headerPowHash?
+  def work(nonce: Nonce, headerPowHash: Keccak256Hash, mixDigest: Digest): Future[Boolean] =
     web3j.ethSubmitWork(nonce.toString, headerPowHash.value, mixDigest.value).sendAsync.toScala.map(_.solutionValid)
 }
