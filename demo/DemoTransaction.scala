@@ -22,8 +22,11 @@ class DemoTransaction(demo: Demo) {
     Transfer.sendFunds(web3j, credentials, "0x...", BigDecimal.valueOf(0.01).bigDecimal, ETHER).send
   println(format(transactionReceipt))
 
+  // todo use a real value of address
+  val address: Address = Address("address")
+
   // Before creating a custom transaction, first get the next available nonce
-  val nonce: Nonce = demo.web3jScala.sync.nextNonce(Address("address"))
+  val nonce: Nonce = demo.web3jScala.sync.nextNonce(address)
 
   // Create a custom transaction
   val rawTransaction: RawTransaction =

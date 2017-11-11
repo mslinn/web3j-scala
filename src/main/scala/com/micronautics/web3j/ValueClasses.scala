@@ -1,6 +1,7 @@
 package com.micronautics.web3j
 
 import java.math.BigInteger
+import org.web3j.crypto.WalletUtils
 import org.web3j.protocol.core.methods.response.EthCompileSolidity
 
 case class Address(value: String) extends AnyVal {
@@ -43,6 +44,16 @@ case class LLLSource(value: String) extends AnyVal {
 case class Nonce(value: BigInt) extends AnyVal {
   @inline def bigInteger: BigInteger = value.bigInteger
 
+  @inline override def toString: String = value.toString
+}
+
+case class PrivateKey(value: String) extends AnyVal {
+  @inline def isValid: Boolean = WalletUtils.isValidPrivateKey(value)
+
+  @inline override def toString: String = value.toString
+}
+
+case class PublicKey(value: String) extends AnyVal {
   @inline override def toString: String = value.toString
 }
 

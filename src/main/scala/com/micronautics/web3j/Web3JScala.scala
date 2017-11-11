@@ -1,6 +1,7 @@
 package com.micronautics.web3j
 
 import com.micronautics.web3j.InfuraNetwork._
+import org.web3j.crypto.WalletUtils
 import org.web3j.protocol.Web3j
 import org.web3j.protocol.http.HttpService
 import org.web3j.protocol.infura.InfuraHttpService
