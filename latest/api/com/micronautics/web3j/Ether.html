@@ -280,7 +280,8 @@ are returned by the following methods of <a href="EthereumSynchronous.html" clas
           <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Wei are the smallest unit of currency and are always integers, never fractional quantities.
 An <code>Ether</code> is 10<sup>18</sup> Wei ... a huge dynamic range.
 But that is not all, because Ether actually has 54 orders of magnitude (+/- 10<sup>27</sup>).</p><p>This class stores and computes in Wei (like cents, they are the smallest currency denomination), using <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/index.html#BigInt=scala.math.BigInt" class="extype" name="scala">scala.BigInt</a>.
-Unless special care is taken, <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/index.html#BigDecimal=scala.math.BigDecimal" class="extype" name="scala">scala.BigDecimal</a> should not be used for Ether computations, just for formatting of output.</p></div><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/mslinn/web3j-scala/tree/master/src/main/scala/com/micronautics/web3j/Ether.scala" target="_blank">Ether.scala</a></dd></dl><div class="toggleContainer block">
+Unless special care is taken, <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/index.html#BigDecimal=scala.math.BigDecimal" class="extype" name="scala">scala.BigDecimal</a> should not be used for Ether computations, just for formatting of output.</p><p>Common arithmetic operators used in financial applications are directly implemented; if you need an operator that is not provided,
+the underlying BigInt probably supports it.</p></div><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/mslinn/web3j-scala/tree/master/src/main/scala/com/micronautics/web3j/Ether.scala" target="_blank">Ether.scala</a></dd></dl><div class="toggleContainer block">
           <span class="toggle">
             Linear Supertypes
           </span>
@@ -1061,25 +1062,6 @@ Do not use the return value for computations unless special care is token.</p></
       
       <p class="shortcomment cmt">Do not use the return value for computations unless special care is token.</p><div class="fullcomment"><div class="comment cmt"><p>Do not use the return value for computations unless special care is token.</p></div><dl class="paramcmts block"><dt class="param">scale</dt><dd class="cmt"><p>used when constructing the <a href="https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html" class="extype" name="java.math.BigDecimal">java.math.BigDecimal</a> return value; defaults to 16.
 This class is intended for output formatting only.</p></dd></dl><dl class="attributes block"> <dt>Annotations</dt><dd>
-                <span class="name">@inline</span><span class="args">()</span>
-              
-        </dd></dl></div>
-    </li><li name="com.micronautics.web3j.Ether#bigDecimal" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="bigDecimal(wei:BigInt,scale:Int):java.math.BigDecimal"></a><a id="bigDecimal(BigInt,Int):BigDecimal"></a>
-      <span class="permalink">
-      <a href="../../../com/micronautics/web3j/Ether.html#bigDecimal(wei:BigInt,scale:Int):java.math.BigDecimal" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">bigDecimal</span><span class="params">(<span name="wei">wei: <span class="extype" name="scala.BigInt">BigInt</span></span>, <span name="scale">scale: <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/Int.html#scala.Int" class="extype" name="scala.Int">Int</a> = <span class="symbol">16</span></span>)</span><span class="result">: <a href="https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html#java.math.BigDecimal" class="extype" name="java.math.BigDecimal">BigDecimal</a></span>
-      </span>
-      
-      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">scale</dt><dd class="cmt"><p>used when constructing the <a href="https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html" class="extype" name="java.math.BigDecimal">java.math.BigDecimal</a> return value</p></dd><dt>returns</dt><dd class="cmt"><p>Amount of Ether corresponding to the given wei value</p></dd></dl><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@inline</span><span class="args">()</span>
               
         </dd></dl></div>

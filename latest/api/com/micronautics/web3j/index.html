@@ -462,7 +462,8 @@ are returned by the following methods of <a href="EthereumSynchronous.html" clas
       <p class="shortcomment cmt">Wei are the smallest unit of currency and are always integers, never fractional quantities.</p><div class="fullcomment"><div class="comment cmt"><p>Wei are the smallest unit of currency and are always integers, never fractional quantities.
 An <code>Ether</code> is 10<sup>18</sup> Wei ... a huge dynamic range.
 But that is not all, because Ether actually has 54 orders of magnitude (+/- 10<sup>27</sup>).</p><p>This class stores and computes in Wei (like cents, they are the smallest currency denomination), using <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/index.html#BigInt=scala.math.BigInt" class="extype" name="scala">scala.BigInt</a>.
-Unless special care is taken, <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/index.html#BigDecimal=scala.math.BigDecimal" class="extype" name="scala">scala.BigDecimal</a> should not be used for Ether computations, just for formatting of output.</p></div></div>
+Unless special care is taken, <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/index.html#BigDecimal=scala.math.BigDecimal" class="extype" name="scala">scala.BigDecimal</a> should not be used for Ether computations, just for formatting of output.</p><p>Common arithmetic operators used in financial applications are directly implemented; if you need an operator that is not provided,
+the underlying BigInt probably supports it.</p></div></div>
     </li><li name="com.micronautics.web3j.EthereumASynchronous" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="EthereumASynchronousextendsAnyRef"></a><a id="EthereumASynchronous:EthereumASynchronous"></a>
       <span class="permalink">
