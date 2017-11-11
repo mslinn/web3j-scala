@@ -7,18 +7,40 @@ import Ether._
 
 @RunWith(classOf[JUnitRunner])
 class EtherTest extends WordSpec {
-  val wei: Ether = Ether(e(0))
-  val kWei: Ether = Ether(e(3))
-  val mWei: Ether = Ether(e(6))
-  val gWei: Ether = Ether(e(9))
-  val szabo: Ether = Ether(e(12))
+  val wei: Ether    = Ether(e(0))
+  val kWei: Ether   = Ether(e(3))
+  val mWei: Ether   = Ether(e(6))
+  val gWei: Ether   = Ether(e(9))
+  val szabo: Ether  = Ether(e(12))
   val finney: Ether = Ether(e(15))
-  val ether: Ether = Ether(e(18))
+  val ether: Ether  = Ether(e(18))
   val kEther: Ether = Ether(e(21))
   val mEther: Ether = Ether(e(24))
   val gEther: Ether = Ether(e(27))
 
   "Ether" should {
+    "compare" in {
+      wei  shouldBe wei
+      kWei should be >  wei
+      kWei should be >= wei
+      wei  should be <  kWei
+      wei  should be <= kWei
+    }
+
+    "support math" in {
+      wei + wei shouldBe Ether(2)
+      wei - 1 shouldBe Ether.zero
+      wei - 2 shouldBe Ether(-1)
+      wei + 2 shouldBe Ether(3)
+      wei * 4 shouldBe Ether(4)
+
+      kWei + kWei shouldBe Ether(e(3) * 2)
+      kWei - 1000 shouldBe Ether.zero
+      kWei - 2000 shouldBe Ether(e(3) * -1)
+      kWei + 2000 shouldBe Ether(e(3) * 3)
+      kWei * 4    shouldBe Ether(e(3) * 4)
+    }
+
     "convert properly" in {
       Ether.fromWei(BigInt(1))    shouldBe wei
       Ether.fromWei(BigInt(1))    shouldBe wei

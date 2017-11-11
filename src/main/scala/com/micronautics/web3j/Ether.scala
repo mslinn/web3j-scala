@@ -1,6 +1,8 @@
 package com.micronautics.web3j
 
 object Ether {
+  lazy val zero: Ether = Ether(0)
+
   /** @return a BigInt containing 1 with the given number of zeros after it, e.g. {{{e(3) == BigInt(1000)}}} */
   @inline def e(howManyZeros: Int): BigInt = BigInt(s"1${ zeros(howManyZeros) }")
 
@@ -76,7 +78,7 @@ object Ether {
 }
 
 /** Wei are the smallest unit of currency and are always integers, never fractional quantities */
-class Ether(val wei: BigInt) {
+class Ether(val wei: BigInt) extends Ordered[Ether] {
   import Ether._
 
   @inline def *(value: Ether): Ether      = Ether(wei * value.wei)
@@ -116,11 +118,13 @@ class Ether(val wei: BigInt) {
   @inline def asGEther: BigDecimal = bigDecimal(wei / e(27))
 
   /** @return Amount of Ether corresponding to the given wei value */
-  def bigDecimal(wei: BigInt): java.math.BigDecimal =
+  @inline def bigDecimal(wei: BigInt): java.math.BigDecimal =
     new java.math.BigDecimal(wei.bigInteger)
       .setScale(16, java.math.BigDecimal.ROUND_DOWN)
 
-  override def equals(that: Any): Boolean =
+  @inline def compare(that: Ether): Int = this.wei compare that.wei
+
+  @inline override def equals(that: Any): Boolean =
     that match {
       case that: Ether =>
         this.hashCode == that.hashCode
@@ -128,11 +132,18 @@ class Ether(val wei: BigInt) {
       case _ => false
     }
 
-  override def hashCode: Int = wei.hashCode
+  @inline override def hashCode: Int = wei.hashCode
+
+  @inline def isNegative: Boolean = wei < zero.wei
+
+  /** Zero is not considered to be a positive value */
+  @inline def isPositive: Boolean = wei > zero.wei
+
+  @inline def isZero: Boolean = wei == zero.wei
 
   @inline def toHex: String = s"0x${ wei.toString(16) }"
 
-  @inline override def toString: String = wei.bitLength match {
+  override def toString: String = wei.bitLength match {
     case length if length <=3  => s"$wei Wei"
     case length if length <=6  => s"$asKWei KWei"
     case length if length <=9  => s"$asMWei MWei"
