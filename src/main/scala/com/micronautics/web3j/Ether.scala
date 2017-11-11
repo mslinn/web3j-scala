@@ -74,7 +74,7 @@ object Ether {
 }
 
 /** Wei are the smallest unit of currency and are always integers, never fractional quantities */
-class Ether(val wei: BigInt) {
+class Ether(val wei: BigInt) extends AnyVal {
   import Ether.bigDecimal
 
   @inline def asWei: BigDecimal    = bigDecimal(wei)
@@ -88,20 +88,20 @@ class Ether(val wei: BigInt) {
   @inline def asMEther: BigDecimal = bigDecimal(wei * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000)
   @inline def asGEther: BigDecimal = bigDecimal(wei * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000)
 
-  override def equals(that: Any): Boolean =
+  /*override def equals(that: Any): Boolean =
     that match {
       case that: Ether => this.hashCode == that.hashCode
       case _ => false
     }
 
-  override def hashCode: Int = wei.hashCode
+  override def hashCode: Int = wei.hashCode*/
 
   @inline def toHex: String = s"0x${ wei.toString(16) }"
 
   @inline override def toString: String = wei.toString.length match {
-    case length if length <=3 => s"$wei Wei"
-    case length if length <=6 => s"$asKWei KWei"
-    case length if length <=9 => s"$asMWei MWei"
+    case length if length <=3  => s"$wei Wei"
+    case length if length <=6  => s"$asKWei KWei"
+    case length if length <=9  => s"$asMWei MWei"
     case length if length <=12 => s"$asGWei GWei"
     case length if length <=15 => s"$asSzabo Szabo"
     case length if length <=18 => s"$asFinney Finney"

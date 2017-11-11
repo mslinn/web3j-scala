@@ -35,8 +35,8 @@ class EthereumASynchronous(val web3j: Web3j)
     * @param defaultBlockParameter either an integer block number, or the string "latest", "earliest" or "pending".
     * See the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#the-default-block-parameter specification]].
     * @return the balance of the account of given address */
-  def balance(address: String, defaultBlockParameter: DefaultBlockParameter): Future[BigInteger] =
-    web3j.ethGetBalance(address, defaultBlockParameter).sendAsync.toScala.map(_.getBalance)
+  def balance(address: String, defaultBlockParameter: DefaultBlockParameter): Future[Ether] =
+    web3j.ethGetBalance(address, defaultBlockParameter).sendAsync.toScala.map(x => Ether(x.getBalance))
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getblockbyhash eth_getblockbyhash]] JSON-RPC endpoint.
     * @return Option[EthBlock.Block] */
@@ -102,8 +102,8 @@ class EthereumASynchronous(val web3j: Web3j)
     * for estimating the used gas.
     * Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_estimategas eth_estimategas]] JSON-RPC endpoint.
     * @return amount of gas estimated */
-  def estimateGas(transaction: request.Transaction): Future[BigInteger] =
-    web3j.ethEstimateGas(transaction).sendAsync.toScala.map(_.getAmountUsed)
+  def estimateGas(transaction: request.Transaction): Future[Ether] =
+    web3j.ethEstimateGas(transaction).sendAsync.toScala.map(x => Ether(x.getAmountUsed))
 
   /** Polling method for an eth filter.
     *
@@ -123,7 +123,7 @@ class EthereumASynchronous(val web3j: Web3j)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gasprice eth_gasprice]] JSON-RPC endpoint.
     * @return the current price per gas in wei */
-  def gasPrice: Future[BigInteger] = web3j.ethGasPrice.sendAsync.toScala.map(_.getGasPrice)
+  def gasPrice: Future[Ether] = web3j.ethGasPrice.sendAsync.toScala.map(x => Ether(x.getGasPrice))
 
   /** Used for submitting mining hash rate
     *
