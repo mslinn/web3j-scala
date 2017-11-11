@@ -16,6 +16,12 @@ object Ether {
   @inline def apply(value: Double):          Ether = new Ether(BigDecimal(value).bigDecimal.toBigInteger)
   @inline def apply(value: BigDecimal):      Ether = new Ether(value.bigDecimal.toBigInteger)
 
+  /** @param scale used when constructing the [[java.math.BigDecimal]] return value
+    * @return Amount of Ether corresponding to the given wei value */
+  @inline def bigDecimal(wei: BigInt, scale: Int=16): java.math.BigDecimal =
+    new java.math.BigDecimal(wei.bigInteger)
+      .setScale(scale, java.math.BigDecimal.ROUND_DOWN)
+
   @inline def fromWei(value: String):        Ether = Ether(value)
   @inline def fromWei(value: Double):        Ether = Ether(value)
   @inline def fromWei(value: BigDecimal):    Ether = Ether(value)
@@ -82,7 +88,10 @@ object Ether {
   * But that is not all, because Ether actually has 54 orders of magnitude (+/- 10^27^).
   *
   * This class stores and computes in Wei (like cents, they are the smallest currency denomination), using [[scala.BigInt]].
-  * Unless special care is taken, [[scala.BigDecimal]] should not be used for Ether computations, just for formatting of output. */
+  * Unless special care is taken, [[scala.BigDecimal]] should not be used for Ether computations, just for formatting of output.
+  *
+  * Common arithmetic operators used in financial applications are directly implemented; if you need an operator that is not provided,
+  * the underlying BigInt probably supports it. */
 class Ether(val wei: BigInt) extends Ordered[Ether] {
   import Ether._
 
@@ -162,12 +171,6 @@ class Ether(val wei: BigInt) extends Ordered[Ether] {
     * Do not use the return value for computations unless special care is token.
     * @param scale used when constructing the [[java.math.BigDecimal]] return value; defaults to 16. */
   @inline def asGEther(scale: Int = 16): BigDecimal = bigDecimal(wei / e(27))
-
-  /** @param scale used when constructing the [[java.math.BigDecimal]] return value
-    * @return Amount of Ether corresponding to the given wei value */
-  @inline def bigDecimal(wei: BigInt, scale: Int=16): java.math.BigDecimal =
-    new java.math.BigDecimal(wei.bigInteger)
-      .setScale(scale, java.math.BigDecimal.ROUND_DOWN)
 
   @inline def compare(that: Ether): Int = this.wei compare that.wei
 
