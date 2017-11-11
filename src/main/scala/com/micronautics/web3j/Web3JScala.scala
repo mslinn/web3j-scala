@@ -92,5 +92,5 @@ object Web3JScala {
 class Web3JScala(val web3j: Web3j)
                 (implicit ec: ExecutionContext) {
   lazy val async = new EthereumASynchronous(web3j)
-  lazy val sync = new EthereumSynchronous(web3j)
+  lazy val sync  = new EthereumSynchronous(web3j)
 }
