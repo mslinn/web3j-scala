@@ -124,7 +124,15 @@ Web3J is a lightweight, reactive, somewhat type safe Java and Android library fo
    For example, <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/concurrent/Future.html" class="extype" name="scala.concurrent.Future">scala.concurrent.Future</a> instead of <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html" class="extype" name="java.util.concurrent.Future">java.util.concurrent.Future</a>.</li><li>A functional programming style is encouraged by always returning immutable data types from methods.
    For example, <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/collection/immutable/List.html" class="extype" name="scala.collection.immutable.List">scala.collection.immutable.List</a></li></ul><h4>Beyond RxJava</h4><p>Web3J features RxJava extensions, and <code>web3j-scala</code> wraps that syntax in Scala goodness.
 For example, the <code>web3j-scala</code> <a href="http://mslinn.github.io/web3j-scala/latest/api/com/micronautics/web3j/Web3JScala$.html" target="_blank">observable methods</a>
-provide <a href="https://github.com/mslinn/web3j-scala/blob/master/demo/DemoObservables.scala#L14-L22" target="_blank">simple and efficient application code</a>.</p><h4>Value Classes</h4><p>Scala's <a href="https://github.com/mslinn/web3j-scala/blob/master/src/main/scala/com/micronautics/web3j/ValueClasses.scala" target="_blank">value classes are used</a>
+provide <a href="https://github.com/mslinn/web3j-scala/blob/master/demo/DemoObservables.scala#L14-L22" target="_blank">simple and efficient application code</a>:</p><pre><span class="cmt">//  Display all new blocks as they are added to the blockchain:</span>
+observe(web3j.blockObservable(<span class="kw">false</span>)) { ethBlock <span class="kw">=&gt;</span>
+  println(format(ethBlock))
+}
+
+<span class="cmt">// Display only the first 10 new transactions as they are added to the blockchain:</span>
+observe(<span class="num">10</span>)(web3j.transactionObservable) { tx <span class="kw">=&gt;</span>
+  println(format(tx))
+}</pre><h4>Value Classes</h4><p>Scala's <a href="https://github.com/mslinn/web3j-scala/blob/master/src/main/scala/com/micronautics/web3j/ValueClasses.scala" target="_blank">value classes are used</a>
 to provide much stronger type safety than Web3J, without incurring a runtime penalty.
 Implicit conversions are provided that make it easy to obtain instances of the desired value classes,
 without sacrificing type safety.
@@ -288,7 +296,15 @@ Web3J is a lightweight, reactive, somewhat type safe Java and Android library fo
    For example, <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/concurrent/Future.html" class="extype" name="scala.concurrent.Future">scala.concurrent.Future</a> instead of <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html" class="extype" name="java.util.concurrent.Future">java.util.concurrent.Future</a>.</li><li>A functional programming style is encouraged by always returning immutable data types from methods.
    For example, <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/collection/immutable/List.html" class="extype" name="scala.collection.immutable.List">scala.collection.immutable.List</a></li></ul><h4>Beyond RxJava</h4><p>Web3J features RxJava extensions, and <code>web3j-scala</code> wraps that syntax in Scala goodness.
 For example, the <code>web3j-scala</code> <a href="http://mslinn.github.io/web3j-scala/latest/api/com/micronautics/web3j/Web3JScala$.html" target="_blank">observable methods</a>
-provide <a href="https://github.com/mslinn/web3j-scala/blob/master/demo/DemoObservables.scala#L14-L22" target="_blank">simple and efficient application code</a>.</p><h4>Value Classes</h4><p>Scala's <a href="https://github.com/mslinn/web3j-scala/blob/master/src/main/scala/com/micronautics/web3j/ValueClasses.scala" target="_blank">value classes are used</a>
+provide <a href="https://github.com/mslinn/web3j-scala/blob/master/demo/DemoObservables.scala#L14-L22" target="_blank">simple and efficient application code</a>:</p><pre><span class="cmt">//  Display all new blocks as they are added to the blockchain:</span>
+observe(web3j.blockObservable(<span class="kw">false</span>)) { ethBlock <span class="kw">=&gt;</span>
+  println(format(ethBlock))
+}
+
+<span class="cmt">// Display only the first 10 new transactions as they are added to the blockchain:</span>
+observe(<span class="num">10</span>)(web3j.transactionObservable) { tx <span class="kw">=&gt;</span>
+  println(format(tx))
+}</pre><h4>Value Classes</h4><p>Scala's <a href="https://github.com/mslinn/web3j-scala/blob/master/src/main/scala/com/micronautics/web3j/ValueClasses.scala" target="_blank">value classes are used</a>
 to provide much stronger type safety than Web3J, without incurring a runtime penalty.
 Implicit conversions are provided that make it easy to obtain instances of the desired value classes,
 without sacrificing type safety.
