@@ -8,11 +8,26 @@
 `web3j-scala` is an idiomatic Scala wrapper around [Web3J](https://www.web3j.io) for Ethereum.
 Web3J is a lightweight, reactive, somewhat type safe Java and Android library for integrating with nodes on Ethereum blockchains.
 
+This project promotes idiomatic Scala in the following ways:0
+  - Variables and no-argument methods are actually names of properties, so `set` and `get` prefixes are not used.
+    This means some properties do not have exactly the same name as their Web3J counterpart.
+  - Zero-argument methods only require parentheses if they perform side effects.
+  - Scala data types are used to the maximum extent that makes sense.
+    For example, [[scala.concurrent.Future]].
+  - A functional programming style is encouraged by always returning immutable data types from methods.
+    For example, [[scala.collection.immutable.List]]
+
 Web3J features RxJava extensions, and `web3j-scala` wraps that syntax in Scala goodness.
 For example, the `web3j-scala` [observable methods](http://mslinn.github.io/web3j-scala/latest/api/com/micronautics/web3j/Web3JScala$.html)
 provide [simple and efficient application code](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoObservables.scala#L14-L22).
-Scala's [value classes are used](https://github.com/mslinn/web3j-scala/blob/master/src/main/scala/com/micronautics/web3j/ValueClasses.scala) to provide much stronger type safety than Web3J, without incurring a runtime penalty.
+Scala's [value classes are used](https://github.com/mslinn/web3j-scala/blob/master/src/main/scala/com/micronautics/web3j/ValueClasses.scala) 
+to provide much stronger type safety than Web3J, without incurring a runtime penalty.
+Implicit conversions are provided that make it easy to obtain instances of the desired value classes, without sacrificing type safety.
+For example, the following code implicitly converts the `String` returned by `basicInfoContract.send.getContractAddress`
+into an `Address`:
 
+    val basicInfoContractAddress: Address = basicInfoContract.send.getContractAddress
+    
 ## Use As a Library
 Add this to your SBT project's `build.sbt`:
 
