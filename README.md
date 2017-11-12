@@ -20,6 +20,7 @@ This project promotes idiomatic Scala in the following ways:
 Web3J features RxJava extensions, and `web3j-scala` wraps that syntax in Scala goodness.
 For example, the `web3j-scala` [observable methods](http://mslinn.github.io/web3j-scala/latest/api/com/micronautics/web3j/Web3JScala$.html)
 provide [simple and efficient application code](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoObservables.scala#L14-L22).
+
 Scala's [value classes are used](https://github.com/mslinn/web3j-scala/blob/master/src/main/scala/com/micronautics/web3j/ValueClasses.scala) 
 to provide much stronger type safety than Web3J, without incurring a runtime penalty.
 Implicit conversions are provided that make it easy to obtain instances of the desired value classes, without sacrificing type safety.
@@ -37,7 +38,7 @@ Add this to your SBT project's `build.sbt`:
 
 Only Scala 2.12 with JDK 8 is supported at present; this is a limitation of the Scala ecosystem as of November 7, 2017.
 
-## Run an Ethereum Client
+## Demos Require an Ethereum Client
 An Ethereum client such as `geth` needs to be running before the demos can work.
 The `bin/runGeth` script invokes `geth` with the following options, which are convenient for development 
 but not secure enough for production:
