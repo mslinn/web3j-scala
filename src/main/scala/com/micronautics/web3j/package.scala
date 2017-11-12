@@ -8,7 +8,7 @@ import org.web3j.protocol.core.methods.response
   *
   * This project is built with Scala 2.12, and requires the Java 8 runtime; it is not yet compatible with Java 9.
   *
-  * This project promotes idiomatic Scala in the following ways:0
+  * This project promotes idiomatic Scala in the following ways:
   *  - Variables and no-argument methods are actually names of properties, so `set` and `get` prefixes are not used.
   *    This means some properties do not have exactly the same name as their Web3J counterpart.
   *  - Zero-argument methods only require parentheses if they perform side effects.
