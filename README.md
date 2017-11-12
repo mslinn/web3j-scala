@@ -76,15 +76,22 @@ The demo programs follow the general outline of the
 [Web3J Getting Started](https://docs.web3j.io/getting_started.html#start-sending-requests) documentation, 
 adapted for Web3J-Scala, including synchronous and asynchronous versions of the available methods.
 
-Each demo program starts with a [DemoContext](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoContext.scala), 
+Each demo program starts with a 
+[DemoContext](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoContext.scala), 
 which performs some setup common to all the demo programs.
+`DemoContext` demonstrates how to use `web3j-scala`'s 
+[synchrounous and asynchronous APIs](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoContext.scala).
+
 The demo programs are:
  - `DemoObservables` - Web3J's functional-reactive nature makes it easy to set up observers that notify subscribers of events taking place on the blockchain.
-   This demo shows how Scala works with the RxJava functionality provided with Web3J.
+   This demo shows how to work with [RxJava's Observables from Scala](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoObservables.scala).
  - `DemoSmartContracts` - Compiles an example Solidity program that defines a smart contract,
-   creates a JVM wrapper for the smart contract, and exercises the smart contract from Scala.
+   [creates a JVM wrapper](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoSmartContracts.scala) for the
+   [sample smart contract](https://github.com/mslinn/web3j-scala/blob/master/src/test/resources/basic_info_getter.sol), 
+   and exercises the smart contract from Scala.
  - `DemoTransaction` - Demonstrates enhanced support beyond what Web3J provides for working with Ethereum wallet files
-   and Ethereum client admin commands for sending transactions.
+   and Ethereum client admin commands for sending 
+   [transactions](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoTransactions.scala).
 
 The help message for the `bin/demo` script appears if you do not specify any arguments:
 ```
@@ -103,31 +110,34 @@ Once geth is running, run a demo programs by typing the following into another c
   bin/demo All             # Run all of the above
 ```
 
-1. Here are more details about the demo programs:
-   - `DemoContext` demonstrates how to use `web3j-scala`'s 
-     [synchrounous and asynchronous APIs](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoContext.scala).
-   - `DemoSmartContracts` [creates a JVM wrapper](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoSmartContracts.scala)
-      for the [sample smart contract](https://github.com/mslinn/web3j-scala/blob/master/src/test/resources/basic_info_getter.sol).
-   - `DemoObservables` shows how to work with 
-     [RxJava's Observables from Scala](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoObservables.scala)
-   - `DemoSmartContracts` demonstrates how to work with 
-     [JVM wrappers around Ethereum smart contracts](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoSmartContracts.scala).
-   - `DemoTransactions` shows how to use 
-     [transactions](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoTransactions.scala) 
-     with Ethereum wallet files and the Ethereum client.
-2. The `bin/web3j` script runs the [Web3J command-line console](https://docs.web3j.io/command_line.html).
-   The script builds a fat jar the first time it is run, so the command runs quickly on subsequent invocations.
-3. More scripts are provided in the `bin/` directory, including:
-   - [bin/attachHttp](https://github.com/mslinn/web3j-scala/blob/master/bin/attachHttp) &dash;
-     Attach to a running geth instance via HTTP and open a 
-     [JavaScript console](https://godoc.org/github.com/robertkrimen/otto)
-   - [bin/attachIpc](https://github.com/mslinn/web3j-scala/blob/master/bin/attachIpc) &dash;
-     Attach to a running geth instance via IPC and open a JavaScript console.
-     This script might need to be edited if a network other than `devnet` is used.
-   - [bin/getApis](https://github.com/mslinn/web3j-scala/blob/master/bin/gethApis) &dash;
-     Reports the available APIs exposed by this `geth` instance.
-   - [bin/isGethListening](https://github.com/mslinn/web3j-scala/blob/master/bin/isGethListening) &dash;
-     Verifies that `geth` is listening on HTTP port 8545
+## More Scripts!
+The following scripts are provided in the `bin/` directory:
+- [bin/web3j](https://github.com/mslinn/web3j-scala/blob/master/bin/web3j) &ndash; 
+  Runs the [Web3J command-line console](https://docs.web3j.io/command_line.html).
+  The script builds a fat jar the first time it is run, so the command runs quickly on subsequent invocations.
+  Invoke the script without any arguments to see the help message:
+  ```
+                  _      _____ _     _
+                 | |    |____ (_)   (_)
+    __      _____| |__      / /_     _   ___
+    \ \ /\ / / _ \ '_ \     \ \ |   | | / _ \
+     \ V  V /  __/ |_) |.___/ / | _ | || (_) |
+      \_/\_/ \___|_.__/ \____/| |(_)|_| \___/
+                             _/ |
+                            |__/
+    
+   Usage: web3j version|wallet|solidity ...
+   ```
+- [bin/attachHttp](https://github.com/mslinn/web3j-scala/blob/master/bin/attachHttp) &ndash;
+  Attach to a running geth instance via HTTP and open a 
+  [JavaScript console](https://godoc.org/github.com/robertkrimen/otto)
+- [bin/attachIpc](https://github.com/mslinn/web3j-scala/blob/master/bin/attachIpc) &ndash;
+  Attach to a running geth instance via IPC and open a JavaScript console.
+  This script might need to be edited if a network other than `devnet` is used.
+- [bin/getApis](https://github.com/mslinn/web3j-scala/blob/master/bin/gethApis) &ndash;
+  Reports the available APIs exposed by this `geth` instance.
+- [bin/isGethListening](https://github.com/mslinn/web3j-scala/blob/master/bin/isGethListening) &ndash;
+  Verifies that `geth` is listening on HTTP port 8545
    
 ## Developers
 ### API Documentation
