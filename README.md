@@ -20,7 +20,18 @@ This project promotes idiomatic Scala in the following ways:
 
 Web3J features RxJava extensions, and `web3j-scala` wraps that syntax in Scala goodness.
 For example, the `web3j-scala` [observable methods](http://mslinn.github.io/web3j-scala/latest/api/com/micronautics/web3j/Web3JScala$.html)
-provide [simple and efficient application code](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoObservables.scala#L14-L22).
+provide [simple and efficient application code](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoObservables.scala#L14-L22):
+```
+//  Display all new blocks as they are added to the blockchain:
+observe(web3j.blockObservable(false)) { ethBlock =>
+  println(format(ethBlock))
+}
+
+// Display only the first 10 new transactions as they are added to the blockchain:
+observe(10)(web3j.transactionObservable) { tx =>
+  println(format(tx))
+}
+```
 
 Scala's [value classes are used](https://github.com/mslinn/web3j-scala/blob/master/src/main/scala/com/micronautics/web3j/ValueClasses.scala) 
 to provide much stronger type safety than Web3J, without incurring a runtime penalty.

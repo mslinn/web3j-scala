@@ -22,7 +22,18 @@ import org.web3j.protocol.core.methods.response
   * ==Beyond RxJava==
   * Web3J features RxJava extensions, and `web3j-scala` wraps that syntax in Scala goodness.
   * For example, the `web3j-scala` [[http://mslinn.github.io/web3j-scala/latest/api/com/micronautics/web3j/Web3JScala$.html observable methods]]
-  * provide [[https://github.com/mslinn/web3j-scala/blob/master/demo/DemoObservables.scala#L14-L22 simple and efficient application code]].
+  * provide [[https://github.com/mslinn/web3j-scala/blob/master/demo/DemoObservables.scala#L14-L22 simple and efficient application code]]:
+  * {{{
+  //  Display all new blocks as they are added to the blockchain:
+  observe(web3j.blockObservable(false)) { ethBlock =>
+    println(format(ethBlock))
+  }
+
+  // Display only the first 10 new transactions as they are added to the blockchain:
+  observe(10)(web3j.transactionObservable) { tx =>
+    println(format(tx))
+  }
+  }}}
   *
   * ==Value Classes==
   * Scala's [[https://github.com/mslinn/web3j-scala/blob/master/src/main/scala/com/micronautics/web3j/ValueClasses.scala value classes are used]]
