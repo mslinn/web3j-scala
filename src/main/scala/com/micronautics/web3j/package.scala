@@ -25,7 +25,7 @@ import org.web3j.protocol.core.methods.response
   *
   * Implicit conversions are provided that make it easy to obtain instances of the desired value classes,
   * without sacrificing type safety.
-  * For example, the following code implicitly converts the [[String\]] returned by `basicInfoContract.send.getContractAddress`
+  * For example, the following code implicitly converts the [[java.lang.String]] returned by `basicInfoContract.send.getContractAddress`
   * into an [[com.micronautics.web3j.Address]]:
   * {{{val basicInfoContractAddress: Address = basicInfoContract.send.getContractAddress}}}
   *
