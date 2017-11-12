@@ -106,7 +106,7 @@ lazy val commonSettings = Seq(
   bintrayPackage := name.value,
 
   // sbt-ghpages
-  git.remoteRepo := s"git@github.com:$gitHubName/web3j-scala.git",
+//  git.remoteRepo := s"git@github.com:$gitHubName/web3j-scala.git",
 
   // sbt-site settings
   siteSourceDirectory := target.value / "api"
