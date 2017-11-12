@@ -11,11 +11,11 @@ Web3J is a lightweight, reactive, somewhat type safe Java and Android library fo
 This project promotes idiomatic Scala in the following ways:
   - Variables and no-argument methods are actually names of properties, so `set` and `get` prefixes are not used.
     This means some properties do not have exactly the same name as their Web3J counterpart.
-  - Zero-argument methods only require parentheses if they perform side effects.
+  - In general, zero-argument methods only require parentheses if they perform side effects.
   - Scala data types are used to the maximum extent that makes sense.
-    For example, [[scala.concurrent.Future]].
+    For example, [scala.concurrent.Future](http://www.scala-lang.org/api/current/scala/concurrent/Future.html).
   - A functional programming style is encouraged by always returning immutable data types from methods.
-    For example, [[scala.collection.immutable.List]]
+    For example, [scala.collection.immutable.List](http://www.scala-lang.org/api/current/scala/collection/immutable/List.html)
 
 Web3J features RxJava extensions, and `web3j-scala` wraps that syntax in Scala goodness.
 For example, the `web3j-scala` [observable methods](http://mslinn.github.io/web3j-scala/latest/api/com/micronautics/web3j/Web3JScala$.html)
