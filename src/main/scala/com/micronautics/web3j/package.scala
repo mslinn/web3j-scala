@@ -3,14 +3,14 @@ package com.micronautics
 import org.web3j.protocol.core.methods.response
 
 /** <img src='https://docs.web3j.io/_static/web3j.png' align='right' height='100px' />
-  * This project is an idiomatic Scala wrapper around [[https://www.web3j.io Web3J]] for Ethereum.
+  * [[https://github.com/mslinn/web3j-scala This project]] is an idiomatic Scala wrapper around [[https://www.web3j.io Web3J]] for Ethereum.
   * Web3J is a lightweight, reactive, somewhat type safe Java and Android library for integrating with nodes on Ethereum blockchains.
   *
   * ==Prerequisites==
-  * This project is built with Scala 2.12, and requires the Java 8 runtime; it is not yet compatible with Java 9.
+  * `web3j-scala` is built with Scala 2.12, and requires the Java 8 runtime; it is not yet compatible with Java 9.
   *
   * ==Idiomatic Scala==
-  * This project promotes idiomatic Scala in the following ways:
+  * `web3j-scala` promotes idiomatic Scala in the following ways:
   *  - Variables and no-argument methods are actually names of properties, so `set` and `get` prefixes are not used.
   *    This means some properties do not have exactly the same name as their Web3J counterpart.
   *  - Zero-argument methods generally only require parentheses if they perform side effects.

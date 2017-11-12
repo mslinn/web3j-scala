@@ -4,23 +4,25 @@ import com.micronautics.web3j.{Address, Password, Wallet}
 import org.web3j.crypto.Credentials
 import org.web3j.protocol.core.RemoteCall
 
-object CreateSmartContracts extends App {
+object DemoSmartContracts extends App {
   import scala.concurrent.ExecutionContext.Implicits.global
 
-  new DemoSmartContracts(new Demo)
+  new DemoSmartContracts(new DemoContext)
 }
 
-/** Web3J can auto-generate smart contract wrapper code to deploy and interact with smart contracts without leaving the JVM.
+/** This demo compiles an example Solidity program that defines a smart contract, and then creates a JVM wrapper from an example smart contract.
+  *
+  * Web3J can auto-generate smart contract wrapper code to deploy and interact with smart contracts without leaving the JVM.
   * This program creates a smart contract wrapper around a [[../src/test/resources/basic_info_getter.sol sample smart contract]]
   * and demonstrates how to work with smart contracts using JVM wrappers.
   *
-  * Run this program before [[Main running the demo]].
+  * Run this program before [[Main running the demoContext]].
   *
   * @see See [[https://web3j.readthedocs.io/en/latest/smart_contracts.html Web3J Smart Contracts]] */
-class DemoSmartContracts(demo: Demo) {
+class DemoSmartContracts(demoContext: DemoContext) {
   import com.micronautics.web3j.Web3JScala.{solc,wrapAbi}
   import com.micronautics.solidity._
-  import Demo._
+  import DemoContext._
 
   // Compile the smart contract before generating the wrapper code
   val solidityFileName = "basic_info_getter"
@@ -31,13 +33,13 @@ class DemoSmartContracts(demo: Demo) {
     val password = Password("bogus") // todo make this real
     val credentials: Credentials = Wallet.loadCredentials(password, walletDir)
 
-    val basicInfoContract: RemoteCall[BasicInfoGetter] = BasicInfoGetter.deploy(demo.web3j, credentials, gasPrice.bigInteger, gasLimit)
+    val basicInfoContract: RemoteCall[BasicInfoGetter] = BasicInfoGetter.deploy(demoContext.web3j, credentials, gasPrice.bigInteger, gasLimit)
     val wtf: BasicInfoGetter = basicInfoContract.send
     println(wtf)
 
     // Or use an existing contract:
     val address = Address("address")  // todo make this real
-     val basicInfoContract2 = BasicInfoGetter.load(address.value, demo.web3j, credentials, gasPrice.wei.bigInteger, gasLimit)
+     val basicInfoContract2 = BasicInfoGetter.load(address.value, demoContext.web3j, credentials, gasPrice.wei.bigInteger, gasLimit)
 
     // Transact with a smart contract; e.g. obtain the address of the contract.
     // Would be nice to generate a Scala wrapper instead of a Java wrapper!

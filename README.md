@@ -38,13 +38,35 @@ Add this to your SBT project's `build.sbt`:
 Only Scala 2.12 with JDK 8 is supported at present; this is a limitation of the Scala ecosystem as of November 7, 2017.
 
 ## Run the Demo Program
-The demo program performs the following:
- - Follows the outline of the [Web3J Getting Started](https://docs.web3j.io/getting_started.html#start-sending-requests) documentation, 
-   adapted for Web3J-Scala, including synchronous and asynchronous versions of the available methods.
- - Compiles an example Solidity program that defines a smart contract.
- - Creates a JVM wrapper from an example smart contract.
+The demo programs follow the outline of the [Web3J Getting Started](https://docs.web3j.io/getting_started.html#start-sending-requests) documentation, 
+adapted for Web3J-Scala, including synchronous and asynchronous versions of the available methods.
+Each demo program starts with a [DemoContext](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoContext.scala), 
+which performs some setup common to all the demo programs.  
+ - `DemoObservables` - Web3J's functional-reactive nature makes it easy to set up observers that notify subscribers of events taking place on the blockchain.
+   This demo shows how Scala works with the RxJava functionality provided with Web3J.
+ - `DemoSmartContracts` - Compiles an example Solidity program that defines a smart contract.
+   Creates a JVM wrapper from an example smart contract.
+ - `DemoTransaction` - Demonstrates enhanced support beyond what Web3J provides for working with Ethereum wallet files
+   and Ethereum client admin commands for sending transactions.
 
-To run the demo:
+The demo script help message appears if you do not specify any arguments:
+```
+$ bin/demo
+This script can run some or all of the web3j-scala demo programs.
+An Ethereum client must be running before any of these demos will work.
+If you have installed a recent version of the geth Ethereum client, run it as follows:
+
+bin/runGeth
+
+Once geth is running, run a demo programs by typing the following into another console:
+
+  bin/demo Observables     # Demonstrates how Scala works with the RxJava functionality provided with Web3J.
+  bin/demo SmartContracts  # Demonstrates JVM wrappers around Ethereum smart contracts.
+  bin/demo Transactions    # Demonstrates of Ethereum transactions using wallet files and the Ethereum client.
+  bin/demo All             # Run all of the above
+```
+
+Here is detailed information on running the demo:
 1. Start up an Ethereum client if you don’t already have one running, such as `geth`.
    The `bin/runGeth` script invokes `geth` with the following options, which are convenient for development but not secure enough for production:
      - The Ethereum data directory is set to `~/.ethereum`, or a subdirectory that depends on the network chosen; 
@@ -75,19 +97,19 @@ To run the demo:
    Etherbase is the index into `personal.listAccounts` which determines the account to send Ether too.
    You can specify this value with the option `--etherbase 0`.
 2. The shell that you just used will continuously scroll output so long as `geth` continues to run,
-   so type the following into another shell:
-   ```
-   $ bin/demo
-   ```
-   The demo has two major components:
-   1. [Creates a JVM wrapper](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoSmartContracts.scala)
+   so run the demo programs in another shell. 
+   Here are more details about the demo programs:
+   - `DemoContext` demonstrates how to use `web3j-scala`'s 
+     [synchrounous and asynchronous APIs](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoContext.scala)
+   - `DemoSmartContracts` [creates a JVM wrapper](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoSmartContracts.scala)
       for the [sample smart contract](https://github.com/mslinn/web3j-scala/blob/master/src/test/resources/basic_info_getter.sol).
-   2. The second portion of the demo consists of the following:
-      - Examples of using `web3j-scala`'s [synchrounous and asynchronous APIs](https://github.com/mslinn/web3j-scala/blob/master/demo/Demo.scala)
-      - Examples of working with [RxJava's Observables from Scala](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoObservables.scala)
-      - Examples of working with [JVM wrappers around Ethereum smart contracts](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoSmartContracts.scala).
-      - Examples of using [transactions](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoTransaction.scala) 
-        with Ethereum wallet files and the Ethereum client.
+   - `DemoObservables` shows how to work with 
+     [RxJava's Observables from Scala](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoObservables.scala)
+   - `DemoSmartContracts` demonstrates how to work with 
+     [JVM wrappers around Ethereum smart contracts](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoSmartContracts.scala).
+   - `DemoTransactions` shows how to use 
+     [transactions](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoTransactions.scala) 
+     with Ethereum wallet files and the Ethereum client.
 3. The `bin/web3j` script runs the [Web3J command-line console](https://docs.web3j.io/command_line.html).
    The script builds a fat jar the first time it is run, so the command runs quickly on subsequent invocations.
 4. More scripts are provided in the `bin/` directory, including:

@@ -9,7 +9,7 @@ import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContext, Promise}
 import org.web3j.protocol.core.DefaultBlockParameterName._
 
-object Demo {
+object DemoContext {
   val gasPrice: Ether = Ether(1)
   val gasLimit: BigInteger = BigInteger.valueOf(2)
 
@@ -20,7 +20,7 @@ object Demo {
   )
 }
 
-class Demo(implicit ec: ExecutionContext) {
+class DemoContext(implicit ec: ExecutionContext) {
   // Instantiate an instance of the underlying Web3J library:
   val web3j: Web3j = Web3JScala.fromHttp()  // defaults to http://localhost:8545/
   val web3jScala: Web3JScala = new Web3JScala(web3j)

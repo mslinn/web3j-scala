@@ -1,4 +1,25 @@
 #!/bin/bash
 
-sbt "test:runMain demo.CreateSmartContracts" \
-    "test:runMain demo.Main"
+function help {
+  echo "This script can run some or all of the web3j-scala demo programs.
+An Ethereum client must be running before any of these demos will work.
+If you have installed a recent version of the geth Ethereum client, run it as follows:
+
+bin/runGeth
+
+Once geth is running, run a demo programs by typing the following into another console:
+
+  $0 Observables     # Demonstrates how Scala works with the RxJava functionality provided with Web3J.
+  $0 SmartContracts  # Demonstrates JVM wrappers around Ethereum smart contracts.
+  $0 Transactions    # Demonstrates of Ethereum transactions using wallet files and the Ethereum client.
+  $0 All             # Run all of the above"
+  exit
+}
+
+case "$1" in
+  Observables)    sbt "test:runMain demo.DemoObservables"    ;;
+  SmartContracts) sbt "test:runMain demo.DemoSmartContracts" ;;
+  Transactions)   sbt "test:runMain demo.DemoTransactions"   ;;
+  All)            sbt "test:runMain demo.Main"               ;;
+  *) help
+esac

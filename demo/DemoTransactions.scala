@@ -9,10 +9,16 @@ import org.web3j.protocol.http.HttpService
 import org.web3j.tx.Transfer
 import org.web3j.utils.Convert.Unit.{ETHER, WEI}
 
-/** Web3J provides support for both working with Ethereum wallet files (recommended) and Ethereum client admin commands
-  * for sending transactions. */
-class DemoTransaction(demo: Demo) {
-  import Demo._, demo._
+object DemoTransactions extends App {
+  import scala.concurrent.ExecutionContext.Implicits.global
+
+  new DemoTransactions(new DemoContext)
+}
+
+/** Demonstrates enhanced support beyond what Web3J provides for working with Ethereum wallet files (recommended)
+  * and Ethereum client admin commands for sending transactions. */
+class DemoTransactions(demoContext: DemoContext) {
+  import DemoContext._, demoContext._
 
   //  Send Ether to another party using your Ethereum wallet file
   val password: Password = Password("bogus") // todo make this real
@@ -25,7 +31,7 @@ class DemoTransaction(demo: Demo) {
   val address: Address = Address("address")
 
   // Before creating a custom transaction, first get the next available nonce
-  val nonce: Nonce = demo.web3jScala.sync.nextNonce(address)
+  val nonce: Nonce = demoContext.web3jScala.sync.nextNonce(address)
 
   // Create a custom transaction
   val rawTransaction: RawTransaction =

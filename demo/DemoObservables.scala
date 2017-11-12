@@ -5,12 +5,18 @@ import com.micronautics.web3j.Web3JScala._
 import org.web3j.protocol.core.DefaultBlockParameterName._
 import org.web3j.protocol.core.methods.{request, response}
 
-/** Web3J's functional-reactive nature makes it easy to set up observers that notify subscribers of events taking place on the blockchain.
-  * The functional-reactive programming style works really well with Scala.
+object DemoObservables extends App {
+  import scala.concurrent.ExecutionContext.Implicits.global
+
+  new DemoObservables(new DemoContext)
+}
+
+/** This demo shows how Scala works with the RxJava functionality provided with Web3J.
+  * Web3J's functional-reactive nature makes it easy to set up observers that notify subscribers of events taking place on the blockchain.
   *
   * Other transaction and block replay [[org.web3j.utils.Observables]] are described in [[https://docs.web3j.io/filters.html Filters and Events]]. */
-class DemoObservables(demo: Demo) {
-  import demo._
+class DemoObservables(demoContext: DemoContext) {
+  import demoContext._
 
   //  Display the first 2 new blocks as they are added to the blockchain:
   observe(2)(web3j.blockObservable(false)) { ethBlock =>
@@ -40,16 +46,16 @@ class DemoObservables(demo: Demo) {
     } else println(format(ethBlock))
   }
 
-  // Topic Filter Demo
+  // Topic Filter DemoContext
   // Filters are not supported on the Infura network.
-  val contractAddress = "0x8888f1f195afa192cfee860698584c030f4c9db1" // todo relate this bogus contract to something in the demo
+  val contractAddress = "0x8888f1f195afa192cfee860698584c030f4c9db1" // todo relate this bogus contract to something in the demoContext
 
   // See https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_newfilter
   val ethFilter: request.EthFilter =
     new request
       .EthFilter(EARLIEST, LATEST, contractAddress)
-      .addSingleTopic("0x000000000000000000000000a94f5374fce5edbc8e2a8697c15331677e6ebf0b") // todo relate this bogus topic to something in the demo
-      .addOptionalTopics( // todo relate these bogus topics to something in the demo
+      .addSingleTopic("0x000000000000000000000000a94f5374fce5edbc8e2a8697c15331677e6ebf0b") // todo relate this bogus topic to something in the demoContext
+      .addOptionalTopics( // todo relate these bogus topics to something in the demoContext
         "0x000000000000000000000000a94f5374fce5edbc8e2a8697c15331677e6ebf0b",
         "0x0000000000000000000000000aff3454fce5edbc8cca8697c15331677e6ebccc"
       )
