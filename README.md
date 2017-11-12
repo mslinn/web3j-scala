@@ -117,17 +117,32 @@ The following scripts are provided in the `bin/` directory:
   The script builds a fat jar the first time it is run, so the command runs quickly on subsequent invocations.
   Invoke the script without any arguments to see the help message:
   ```
-                  _      _____ _     _
-                 | |    |____ (_)   (_)
-    __      _____| |__      / /_     _   ___
-    \ \ /\ / / _ \ '_ \     \ \ |   | | / _ \
-     \ V  V /  __/ |_) |.___/ / | _ | || (_) |
-      \_/\_/ \___|_.__/ \____/| |(_)|_| \___/
-                             _/ |
-                            |__/
-    
-   Usage: web3j version|wallet|solidity ...
-   ```
+                _      _____ _     _
+               | |    |____ (_)   (_)
+  __      _____| |__      / /_     _   ___
+  \ \ /\ / / _ \ '_ \     \ \ |   | | / _ \
+   \ V  V /  __/ |_) |.___/ / | _ | || (_) |
+    \_/\_/ \___|_.__/ \____/| |(_)|_| \___/
+                           _/ |
+                          |__/
+  
+  Usage: web3j version|wallet|solidity ...
+  ```
+  To see the help message for `web3j wallet`, simply type that in:
+  ```
+  $ bin/web3j wallet
+  
+                _      _____ _     _
+               | |    |____ (_)   (_)
+  __      _____| |__      / /_     _   ___
+  \ \ /\ / / _ \ '_ \     \ \ |   | | / _ \
+   \ V  V /  __/ |_) |.___/ / | _ | || (_) |
+    \_/\_/ \___|_.__/ \____/| |(_)|_| \___/
+                           _/ |
+                          |__/
+  
+  wallet create|update|send|fromkey
+  ```
 - [bin/attachHttp](https://github.com/mslinn/web3j-scala/blob/master/bin/attachHttp) &ndash;
   Attach to a running geth instance via HTTP and open a 
   [JavaScript console](https://godoc.org/github.com/robertkrimen/otto)
