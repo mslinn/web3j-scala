@@ -17,9 +17,9 @@ Once geth is running, run a demo programs by typing the following into another c
 }
 
 case "$1" in
-  Observables)    sbt "test:runMain demo.DemoObservables"    ;;
-  SmartContracts) sbt "test:runMain demo.DemoSmartContracts" ;;
-  Transactions)   sbt "test:runMain demo.DemoTransactions"   ;;
-  All)            sbt "test:runMain demo.Main"               ;;
+  Observables)    sbt ";project demo; runMain demo.DemoObservables"    ;;
+  SmartContracts) sbt ";project demo; runMain demo.DemoSmartContracts" ;;
+  Transactions)   sbt ";project demo; runMain demo.DemoTransactions"   ;;
+  All)            sbt ";project demo; runMain demo.Main"               ;;
   *) help
 esac
