@@ -8,7 +8,7 @@
 `web3j-scala` is an idiomatic Scala wrapper around [Web3J](https://www.web3j.io) for Ethereum.
 Web3J is a lightweight, reactive, somewhat type safe Java and Android library for integrating with nodes on Ethereum blockchains.
 
-This project promotes idiomatic Scala in the following ways:0
+This project promotes idiomatic Scala in the following ways:
   - Variables and no-argument methods are actually names of properties, so `set` and `get` prefixes are not used.
     This means some properties do not have exactly the same name as their Web3J counterpart.
   - Zero-argument methods only require parentheses if they perform side effects.
