@@ -14,6 +14,17 @@ case class Address(value: String) extends AnyVal {
 }
 
 
+object BlockHash {
+  /** This implicit conversion allows for a convenient way of constructing a `BlockHash` instance from a [[java.lang.String]].
+    * {{{val blockHash: BlockHash = "0xdeadbeef"}}} */
+  implicit def stringToBlockHash(value: String): BlockHash = BlockHash(value)
+}
+
+case class BlockHash(value: String) extends AnyVal {
+  @inline override def toString: String = value.toString
+}
+
+
 object Compiler {
   /** This implicit conversion allows for a convenient way of constructing a `Compiler` instance from a [[java.lang.String]].
     * {{{val compiler: Compiler = "solc"}}} */
@@ -48,17 +59,6 @@ case class EtHash(value: String) extends AnyVal {
 }
 
 
-object BlockHash {
-  /** This implicit conversion allows for a convenient way of constructing a `BlockHash` instance from a [[java.lang.String]].
-    * {{{val blockHash: BlockHash = "0xdeadbeef"}}} */
-  implicit def stringToBlockHash(value: String): BlockHash = BlockHash(value)
-}
-
-case class BlockHash(value: String) extends AnyVal {
-  @inline override def toString: String = value.toString
-}
-
-
 object FilterId {
   /** This implicit conversion allows for a convenient way of constructing a `FilterId` instance from a [[java.math.BigInteger]].
     * {{{val filterId: FilterId = "0xdeadbeef"}}} */
@@ -66,6 +66,21 @@ object FilterId {
 }
 
 case class FilterId(value: BigInteger) extends AnyVal {
+  @inline override def toString: String = value.toString
+}
+
+
+object Keccak256Hash {
+  /** This implicit conversion allows for a convenient way of constructing a `Keccak256Hash` instance from a [[java.lang.String]].
+    * {{{val keccak256Hash: Keccak256Hash = "0xdeadbeef"}}} */
+  implicit def stringToKeccak256Hash(value: String): Keccak256Hash = Keccak256Hash(value)
+}
+
+/** The SHA3 hash is more properly referred to as
+  * [[https://ethereum.stackexchange.com/questions/550/which-cryptographic-hash-function-does-ethereum-use Keccak-256]] */
+/* todo better to use value classes to indicate functionality, not how something was created.
+ * todo Delete this type and replace by one of the others, or rename it */
+case class Keccak256Hash(value: String) extends AnyVal {
   @inline override def toString: String = value.toString
 }
 
@@ -94,7 +109,7 @@ case class LLLSource(value: String) extends AnyVal {
 
 object Nonce {
   /** This implicit conversion allows for a convenient way of constructing a `Nonce` instance from a [[scala.BigInt]].
-    * {{{val nonce: Nonce = "0x123456789"}}} */
+    * {{{val nonce: Nonce = BigInt("123456789")}}} */
   implicit def stringToNonce(value: BigInt): Nonce = Nonce(value)
 }
 
@@ -105,6 +120,17 @@ object Nonce {
 case class Nonce(value: BigInt) extends AnyVal {
   @inline def bigInteger: BigInteger = value.bigInteger
 
+  @inline override def toString: String = value.toString
+}
+
+
+object Password {
+  /** This implicit conversion allows for a convenient way of constructing a `Password` instance from a [[java.lang.String]].
+    * {{{val password: Password = "secret"}}} */
+  implicit def stringToPassword(value: String): Password = Password(value)
+}
+
+case class Password(value: String) extends AnyVal {
   @inline override def toString: String = value.toString
 }
 
@@ -151,32 +177,6 @@ object SerpentSource {
 }
 
 case class SerpentSource(value: String) extends AnyVal {
-  @inline override def toString: String = value.toString
-}
-
-
-object Keccak256Hash {
-  /** This implicit conversion allows for a convenient way of constructing a `Keccak256Hash` instance from a [[java.lang.String]].
-    * {{{val keccak256Hash: Keccak256Hash = "0xdeadbeef"}}} */
-  implicit def stringToKeccak256Hash(value: String): Keccak256Hash = Keccak256Hash(value)
-}
-
-/** The SHA3 hash is more properly referred to as
-  * [[https://ethereum.stackexchange.com/questions/550/which-cryptographic-hash-function-does-ethereum-use Keccak-256]] */
-/* todo better to use value classes to indicate functionality, not how something was created.
- * todo Delete this type and replace by one of the others, or rename it */
-case class Keccak256Hash(value: String) extends AnyVal {
-  @inline override def toString: String = value.toString
-}
-
-
-object Password {
-  /** This implicit conversion allows for a convenient way of constructing a `Password` instance from a [[java.lang.String]].
-    * {{{val password: Password = "secret"}}} */
-  implicit def stringToPassword(value: String): Password = Password(value)
-}
-
-case class Password(value: String) extends AnyVal {
   @inline override def toString: String = value.toString
 }
 
