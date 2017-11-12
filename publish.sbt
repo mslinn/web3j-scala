@@ -1,3 +1,5 @@
+import Settings._
+
 lazy val scaladoc =
   taskKey[Unit]("Rebuilds the Scaladoc and pushes the updated Scaladoc to GitHub pages without committing to the git repository")
 
@@ -67,11 +69,11 @@ publishAndTag := {
 
 // See http://www.scala-sbt.org/1.0/docs/Howto-Scaladoc.html
 autoAPIMappings := true
-apiURL := Some(url("https://mslinn.github.io/web3j-scala/latest/api"))
+apiURL := Some(url(s"https://$gitHubName.github.io/${ name.value }/latest/api"))
 
 bintrayOrganization := Some("micronautics")
 bintrayRepository := "scala"
-bintrayPackage := "web3j-scala"
+bintrayPackage := name.value
 
 // sbt-site settings
 enablePlugins(SiteScaladocPlugin)
@@ -80,4 +82,4 @@ publishSite
 
 // sbt-ghpages settings
 enablePlugins(GhpagesPlugin)
-git.remoteRepo := s"git@github.com:mslinn/${ name.value }.git"
+git.remoteRepo := s"git@github.com:$gitHubName/${ name.value }.git"

@@ -1,12 +1,10 @@
-organization := "com.micronautics"
+import Settings._
 
 name := "web3j-scala"
-
+organization := "com.micronautics"
+scalaVersion := "2.12.4"
 version := "0.2.0"
 
-scalaVersion := "2.12.4"
-
-// If you want to apply a license, such as the Apache 2 license, uncomment the following:
 licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
 
 scalacOptions ++= Seq( // From https://tpolecat.github.io/2017/04/25/scalac-flags.html
@@ -63,7 +61,7 @@ scalacOptions in (Compile, console) --= Seq("-Ywarn-unused:imports", "-Xfatal-wa
 scalacOptions in (Compile, doc) ++= baseDirectory.map {
   (bd: File) => Seq[String](
      "-sourcepath", bd.getAbsolutePath,
-     "-doc-source-url", "https://github.com/mslinn/web3j-scala/tree/master€{FILE_PATH}.scala"
+     "-doc-source-url", "https://github.com/mslinn/web3j-scala/tree/master€{FILE_PATH}.scala" // todo how to compute the url?
   )
 }.value
 
@@ -86,7 +84,7 @@ libraryDependencies ++= Seq(
   "org.web3j"              %  "codegen"               % web3jVersion withSources(), // Code generators
   "org.web3j"              %  "console"               % web3jVersion withSources(), // Command-line tools
   "org.web3j"              %  "core"                  % web3jVersion withSources(),
-//  "org.web3j"              %  "crypto"                % web3jVersion withSources(), // For transaction signing and key/wallet management
+  "org.web3j"              %  "crypto"                % web3jVersion withSources(), // For transaction signing and key/wallet management
   "org.web3j"              %  "geth"                  % web3jVersion withSources(), // Geth-specific JSON-RPC module
   "org.web3j"              %  "infura"                % web3jVersion withSources(), // Infura-specific HTTP header support
   "org.web3j"              %  "parity"                % web3jVersion withSources(), // Parity-specific JSON-RPC module
