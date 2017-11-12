@@ -64,21 +64,8 @@ but not secure enough for production:
  - Verbosity level `info` is specified.
  - A log file for the `geth` output will be written, or overwritten, in `logs/geth.log`;
    the `logs/` directory will be created if it does not already exist.
-```
-$ mkdir logs/
-$ geth \
-  #--datadir .ethereum/devnet --dev \      # boots quickly but has no deployed contracts from others
-  --datadir .ethereum/rinkeby --rinkeby \  # takes about 15 minutes to boot, but has contracts
-  --ipcpath geth.ipc \
-  --metrics \
-  --rpc \
-  --rpcapi eth,net,web3,clique,debug,eth,miner,personal,rpc,ssh,txpool \
-  --shh \
-  --ws \
-  --wsapi eth,net,web3,clique,debug,eth,miner,personal,rpc,ssh,txpool \
-  --verbosity 2 2> logs/geth.log
-```
-You will see the message `No etherbase set and no accounts found as default`.
+
+When you run the script you will see the message `No etherbase set and no accounts found as default`.
 Etherbase is the index into `personal.listAccounts` which determines the account to send Ether too.
 You can specify this value with the option `--etherbase 0`.
 
