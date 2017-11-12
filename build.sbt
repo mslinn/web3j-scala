@@ -3,6 +3,12 @@ import sbt.Keys.apiURL
 
 val web3jVersion = "3.0.2"
 
+//enablePlugins(SiteScaladocPlugin, GhpagesPlugin)
+/* if the above is not there:
+References to undefined settings:
+  web3j-scala\*:ghpagesPushSite from web3j-scala/\*:scaladoc2 (/mnt/_/work/ethereum/web3j-scala/publish.sbt:4)
+  web3j-scala\*:ghpagesPushSite from web3j-scala/\*:commitAndDoc (/mnt/_/work/ethereum/web3j-scala/publish.sbt:24) */
+
 lazy val commonSettings = Seq(
   cancelable := true,
 
@@ -94,21 +100,16 @@ lazy val commonSettings = Seq(
 
   // See http://www.scala-sbt.org/1.0/docs/Howto-Scaladoc.html
   autoAPIMappings := true,
-  apiURL := Some(url(s"https://$gitHubName.github.io/web3j-scala/latest/api")),
 
   bintrayOrganization := Some("micronautics"),
   bintrayRepository := "scala",
   bintrayPackage := name.value,
 
-  // sbt-site settings
-  siteSourceDirectory := target.value / "api",
+  // sbt-ghpages
+  git.remoteRepo := s"git@github.com:$gitHubName/web3j-scala.git",
 
-  // sbt-ghpages settings
-  git.remoteRepo := s"git@github.com:$gitHubName/${ name.value }.git"
-  /* To preview the Scaladoc, run `previewSite`, which launches a static web server, or run `previewAuto`,
-     which launches a dynamic server that updates its content at each modification in your source files.
-     Both launch the server on port 4000 and attempt to connect your browser to http://localhost:4000/.
-     To change the server port, use the key previewFixedPort: {{{previewFixedPort := Some(9999)}}} */
+  // sbt-site settings
+  siteSourceDirectory := target.value / "api"
 )
 
 lazy val demo = project
@@ -116,7 +117,17 @@ lazy val demo = project
   .settings(
     commonSettings,
 
+    apiURL := Some(url(s"https://$gitHubName.github.io/web3j-scala/demo/latest/api")),// todo is the demo directory respected?
+
+    // this does not help:
+    //GitKeys.gitReader in ThisProject := baseDirectory(base => new DefaultReadableGit(base)).value,
+
+    // sbt-ghpages settings
     ghpagesBranch := "demo-pages",
+    /* To preview the Scaladoc, run `previewSite`, which launches a static web server, or run `previewAuto`,
+       which launches a dynamic server that updates its content at each modification in your source files.
+       Both launch the server on port 4000 and attempt to connect your browser to http://localhost:4000/.
+       To change the server port, use the key previewFixedPort: {{{previewFixedPort := Some(9999)}}} */
 
     // define the statements initially evaluated when entering 'console', 'console-quick', but not 'console-project'
     initialCommands in console := """import java.math.BigInteger
@@ -132,10 +143,19 @@ lazy val demo = project
     unmanagedSourceDirectories in Compile += baseDirectory.value / "../abiWrapper"
   ).dependsOn(root)
 
-lazy val root = (project in file("."))
+lazy val root = (project in file("root"))
   .enablePlugins(SiteScaladocPlugin, GhpagesPlugin)
   .settings(
     commonSettings,
+
+    apiURL := Some(url(s"https://$gitHubName.github.io/web3j-scala/root/latest/api")),   // todo is the root directory respected?
+
+    // sbt-ghpages setting
+    git.remoteRepo := s"git@github.com:$gitHubName/${ name.value }.git",
+    /* To preview the Scaladoc, run `previewSite`, which launches a static web server, or run `previewAuto`,
+       which launches a dynamic server that updates its content at each modification in your source files.
+       Both launch the server on port 4000 and attempt to connect your browser to http://localhost:4000/.
+       To change the server port, use the key previewFixedPort: {{{previewFixedPort := Some(9999)}}} */
 
     // define the statements initially evaluated when entering 'console', 'console-quick', but not 'console-project'
     initialCommands in console := """import java.math.BigInteger

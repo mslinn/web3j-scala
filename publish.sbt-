@@ -1,14 +1,13 @@
-import Settings._
-
-lazy val scaladoc =
+lazy val scaladoc2 =
   taskKey[Unit]("Rebuilds the Scaladoc and pushes the updated Scaladoc to GitHub pages without committing to the git repository")
 
-scaladoc := {
+scaladoc2 := {
   println("Creating Scaladoc")
-  doc.in(Test).value
+  doc.in(Compile).value
 
   println("Uploading Scaladoc to GitHub Pages")
-  ghpagesPushSite.value
+  ghpagesPushSite.value // todo does it push to the proper project directory?
+  ()
 }
 
 /** Best practice is to comment your commits before invoking this task: `git commit -am "Your comment here"`.
@@ -28,7 +27,7 @@ commitAndDoc := {
     "git pull".!!
 
     println("Creating Scaladoc")
-    doc.in(Test).value
+    doc.in(Compile).value
 
     val changedFileNames = "git diff --name-only".!!.trim.replace("\n", ", ")
     if (changedFileNames.nonEmpty) {
@@ -46,7 +45,7 @@ commitAndDoc := {
     "git push origin HEAD".!!  // See https://stackoverflow.com/a/20922141/553865
 
     println("Uploading Scaladoc to GitHub Pages")
-    ghpagesPushSite.value
+    ghpagesPushSite.value // todo does it push to the proper project directory?
   } catch {
     case e: Exception => println(e.getMessage)
   }
