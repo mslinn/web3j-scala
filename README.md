@@ -128,6 +128,7 @@ The following scripts are provided in the `bin/` directory:
   
   Usage: web3j version|wallet|solidity ...
   ```
+  Now we know that the `web3j` script accepts three subcommand: `version`, `wallet` and `solidity`.
   To see the help message for `web3j wallet`, simply type that in:
   ```
   $ bin/web3j wallet
