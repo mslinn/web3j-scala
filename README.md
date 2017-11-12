@@ -48,9 +48,9 @@ but not secure enough for production:
  - Inter-process communication will be via a virtual file called `geth.ipc`, 
    located at `~/.ethereum` or a subdirectory.
  - WS-RPC server at `localhost:8546` is enabled, and all APIs are allowed.
- - Info verbosity is specified.
+ - Verbosity level `info` is specified.
  - A log file for the `geth` output will be written, or overwritten, in `logs/geth.log`;
-   the `log/` directory will be created if it does not already exist.
+   the `logs/` directory will be created if it does not already exist.
 ```
 $ mkdir logs/
 $ geth \
@@ -63,11 +63,13 @@ $ geth \
   --shh \
   --ws \
   --wsapi eth,net,web3,clique,debug,eth,miner,personal,rpc,ssh,txpool \
-  --verbosity 2
+  --verbosity 2 2> logs/geth.log
 ```
 You will see the message `No etherbase set and no accounts found as default`.
 Etherbase is the index into `personal.listAccounts` which determines the account to send Ether too.
 You can specify this value with the option `--etherbase 0`.
+
+`geth` will continuously scroll output so long as it continues to run, so you must run the demo programs in another shell.
 
 ## Running the Demo Programs
 The demo programs follow the general outline of the 
@@ -75,15 +77,16 @@ The demo programs follow the general outline of the
 adapted for Web3J-Scala, including synchronous and asynchronous versions of the available methods.
 
 Each demo program starts with a [DemoContext](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoContext.scala), 
-which performs some setup common to all the demo programs.  
+which performs some setup common to all the demo programs.
+The demo programs are:
  - `DemoObservables` - Web3J's functional-reactive nature makes it easy to set up observers that notify subscribers of events taking place on the blockchain.
    This demo shows how Scala works with the RxJava functionality provided with Web3J.
- - `DemoSmartContracts` - Compiles an example Solidity program that defines a smart contract.
-   Creates a JVM wrapper from an example smart contract.
+ - `DemoSmartContracts` - Compiles an example Solidity program that defines a smart contract,
+   creates a JVM wrapper for the smart contract, and exercises the smart contract from Scala.
  - `DemoTransaction` - Demonstrates enhanced support beyond what Web3J provides for working with Ethereum wallet files
    and Ethereum client admin commands for sending transactions.
 
-The `bin/demo` script help message appears if you do not specify any arguments:
+The help message for the `bin/demo` script appears if you do not specify any arguments:
 ```
 $ bin/demo
 This script can run some or all of the web3j-scala demo programs.
@@ -100,9 +103,7 @@ Once geth is running, run a demo programs by typing the following into another c
   bin/demo All             # Run all of the above
 ```
 
-Here is detailed information on running the demo:
-1. `geth` will continuously scroll output so long as it continues to run, so run the demo programs in another shell. 
-   Here are more details about the demo programs:
+1. Here are more details about the demo programs:
    - `DemoContext` demonstrates how to use `web3j-scala`'s 
      [synchrounous and asynchronous APIs](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoContext.scala).
    - `DemoSmartContracts` [creates a JVM wrapper](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoSmartContracts.scala)
