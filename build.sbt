@@ -1,4 +1,5 @@
 import Settings._
+import sbt.Keys.apiURL
 
 val web3jVersion = "3.0.2"
 
@@ -89,12 +90,33 @@ lazy val commonSettings = Seq(
 
   scalaVersion := "2.12.4",
 
-  version := "0.2.1"
+  version := "0.2.1",
+
+  // See http://www.scala-sbt.org/1.0/docs/Howto-Scaladoc.html
+  autoAPIMappings := true,
+  apiURL := Some(url(s"https://$gitHubName.github.io/web3j-scala/latest/api")),
+
+  bintrayOrganization := Some("micronautics"),
+  bintrayRepository := "scala",
+  bintrayPackage := name.value,
+
+  // sbt-site settings
+  siteSourceDirectory := target.value / "api",
+
+  // sbt-ghpages settings
+  git.remoteRepo := s"git@github.com:$gitHubName/${ name.value }.git"
+  /* To preview the Scaladoc, run `previewSite`, which launches a static web server, or run `previewAuto`,
+     which launches a dynamic server that updates its content at each modification in your source files.
+     Both launch the server on port 4000 and attempt to connect your browser to http://localhost:4000/.
+     To change the server port, use the key previewFixedPort: {{{previewFixedPort := Some(9999)}}} */
 )
 
 lazy val demo = project
+  .enablePlugins(SiteScaladocPlugin, GhpagesPlugin)
   .settings(
     commonSettings,
+
+    ghpagesBranch := "demo-pages",
 
     // define the statements initially evaluated when entering 'console', 'console-quick', but not 'console-project'
     initialCommands in console := """import java.math.BigInteger
@@ -103,10 +125,15 @@ lazy val demo = project
                                     |import org.web3j.protocol.infura._
                                     |""".stripMargin,
 
+    name := "web3j-scala-demo",
+
+    publishSite,
+
     unmanagedSourceDirectories in Compile += baseDirectory.value / "../abiWrapper"
   ).dependsOn(root)
 
 lazy val root = (project in file("."))
+  .enablePlugins(SiteScaladocPlugin, GhpagesPlugin)
   .settings(
     commonSettings,
 
@@ -140,5 +167,7 @@ lazy val root = (project in file("."))
       "junit"                  %  "junit"       % "4.12"  % Test
     ),
 
-    name := "web3j-scala"
+    name := "web3j-scala",
+
+    publishSite
   )

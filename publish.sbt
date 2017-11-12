@@ -66,20 +66,3 @@ publishAndTag := {
   s"""git push origin --tags""".!!
   ()
 }
-
-// See http://www.scala-sbt.org/1.0/docs/Howto-Scaladoc.html
-autoAPIMappings := true
-apiURL := Some(url(s"https://$gitHubName.github.io/${ name.value }/latest/api"))
-
-bintrayOrganization := Some("micronautics")
-bintrayRepository := "scala"
-bintrayPackage := name.value
-
-// sbt-site settings
-enablePlugins(SiteScaladocPlugin)
-siteSourceDirectory := target.value / "api"
-publishSite
-
-// sbt-ghpages settings
-enablePlugins(GhpagesPlugin)
-git.remoteRepo := s"git@github.com:$gitHubName/${ name.value }.git"
