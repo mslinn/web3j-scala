@@ -119,33 +119,32 @@
       <p class="shortcomment cmt"><img src='https://docs.web3j.io/_static/web3j.png' align='right' height='100px' />
 This project is an idiomatic Scala wrapper around <a href="https://www.web3j.io" target="_blank">Web3J</a> for Ethereum.</p><div class="fullcomment"><div class="comment cmt"><p><img src='https://docs.web3j.io/_static/web3j.png' align='right' height='100px' />
 This project is an idiomatic Scala wrapper around <a href="https://www.web3j.io" target="_blank">Web3J</a> for Ethereum.
-Web3J is a lightweight, reactive, somewhat type safe Java and Android library for integrating with nodes on Ethereum blockchains.</p><p>This project is built with Scala 2.12, and requires the Java 8 runtime; it is not yet compatible with Java 9.</p><p>This project promotes idiomatic Scala in the following ways:</p><ul><li>Variables and no-argument methods are actually names of properties, so <code>set</code> and <code>get</code> prefixes are not used.
-   This means some properties do not have exactly the same name as their Web3J counterpart.</li><li>Zero-argument methods only require parentheses if they perform side effects.</li><li>Scala data types are used to the maximum extent that makes sense.
-   For example, <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/concurrent/Future.html" class="extype" name="scala.concurrent.Future">scala.concurrent.Future</a>.</li><li>A functional programming style is encouraged by always returning immutable data types from methods.
-   For example, <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/collection/immutable/List.html" class="extype" name="scala.collection.immutable.List">scala.collection.immutable.List</a></li></ul><p>Web3J features RxJava extensions, and <code>web3j-scala</code> wraps that syntax in Scala goodness.
+Web3J is a lightweight, reactive, somewhat type safe Java and Android library for integrating with nodes on Ethereum blockchains.</p><h4>Prerequisites</h4><p>This project is built with Scala 2.12, and requires the Java 8 runtime; it is not yet compatible with Java 9.</p><h4>Idiomatic Scala</h4><p>This project promotes idiomatic Scala in the following ways:</p><ul><li>Variables and no-argument methods are actually names of properties, so <code>set</code> and <code>get</code> prefixes are not used.
+   This means some properties do not have exactly the same name as their Web3J counterpart.</li><li>Zero-argument methods generally only require parentheses if they perform side effects.</li><li>Scala data types are used to the maximum extent that makes sense.
+   For example, <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/concurrent/Future.html" class="extype" name="scala.concurrent.Future">scala.concurrent.Future</a> instead of <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html" class="extype" name="java.util.concurrent.Future">java.util.concurrent.Future</a>.</li><li>A functional programming style is encouraged by always returning immutable data types from methods.
+   For example, <a href="http://scala-lang.org/files/archive/api/2.12.4/scala/collection/immutable/List.html" class="extype" name="scala.collection.immutable.List">scala.collection.immutable.List</a></li></ul><h4>Beyond RxJava</h4><p>Web3J features RxJava extensions, and <code>web3j-scala</code> wraps that syntax in Scala goodness.
 For example, the <code>web3j-scala</code> <a href="http://mslinn.github.io/web3j-scala/latest/api/com/micronautics/web3j/Web3JScala$.html" target="_blank">observable methods</a>
-provide <a href="https://github.com/mslinn/web3j-scala/blob/master/demo/DemoObservables.scala#L14-L22" target="_blank">simple and efficient application code</a>.
-Scala's <a href="https://github.com/mslinn/web3j-scala/blob/master/src/main/scala/com/micronautics/web3j/ValueClasses.scala" target="_blank">value classes are used</a>
-to provide much stronger type safety than Web3J, without incurring a runtime penalty.</p><p>Implicit conversions are provided that make it easy to obtain instances of the desired value classes,
+provide <a href="https://github.com/mslinn/web3j-scala/blob/master/demo/DemoObservables.scala#L14-L22" target="_blank">simple and efficient application code</a>.</p><h4>Value Classes</h4><p>Scala's <a href="https://github.com/mslinn/web3j-scala/blob/master/src/main/scala/com/micronautics/web3j/ValueClasses.scala" target="_blank">value classes are used</a>
+to provide much stronger type safety than Web3J, without incurring a runtime penalty.
+Implicit conversions are provided that make it easy to obtain instances of the desired value classes,
 without sacrificing type safety.
 For example, the following code implicitly converts the <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" class="extype" name="java.lang.String">java.lang.String</a> returned by <code>basicInfoContract.send.getContractAddress</code>
-into an <a href="Address.html" class="extype" name="com.micronautics.web3j.Address">com.micronautics.web3j.Address</a>:</p><pre><span class="kw">val</span> basicInfoContractAddress: Address = basicInfoContract.send.getContractAddress</pre><p>The <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC" target="_blank">Ethereum JSON-RPC documentation</a>
-was the source of many the comments incorporated into this Scaladoc.</p><p>The JSON-RPC <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#the-default-block-parameter" target="_blank">default block parameter</a>
-can represent a <code>QUANTITY</code> or a <code>TAG</code>.
-Quantities are expressed as integer block numbers, and tags are strings with one of the values &quot;latest&quot;, &quot;earliest&quot; or &quot;pending&quot;.
-The <a href="https://jar-download.com/javaDoc/org.web3j/core/3.0.2/index.html?org/web3j/protocol/core/DefaultBlockParameter.html" target="_blank">Java implementation</a>
-performs the same function as the underlying JSON-RPC implementation.</p><p><a href="https://github.com/ethereum/wiki/wiki/Whisper" target="_blank">Whisper</a>
-is an experimental communication protocol of the Ethereum P2P protocol suite that allows
-for messaging between users' DApps (Ethereum Distributed Applications).
-Whisper uses the same network that the blockchain runs on.
-The protocol is separate from the blockchain, so smart contracts do not have access to whispered messages.</p><p><a href="https://jar-download.com/javaDoc/org.web3j/core/3.0.2/index.html?org/web3j/protocol/core/methods/response/EthBlock.html" target="_blank">EthBlock</a>
-and its internal types such as
-<a href="https://jar-download.com/javaDoc/org.web3j/core/3.0.2/index.html?org/web3j/protocol/core/methods/response/EthBlock.Block.html" target="_blank">Block</a>,
-<a href="https://jar-download.com/javaDoc/org.web3j/core/3.0.2/index.html?org/web3j/protocol/core/methods/response/EthBlock.TransactionObject.html" target="_blank">TransactionObject</a> and
-<a href="https://jar-download.com/javaDoc/org.web3j/core/3.0.2/index.html?org/web3j/protocol/core/methods/response/EthBlock.TransactionResult.html" target="_blank">TransactionResult</a>
-are returned by the following methods of <a href="EthereumSynchronous.html" class="extype" name="com.micronautics.web3j.EthereumSynchronous">com.micronautics.web3j.EthereumSynchronous</a> and <a href="" class="extype" name="com.micronautics.web3j.EthereumASynchronous">com.micronautics.web3j.EthereumASynchronous</a>:
-<code>blockByHash</code>, <code>blockByNumber</code>, <code>uncleByBlockHashAndIndex</code>, <code>uncleByBlockNumberAndIndex</code>.
-</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="com.micronautics">micronautics</a></dd></dl></div>
+into a <a href="Address.html" class="extype" name="com.micronautics.web3j.Address">com.micronautics.web3j.Address</a>:</p><pre><span class="kw">val</span> basicInfoContractAddress: Address = basicInfoContract.send.getContractAddress</pre><h4>Miscellaneous</h4><ul><li>The <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC" target="_blank">Ethereum JSON-RPC documentation</a>
+   was the source of many the comments incorporated into this Scaladoc.</li><li>The JSON-RPC <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#the-default-block-parameter" target="_blank">default block parameter</a>
+   can represent a <code>QUANTITY</code> or a <code>TAG</code>.
+   Quantities are expressed as integer block numbers, and tags are strings with one of the values &quot;latest&quot;, &quot;earliest&quot; or &quot;pending&quot;.
+   The <a href="https://jar-download.com/javaDoc/org.web3j/core/3.0.2/index.html?org/web3j/protocol/core/DefaultBlockParameter.html" target="_blank">Java implementation</a>
+   performs the same function as the underlying JSON-RPC implementation.</li><li><a href="https://github.com/ethereum/wiki/wiki/Whisper" target="_blank">Whisper</a>
+   is an experimental communication protocol of the Ethereum P2P protocol suite that allows
+   for messaging between users' DApps (Ethereum Distributed Applications).
+   Whisper uses the same network that the blockchain runs on.
+   The protocol is separate from the blockchain, so smart contracts do not have access to whispered messages.</li><li><a href="https://jar-download.com/javaDoc/org.web3j/core/3.0.2/index.html?org/web3j/protocol/core/methods/response/EthBlock.html" target="_blank">EthBlock</a>
+   and its internal types such as
+   <a href="https://jar-download.com/javaDoc/org.web3j/core/3.0.2/index.html?org/web3j/protocol/core/methods/response/EthBlock.Block.html" target="_blank">Block</a>,
+   <a href="https://jar-download.com/javaDoc/org.web3j/core/3.0.2/index.html?org/web3j/protocol/core/methods/response/EthBlock.TransactionObject.html" target="_blank">TransactionObject</a> and
+   <a href="https://jar-download.com/javaDoc/org.web3j/core/3.0.2/index.html?org/web3j/protocol/core/methods/response/EthBlock.TransactionResult.html" target="_blank">TransactionResult</a>
+   are returned by the following methods of <a href="EthereumSynchronous.html" class="extype" name="com.micronautics.web3j.EthereumSynchronous">com.micronautics.web3j.EthereumSynchronous</a> and <a href="" class="extype" name="com.micronautics.web3j.EthereumASynchronous">com.micronautics.web3j.EthereumASynchronous</a>:
+   <code>blockByHash</code>, <code>blockByNumber</code>, <code>uncleByBlockHashAndIndex</code>, <code>uncleByBlockNumberAndIndex</code>.</li></ul></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="com.micronautics">micronautics</a></dd></dl></div>
     </li><li class="current-entities indented3">
                         <a class="object" href="Address$.html" title=""></a>
                         <a class="class" href="Address.html" title=""></a>
