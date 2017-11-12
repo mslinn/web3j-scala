@@ -128,7 +128,7 @@ provide <a href="https://github.com/mslinn/web3j-scala/blob/master/demo/DemoObse
 Scala's <a href="https://github.com/mslinn/web3j-scala/blob/master/src/main/scala/com/micronautics/web3j/ValueClasses.scala" target="_blank">value classes are used</a>
 to provide much stronger type safety than Web3J, without incurring a runtime penalty.</p><p>Implicit conversions are provided that make it easy to obtain instances of the desired value classes,
 without sacrificing type safety.
-For example, the following code implicitly converts the <span class="extype" name="String\">String\</span> returned by <code>basicInfoContract.send.getContractAddress</code>
+For example, the following code implicitly converts the <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" class="extype" name="java.lang.String">java.lang.String</a> returned by <code>basicInfoContract.send.getContractAddress</code>
 into an <a href="Address.html" class="extype" name="com.micronautics.web3j.Address">com.micronautics.web3j.Address</a>:</p><pre><span class="kw">val</span> basicInfoContractAddress: Address = basicInfoContract.send.getContractAddress</pre><p>The <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC" target="_blank">Ethereum JSON-RPC documentation</a>
 was the source of many the comments incorporated into this Scaladoc.</p><p>The JSON-RPC <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#the-default-block-parameter" target="_blank">default block parameter</a>
 can represent a <code>QUANTITY</code> or a <code>TAG</code>.
