@@ -5,7 +5,7 @@ function help {
 An Ethereum client must be running before any of these demos will work.
 If you have installed a recent version of the geth Ethereum client, run it as follows:
 
-bin/runGeth
+  bin/runGeth
 
 Once geth is running, run a demo programs by typing the following into another console:
 
