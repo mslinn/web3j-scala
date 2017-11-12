@@ -49,7 +49,7 @@ class DemoContext(implicit ec: ExecutionContext) {
     case Nil => println("No accounts found.")
     case accounts =>
       accounts.foreach {
-        account => println(s"The balance of $account is ${ eSync.balance(account, LATEST) } Wei")
+        account => println(s"The balance of account $account is ${ eSync.balance(account, LATEST) }")
       }
   }
 
