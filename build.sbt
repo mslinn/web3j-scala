@@ -1,7 +1,7 @@
 import Settings._
 import sbt.Keys.apiURL
 
-val web3jVersion = "3.0.2"
+val web3jVersion = "3.1.0"
 
 //enablePlugins(SiteScaladocPlugin, GhpagesPlugin)
 /* if the above is not there:
