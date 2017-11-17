@@ -1,6 +1,6 @@
 import Settings._
 
-val web3jVersion = "3.0.2"
+val web3jVersion = "3.1.0"
 
 lazy val commonSettings = Seq(
   cancelable := true,
