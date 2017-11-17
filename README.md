@@ -168,7 +168,11 @@ The following scripts are provided in the `bin/` directory:
    ```
    $ git add -a && git commit -m "Comment here"
    ```
-3. Publish a new version of this library, including committing changes and updating the Scaladoc with this command:
+3. Tell the `sbt-git` SBT plugin where the `.git` directory is:
+   ```
+   export GIT_DIR="$(pwd)/.git"
+   ```
+4. Publish a new version of this library, including committing changes and updating the Scaladoc with this command:
    ```
    $ sbt publishAndTag
    ```

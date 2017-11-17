@@ -3,7 +3,7 @@ import sbt.Keys.apiURL
 
 val web3jVersion = "3.1.0"
 
-//enablePlugins(SiteScaladocPlugin, GhpagesPlugin)
+enablePlugins(SiteScaladocPlugin, GhpagesPlugin)
 /* if the above is not there:
 References to undefined settings:
   web3j-scala\*:ghpagesPushSite from web3j-scala/\*:scaladoc2 (/mnt/_/work/ethereum/web3j-scala/publish.sbt:4)
@@ -103,13 +103,14 @@ lazy val commonSettings = Seq(
 
   bintrayOrganization := Some("micronautics"),
   bintrayRepository := "scala",
-  bintrayPackage := name.value,
+  bintrayPackage := name.value
 
   // sbt-ghpages
-//  git.remoteRepo := s"git@github.com:$gitHubName/web3j-scala.git",
+//  GitKeys.gitRemoteRepo := "/mnt/c/work/ethereum/web3j-scala", // "git@github.com:mslinn/web3j-scala.git",
+//  GitKeys.gitReader in ThisProject := baseDirectory(base => new DefaultReadableGit(base)).value,
 
   // sbt-site settings
-  siteSourceDirectory := target.value / "api"
+//  siteSourceDirectory := target.value / "api"
 )
 
 lazy val demo = project

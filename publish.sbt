@@ -1,3 +1,36 @@
+import sbt._
+import Keys._
+
+// git settings
+val workFile = new File(target.value, "api")
+val workTree = s"--work-tree=$workFile"
+
+// doc and package-site settings
+val apiDir = target.value / "latest/api/"
+siteSourceDirectory := apiDir
+
+scaladocSetup()
+doc.value
+packageSite.value
+scaladocCreate()
+
+def scaladocSetup(): Unit = {
+  if (new File(workFile, ".git").exists)
+    s"git $workTree checkout gh-pages".!!
+  else
+    s"git $workTree clone -b gh-pages git@github.com:mslinn/web3j-scala.git".!!
+  sbt.IO.delete(apiDir.listFiles)
+  s"git $workTree add -a".!!
+  s"git $workTree commit -m -".!!
+}
+
+def scaladocCreate(): Unit = {
+  s"git $workTree add -a".!!
+  s"git $workTree commit -m -".!!
+  s"git $workTree push origin gh-pages".!!
+}
+
+
 lazy val scaladoc2 =
   taskKey[Unit]("Rebuilds the Scaladoc and pushes the updated Scaladoc to GitHub pages without committing to the git repository")
 
