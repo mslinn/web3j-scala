@@ -8,6 +8,7 @@ scaladoc := {
   doc.in(Test).value
 
   println("Uploading Scaladoc to GitHub Pages")
+  sys.env(
   ghpagesPushSite.value
 }
 
