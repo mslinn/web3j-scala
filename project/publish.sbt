@@ -103,24 +103,28 @@ scaladocPush := {
 }
 
 scaladocSetup := {
-  val cwd: String = sys.props("user.dir") // safe default directory
-  println(s"CWD 1=${ sys.props("user.dir") }")
-  val path = project.base.getAbsolutePath
-  println(s"path=$path")
-  System.setProperty("user.dir", path)
-  println(s"CWD 2=${ sys.props("user.dir") }")
+  try {
+    val cwd: String = sys.props("user.dir") // safe default directory
+    println(s"CWD 1=${ sys.props("user.dir") }")
+    val path = project.base.getAbsolutePath
+    println(s"path=$path")
+    System.setProperty("user.dir", path)
+    println(s"CWD 2=${ sys.props("user.dir") }")
 
-  if (new File(gitWorkFile.value, ".git").exists) {
-    println(s"${ gitWorkFile.value } exists; about to git checkout using ${ gitWorkTree.value }")
-    s"git checkout gh-pages".!!
-  } else {
-    println(s"${ gitWorkFile.value } does not exist; about to git clone the gh-pages branch using ${ gitWorkTree.value }")
-    s"git clone -b gh-pages git@github.com:mslinn/web3j-scala.git".!!
+    if (new File(gitWorkFile.value, ".git").exists) {
+      println(s"${ gitWorkFile.value } exists; about to git checkout using ${ gitWorkTree.value }")
+      s"git checkout gh-pages".!!
+    } else {
+      println(s"${ gitWorkFile.value } does not exist; about to git clone the gh-pages branch using ${ gitWorkTree.value }")
+      s"git clone -b gh-pages git@github.com:mslinn/web3j-scala.git".!!
+    }
+    println(s"About to clear the contents of ${ apiDir.value }")
+    sbt.IO.delete(apiDir.value.listFiles)
+    s"git ${ gitWorkTree.value } add -a".!!
+    s"git ${ gitWorkTree.value } commit -m -".!!
+
+    System.setProperty("user.dir", cwd) // restore default directory
+  } catch {
+    case e: Exception => println(e.getMessage)
   }
-  println(s"About to clear the contents of ${ apiDir.value }")
-  sbt.IO.delete(apiDir.value.listFiles)
-  s"git ${ gitWorkTree.value } add -a".!!
-  s"git ${ gitWorkTree.value } commit -m -".!!
-
-  System.setProperty("user.dir", cwd) // restore default directory
 }

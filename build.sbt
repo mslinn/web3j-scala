@@ -189,5 +189,7 @@ lazy val root = (project in file("root"))
     publishSite
   )
 
-
-
+// todo figure how this works, or if it is even required
+/*scaladocSetup <<= Seq(
+  test in (ThisBuild, Test)
+).dependOn*/
