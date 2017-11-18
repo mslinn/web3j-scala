@@ -5,8 +5,8 @@ test in assembly := {}
 mainClass in assembly := Some("org.web3j.console.Runner")
 
 assemblyMergeStrategy in assembly := {
- case PathList("META-INF", xs @ _*) => MergeStrategy.discard
- case x => MergeStrategy.first
+ case PathList("META-INF", _ @ _*) => MergeStrategy.discard
+ case _ => MergeStrategy.first
 }
 
 //fullClasspath in assembly := (fullClasspath in Compile).value

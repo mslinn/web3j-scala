@@ -1,47 +1,7 @@
 import sbt._
 import Keys._
 
-// git settings
-val workFile = new File(target.value, "api")
-val workTree = s"--work-tree=$workFile"
-
-// doc and package-site settings
-val apiDir = target.value / "latest/api/"
-siteSourceDirectory := apiDir
-
-scaladocSetup()
-doc.value
-packageSite.value
-scaladocCreate()
-
-def scaladocSetup(): Unit = {
-  if (new File(workFile, ".git").exists)
-    s"git $workTree checkout gh-pages".!!
-  else
-    s"git $workTree clone -b gh-pages git@github.com:mslinn/web3j-scala.git".!!
-  sbt.IO.delete(apiDir.listFiles)
-  s"git $workTree add -a".!!
-  s"git $workTree commit -m -".!!
-}
-
-def scaladocCreate(): Unit = {
-  s"git $workTree add -a".!!
-  s"git $workTree commit -m -".!!
-  s"git $workTree push origin gh-pages".!!
-}
-
-
-lazy val scaladoc2 =
-  taskKey[Unit]("Rebuilds the Scaladoc and pushes the updated Scaladoc to GitHub pages without committing to the git repository")
-
-scaladoc2 := {
-  println("Creating Scaladoc")
-  doc.in(Compile).value
-
-  println("Uploading Scaladoc to GitHub Pages")
-  ghpagesPushSite.value // todo does it push to the proper project directory?
-  ()
-}
+lazy val apiDir = settingKey[File]("File where Scaladoc for a branch is generated into")
 
 /** Best practice is to comment your commits before invoking this task: `git commit -am "Your comment here"`.
   * This task does the following:
@@ -54,13 +14,35 @@ scaladoc2 := {
 lazy val commitAndDoc =
   taskKey[Unit]("Rebuilds the docs, commits the git repository, and publishes the updated Scaladoc without publishing a new version")
 
+lazy val gitWorkFile = settingKey[File]("Point git to non-standard location")
+
+lazy val gitWorkTree = settingKey[String]("Point git to non-standard location")
+
+/** Publish a new version of this library to BinTray.
+  * Be sure to update the version string in build.sbt before running this task. */
+lazy val publishAndTag =
+  taskKey[Unit]("Invokes commitAndPublish, then creates a git tag for the version string defined in build.sbt")
+
+lazy val scaladoc2 =
+  taskKey[Unit]("Rebuilds the Scaladoc and pushes the updated Scaladoc to GitHub pages without committing to the git repository")
+
+lazy val scaladocSetup = taskKey[Unit]("Sets up gh-pages branch for receiving scaladoc")
+
+lazy val scaladocPush = taskKey[Unit]("")
+
+
+scaladocSetup := Seq(
+  test in (root, Test)
+  test in (demo, Test)
+).dependOn
+
+apiDir := target.value / "latest/api/"
+
+
 commitAndDoc := {
   try {
     println("Fetching latest updates for this git repo")
     "git pull".!!
-
-    println("Creating Scaladoc")
-    doc.in(Compile).value
 
     val changedFileNames = "git diff --name-only".!!.trim.replace("\n", ", ")
     if (changedFileNames.nonEmpty) {
@@ -77,18 +59,24 @@ commitAndDoc := {
     println("About to git push to origin")
     "git push origin HEAD".!!  // See https://stackoverflow.com/a/20922141/553865
 
+    println("Creating Scaladoc")
+    //scaladocSetup.value // todo need this here?
+    doc.in(Compile).value
+
     println("Uploading Scaladoc to GitHub Pages")
-    ghpagesPushSite.value // todo does it push to the proper project directory?
+    siteSubdirName := apiDir.value.getAbsolutePath // todo append sbt subproject name
+    makeSite.value
+    scaladocPush.value
+//    ghpagesPushSite.value // todo does it push to the proper project directory?
   } catch {
     case e: Exception => println(e.getMessage)
   }
   ()
 }
 
-/** Publish a new version of this library to BinTray.
-  * Be sure to update the version string in build.sbt before running this task. */
-lazy val publishAndTag =
-  taskKey[Unit]("Invokes commitAndPublish, then creates a git tag for the version string defined in build.sbt")
+gitWorkFile := new File(target.value, "api").getAbsoluteFile
+
+gitWorkTree := s"--work-tree=${ gitWorkFile.value }"
 
 publishAndTag := {
   commitAndDoc.in(Compile).value
@@ -97,4 +85,45 @@ publishAndTag := {
   s"""git tag -a ${ version.value } -m ${ version.value }""".!!
   s"""git push origin --tags""".!!
   ()
+}
+
+scaladoc2 := {
+  println("Creating Scaladoc")
+  scaladocSetup.value
+  doc.in(Compile).value
+
+  println("Uploading Scaladoc to GitHub Pages")
+  siteSubdirName := apiDir.value.getAbsolutePath // todo append sbt subproject name
+  makeSite.value
+  scaladocPush.value
+  ()
+}
+
+scaladocPush := {
+  s"git ${ gitWorkTree.value } add -a".!!
+  s"git ${ gitWorkTree.value } commit -m -".!!
+  s"git ${ gitWorkTree.value } push origin gh-pages".!!
+}
+
+scaladocSetup := {
+  val cwd: String = sys.props("user.dir") // safe default directory
+  println(s"CWD 1=${ sys.props("user.dir") }")
+  val path = project.base.getAbsolutePath
+  println(s"path=$path")
+  System.setProperty("user.dir", path)
+  println(s"CWD 2=${ sys.props("user.dir") }")
+
+  if (new File(gitWorkFile.value, ".git").exists) {
+    println(s"${ gitWorkFile.value } exists; about to git checkout using ${ gitWorkTree.value }")
+    s"git checkout gh-pages".!!
+  } else {
+    println(s"${ gitWorkFile.value } does not exist; about to git clone the gh-pages branch using ${ gitWorkTree.value }")
+    s"git clone -b gh-pages git@github.com:mslinn/web3j-scala.git".!!
+  }
+  println(s"About to clear the contents of ${ apiDir.value }")
+  sbt.IO.delete(apiDir.value.listFiles)
+  s"git ${ gitWorkTree.value } add -a".!!
+  s"git ${ gitWorkTree.value } commit -m -".!!
+
+  System.setProperty("user.dir", cwd) // restore default directory
 }

@@ -1,13 +1,8 @@
 import Settings._
+import com.typesafe.sbt.site.SitePlugin.autoImport.siteSourceDirectory
 import sbt.Keys.apiURL
 
 val web3jVersion = "3.1.0"
-
-enablePlugins(SiteScaladocPlugin, GhpagesPlugin)
-/* if the above is not there:
-References to undefined settings:
-  web3j-scala\*:ghpagesPushSite from web3j-scala/\*:scaladoc2 (/mnt/_/work/ethereum/web3j-scala/publish.sbt:4)
-  web3j-scala\*:ghpagesPushSite from web3j-scala/\*:commitAndDoc (/mnt/_/work/ethereum/web3j-scala/publish.sbt:24) */
 
 lazy val commonSettings = Seq(
   cancelable := true,
@@ -111,10 +106,11 @@ lazy val commonSettings = Seq(
 
   // sbt-site settings
 //  siteSourceDirectory := target.value / "api"
+//  siteSourceDirectory := apiDir.value
 )
 
 lazy val demo = project
-  .enablePlugins(SiteScaladocPlugin, GhpagesPlugin)
+  .enablePlugins(SiteScaladocPlugin/*, GhpagesPlugin*/)
   .settings(
     commonSettings,
 
@@ -145,11 +141,13 @@ lazy val demo = project
   ).dependsOn(root)
 
 lazy val root = (project in file("root"))
-  .enablePlugins(SiteScaladocPlugin, GhpagesPlugin)
+  .enablePlugins(SiteScaladocPlugin/*, GhpagesPlugin*/)
   .settings(
     commonSettings,
 
-    apiURL := Some(url(s"https://$gitHubName.github.io/web3j-scala/root/latest/api")),   // todo is the root directory respected?
+    // todo is the root directory respected?
+    // todo is there a way of computing the subproject name?
+    apiURL := Some(url(s"https://$gitHubName.github.io/web3j-scala/root/latest/api")),
 
     // sbt-ghpages setting
     git.remoteRepo := s"git@github.com:$gitHubName/${ name.value }.git",
