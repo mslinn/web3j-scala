@@ -1,6 +1,8 @@
 import sbt._
 import Keys._
 
+enablePlugins(SiteScaladocPlugin)
+
 lazy val apiDir = settingKey[File]("File where Scaladoc for a branch is generated into")
 
 /** Best practice is to comment your commits before invoking this task: `git commit -am "Your comment here"`.
@@ -30,11 +32,6 @@ lazy val scaladocSetup = taskKey[Unit]("Sets up gh-pages branch for receiving sc
 
 lazy val scaladocPush = taskKey[Unit]("")
 
-
-scaladocSetup := Seq(
-  test in (root, Test)
-  test in (demo, Test)
-).dependOn
 
 apiDir := target.value / "latest/api/"
 

@@ -110,7 +110,6 @@ lazy val commonSettings = Seq(
 )
 
 lazy val demo = project
-  .enablePlugins(SiteScaladocPlugin/*, GhpagesPlugin*/)
   .settings(
     commonSettings,
 
@@ -141,7 +140,6 @@ lazy val demo = project
   ).dependsOn(root)
 
 lazy val root = (project in file("root"))
-  .enablePlugins(SiteScaladocPlugin/*, GhpagesPlugin*/)
   .settings(
     commonSettings,
 
@@ -190,3 +188,6 @@ lazy val root = (project in file("root"))
 
     publishSite
   )
+
+
+
