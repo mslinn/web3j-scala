@@ -2,25 +2,13 @@ package com.micronautics.sbt
 
 import sbt._
 import sbt.Keys._
-import scala.collection.JavaConverters._
 import Settings._
-import Util._
+import CommandLine.run
 
 /** To see debug output: {{{set logLevel := Level.Debug}}} */
 trait PublishPluginImpl { this: AutoPlugin =>
   import PublishPlugin._
   import autoImport._
-
-  def run(cmd: String, cwd: File = file(sys.props("user.dir")))
-         (implicit log: Logger): String = {
-    import scala.sys.process._
-    log.debug(s"Running: '$cmd' from '$cwd'")
-    Process(command = cmd, cwd = cwd).!!.trim
-  }
-
-  @inline def run(cmd: String)
-         (implicit log: Logger): String =
-    run(cmd, file(sys.props("user.dir")))
 
   override lazy val projectSettings = Seq(
     /** Include the SBT sub-project name to avoid collisions when merging Scaladoc from all the subprojects */
@@ -119,16 +107,16 @@ trait PublishPluginImpl { this: AutoPlugin =>
           run(s"git checkout gh-pages", gitWorkParent.value)
         } else {
           log.debug("gitGit does not exist; about to create it in 2 steps.\n  1) git clone the gh-pages branch into gitParent")
-          gitWorkParent.value.mkdirs() // does not fail if the directories already exist
-          removeUnder(gitWorkParent.value)
+          IO.createDirectory(gitWorkParent.value) // does not fail if the directories already exist
+          IO.delete(gitWorkParent.value.listFiles) // clear out any children left over from before
           run(s"git clone -b gh-pages git@github.com:$gitHubName/${ name.value }.git", gitWorkParent.value)
           log.debug(s"  2) rename ${ name.value } to ${ baseDirectory.value.name }")
-          file(name.value).renameTo(file(baseDirectory.value.name))
+          IO.move(file(name.value), file(baseDirectory.value.name))
         }
         val files: Array[File] = apiDir.value.listFiles
         if (files.nonEmpty) {
           log.debug(s"About to clear the contents of apiDir (${ files.mkString(", ") })")
-          removeUnder(apiDir.value)
+          IO.delete(files)
         }
         run(s"git ${ gitWorkTree.value } add -a", gitWorkParent.value)
         run(s"git ${ gitWorkTree.value } commit -m -", gitWorkParent.value)

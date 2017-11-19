@@ -1,17 +1,20 @@
 import sbt._
 import Keys._
-import bintray.BintrayPlugin.autoImport.{bintrayOrganization, bintrayPackage, bintrayRepository}
+import com.micronautics.sbt.Settings.gitHubName
+//import bintray.BintrayPlugin.autoImport.{bintrayOrganization, bintrayPackage, bintrayRepository}
 import com.micronautics.sbt.PublishPlugin.autoImport.apiDir
 
 /** @see See [[http://blog.jaceklaskowski.pl/2015/04/12/using-autoplugin-in-sbt-for-common-settings-across-projects-in-multi-project-build.html Using AutoPlugin in Sbt for Common Settings Across Projects in Multi-project Build]] */
 object CommonSettingsPlugin extends AutoPlugin {
   override lazy val projectSettings = Seq(
+    apiURL := Some(url(s"https://$gitHubName.github.io/${ name.value }/${ baseDirectory.value.name }/latest/api")),
+
     // See http://www.scala-sbt.org/1.0/docs/Howto-Scaladoc.html
     autoAPIMappings := true,
 
-    bintrayOrganization := Some("micronautics"),
-    bintrayRepository := "scala",
-    bintrayPackage := name.value,
+//    bintrayOrganization := Some("micronautics"),
+//    bintrayRepository := "scala",
+//    bintrayPackage := name.value,
 
     cancelable := true,
 
@@ -33,7 +36,7 @@ object CommonSettingsPlugin extends AutoPlugin {
 
     licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html")),
 
-    logLevel := Level.Warn,
+    logLevel := Level.Debug,
 
     // Only show warnings and errors on the screen for compilations.
     // This applies to both test:compile and compile and is Info by default
@@ -115,14 +118,6 @@ object CommonSettingsPlugin extends AutoPlugin {
     scalaVersion := "2.12.4",
 
     version := "0.2.1"
-
-    // sbt-ghpages
-    //  GitKeys.gitRemoteRepo := "/mnt/c/work/ethereum/web3j-scala", // "git@github.com:mslinn/web3j-scala.git",
-    //  GitKeys.gitReader in ThisProject := baseDirectory(base => new DefaultReadableGit(base)).value,
-
-    // sbt-site settings
-    //  siteSourceDirectory := target.value / "api"
-    //  siteSourceDirectory := apiDir.value
   )
 
   override def trigger = allRequirements

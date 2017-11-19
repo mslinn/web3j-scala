@@ -162,6 +162,15 @@ The following scripts are provided in the `bin/` directory:
 * [The Web3J JavaDoc is here](https://jar-download.com/java-documentation-javadoc.php?a=core&g=org.web3j&v=3.0.2),
   and here is the [Web3J gitter channel](https://gitter.im/web3j/web3j).
 
+### Previewing Scaladoc
+To preview Scaladoc, you can either run the `previewSite` task, which launches a static web server, or
+run the `previewAuto` task, which launches a dynamic server that updates its content at each modification in your source files.
+Both servers run from port 4000 and both SBT tasks attempt to connect your browser to `http://localhost:4000/`.
+
+To change the server port, set `previewFixedPort`: 
+
+    previewFixedPort := Some(9999)
+   
 ### Publishing
 1. Update the version string in `build.sbt` and in this `README.md` before attempting to publish to Bintray.
 2. Commit changes with a descriptive comment:

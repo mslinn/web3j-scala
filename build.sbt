@@ -4,18 +4,11 @@ import sbt.Keys.apiURL
 
 val web3jVersion = "3.1.0"
 
-/* To preview the Scaladoc, run `previewSite`, which launches a static web server, or run `previewAuto`,
-   which launches a dynamic server that updates its content at each modification in your source files.
-   Both launch the server on port 4000 and attempt to connect your browser to http://localhost:4000/.
-   To change the server port, use the key previewFixedPort: {{{previewFixedPort := Some(9999)}}} */
-
 lazy val demo = project
   .aggregate(root)
   .enablePlugins(PublishPlugin)
   .settings(
-    apiURL := Some(url(s"https://$gitHubName.github.io/web3j-scala/demo/latest/api")),// todo is the demo directory respected?
-
-    // define the statements initially evaluated when entering 'console', 'console-quick', but not 'console-project'
+    // define the statements to be evaluated when entering 'console' and 'consoleQuick' but not 'consoleProject'
     initialCommands in console := """import java.math.BigInteger
                                     |import java.util.concurrent.Future
                                     |import org.web3j.protocol._
@@ -30,13 +23,8 @@ lazy val demo = project
 lazy val root = (project in file("root"))
   .enablePlugins(PublishPlugin)
   .settings(
-    apiURL := Some(url(s"https://$gitHubName.github.io/web3j-scala/root/latest/api")),
-
     // define the statements initially evaluated when entering 'console', 'console-quick', but not 'console-project'
-    initialCommands in console := """import java.math.BigInteger
-                                    |import java.util.concurrent.Future
-                                    |import org.web3j.protocol._
-                                    |import org.web3j.protocol.infura._
+    initialCommands in console := """
                                     |""".stripMargin,
 
     libraryDependencies ++= Seq(
