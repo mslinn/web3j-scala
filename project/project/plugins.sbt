@@ -1,6 +1,9 @@
-// See https://github.com/sbt/sbt-git
-//addSbtPlugin("com.typesafe.sbt" % "sbt-git" % "0.9.3")
+// See https://stackoverflow.com/a/27858890/553865
+evictionWarningOptions in update :=
+  EvictionWarningOptions
+    .default
+    .withWarnTransitiveEvictions(false)
+    .withWarnDirectEvictions(false)
+    .withWarnScalaVersionEviction(false)
 
-addSbtPlugin("com.typesafe.sbt" % "sbt-site"    % "1.3.1")
-
-addSbtPlugin("com.typesafe.sbt" % "sbt-ghpages" % "0.6.2")
+libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.2.3"

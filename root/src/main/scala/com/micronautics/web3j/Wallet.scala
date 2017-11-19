@@ -15,8 +15,8 @@ object Wallet {
     .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 
 
-  @inline def apply(password: String, destinationDirectory: File, isFullWallet: Boolean = true): Wallet =
-    Wallet(password, destinationDirectory, isFullWallet)
+//  @inline def apply(password: String, destinationDirectory: File, isFullWallet: Boolean = true): Wallet =
+//    new Wallet(password, destinationDirectory, isFullWallet)
 
   @inline def defaultKeyDirectory: String = WalletUtils.getDefaultKeyDirectory
 
@@ -40,7 +40,7 @@ object Wallet {
   @inline def testNetKeyDirectory: File = new File(WalletUtils.getTestnetKeyDirectory)
 }
 
-case class Wallet(password: String, destinationDirectory: File, isFullWallet: Boolean) {
+case class Wallet(password: String, destinationDirectory: File, isFullWallet: Boolean=true) {
   import Wallet._
 
   val ecKeyPair: ECKeyPair = Keys.createEcKeyPair
