@@ -33,8 +33,12 @@ object PublishPlugin extends AutoPlugin {
     lazy val scaladocPush = taskKey[Unit]("")
 
     lazy val scaladocSetup = taskKey[Unit]("Sets up gh-pages branch for receiving scaladoc")
+  }
 
-    apiDir := target.value / "latest/api/"
+  import autoImport._
+
+  override lazy val projectSettings = Seq(
+    apiDir := target.value / "latest/api/",
 
     commitAndDoc := {
       try {
@@ -72,11 +76,11 @@ object PublishPlugin extends AutoPlugin {
         case e: Exception => println(e.getMessage)
       }
       ()
-    }
+    },
 
-    gitWorkFile := new File(target.value, "api").getAbsoluteFile
+    gitWorkFile := new File(target.value, "api").getAbsoluteFile,
 
-    gitWorkTree := s"--work-tree=${ gitWorkFile.value }"
+    gitWorkTree := s"--work-tree=${ gitWorkFile.value }",
 
     publishAndTag := {
       commitAndDoc.in(Compile).value
@@ -85,7 +89,7 @@ object PublishPlugin extends AutoPlugin {
       s"""git tag -a ${ version.value } -m ${ version.value }""".!!
       s"""git push origin --tags""".!!
       ()
-    }
+    },
 
     scaladoc2 := {
       println("Creating Scaladoc")
@@ -97,13 +101,13 @@ object PublishPlugin extends AutoPlugin {
 //      makeSite.value
       scaladocPush.value
       ()
-    }
+    },
 
     scaladocPush := {
       s"git ${ gitWorkTree.value } add -a".!!
       s"git ${ gitWorkTree.value } commit -m -".!!
       s"git ${ gitWorkTree.value } push origin gh-pages".!!
-    }
+    },
 
     scaladocSetup := {
       try {
@@ -131,9 +135,7 @@ object PublishPlugin extends AutoPlugin {
         case e: Exception => println(e.getMessage)
       }
     }
-  }
-
-  override def projectSettings = Seq()
+  )
 
   override def trigger = allRequirements
 }

@@ -10,6 +10,7 @@ val web3jVersion = "3.1.0"
    To change the server port, use the key previewFixedPort: {{{previewFixedPort := Some(9999)}}} */
 
 lazy val demo = project
+  .aggregate(root)
   .enablePlugins(PublishPlugin)
   .settings(
     apiURL := Some(url(s"https://$gitHubName.github.io/web3j-scala/demo/latest/api")),// todo is the demo directory respected?
@@ -29,6 +30,7 @@ lazy val demo = project
 lazy val root = (project in file("root"))
   .enablePlugins(PublishPlugin)
   .settings(
+    gitWorkFile := file(""),
     apiURL := Some(url(s"https://$gitHubName.github.io/web3j-scala/root/latest/api")),
 
     // define the statements initially evaluated when entering 'console', 'console-quick', but not 'console-project'
