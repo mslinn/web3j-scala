@@ -16,6 +16,9 @@ jdk:
 
 language: scala
 
+sbt.version:
+  - 1.0.3
+
 scala:
    - 2.12.4
 

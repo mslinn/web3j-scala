@@ -2,6 +2,7 @@ package com.micronautics.sbt
 
 import sbt.Keys._
 import sbt._
+import scala.sys.process._
 import Settings._
 
 trait PublishPluginImpl { this: AutoPlugin =>
