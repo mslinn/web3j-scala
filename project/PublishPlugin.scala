@@ -38,7 +38,8 @@ object PublishPlugin extends AutoPlugin {
   import autoImport._
 
   override lazy val projectSettings = Seq(
-    apiDir := target.value / baseDirectory.value.name / "latest/api/",
+    /** Include the SBT sub-project name to avoid collisions when merging Scaladoc from all the subprojects */
+    apiDir := gitWorkFile.value / "latest/api/",
 
     commitAndDoc := {
       try {
@@ -78,7 +79,7 @@ object PublishPlugin extends AutoPlugin {
       ()
     },
 
-    gitWorkFile := new File(target.value, "api").getAbsoluteFile,
+    gitWorkFile := target.value / "api" / baseDirectory.value.name,
 
     gitWorkTree := s"--work-tree=${ gitWorkFile.value }",
 

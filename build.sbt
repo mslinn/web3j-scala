@@ -30,7 +30,6 @@ lazy val demo = project
 lazy val root = (project in file("root"))
   .enablePlugins(PublishPlugin)
   .settings(
-    gitWorkFile := file(""),
     apiURL := Some(url(s"https://$gitHubName.github.io/web3j-scala/root/latest/api")),
 
     // define the statements initially evaluated when entering 'console', 'console-quick', but not 'console-project'
