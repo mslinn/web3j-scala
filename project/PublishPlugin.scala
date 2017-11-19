@@ -19,9 +19,11 @@ object PublishPlugin extends AutoPlugin with PublishPluginImpl {
 
 //    lazy val docPublishTag = taskKey[Unit]("Does everything necessary to release Scaladoc for this project: initialize, build, upload, tag")
 
-    lazy val gitWorkFile = settingKey[File]("Point git to non-standard location")
+    lazy val gitWorkFile   = settingKey[File]("git work directory for each sbt subproject's scaladoc")
 
-    lazy val gitWorkTree = settingKey[String]("Point git to non-standard location")
+    lazy val gitWorkParent = settingKey[File]("directory to run git from when creating gitWorkFIle")
+
+    lazy val gitWorkTree   = settingKey[String]("git option for applying gitWorkFile")
 
     /** Publish a new version of this library to BinTray.
       * Be sure to update the version string in build.sbt before running this task. */
@@ -31,7 +33,7 @@ object PublishPlugin extends AutoPlugin with PublishPluginImpl {
     lazy val scaladoc =
       taskKey[Unit]("Rebuilds the Scaladoc and pushes the updated Scaladoc to GitHub pages without committing to the git repository")
 
-    lazy val scaladocPush = taskKey[Unit]("Upload scaladocPush")
+    lazy val scaladocPush  = taskKey[Unit]("Upload scaladocPush")
 
     lazy val scaladocSetup = taskKey[Unit]("Sets up gh-pages branch for receiving scaladoc")
   }

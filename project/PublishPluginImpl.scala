@@ -1,40 +1,53 @@
 package com.micronautics.sbt
 
-import sbt.Keys._
 import sbt._
-import scala.sys.process._
+import sbt.Keys._
+import scala.collection.JavaConverters._
 import Settings._
+import Util._
 
+/** To see debug output: {{{set logLevel := Level.Debug}}} */
 trait PublishPluginImpl { this: AutoPlugin =>
   import PublishPlugin._
   import autoImport._
+
+  def run(cmd: String, cwd: File = file(sys.props("user.dir")))
+         (implicit log: Logger): String = {
+    import scala.sys.process._
+    log.debug(s"Running: '$cmd' from '$cwd'")
+    Process(command = cmd, cwd = cwd).!!.trim
+  }
+
+  @inline def run(cmd: String)
+         (implicit log: Logger): String =
+    run(cmd, file(sys.props("user.dir")))
 
   override lazy val projectSettings = Seq(
     /** Include the SBT sub-project name to avoid collisions when merging Scaladoc from all the subprojects */
     apiDir := gitWorkFile.value / "latest/api/",
 
     commitAndDoc := {
-      val log = streams.value.log
+      implicit val log: Logger = streams.value.log
       try {
         scaladocSetup.value // is this already called elsewhere?
 
         log.info("Fetching latest updates for this git repo")
-        "git pull".!!
+        run("git pull")
 
-        val changedFileNames = "git diff --name-only".!!.trim.replace("\n", ", ")
+        val changedFileNames: String = run("git diff --name-only").replace("\n", ", ")
         if (changedFileNames.nonEmpty) {
           log.info(s"About to commit these changed files: $changedFileNames")
-          "git add -A".!!
-          "git commit -m -".!!
+          run("git add -A")
+          run("git commit -m -")
         }
 
         /*val stagedFileNames = "git diff --cached --name-only".!!.trim.replace("\n", ", ")
         if (stagedFileNames.nonEmpty) {
-          println(s"About to push these staged files: $stagedFileNames")
+          log.info(s"About to push these staged files: $stagedFileNames")
         }*/
 
         log.info("About to git push to origin")
-        "git push origin HEAD".!!  // See https://stackoverflow.com/a/20922141/553865
+        run("git push origin HEAD")  // See https://stackoverflow.com/a/20922141/553865
 
         log.info("Creating Scaladoc")
         doc.in(Compile).value
@@ -42,31 +55,33 @@ trait PublishPluginImpl { this: AutoPlugin =>
         log.info("Uploading Scaladoc to GitHub Pages")
         scaladocPush.value
       } catch {
-        case e: Exception => println(e.getMessage)
+        case e: Exception => log.error(e.getMessage)
       }
       ()
     },
 
 //    docPublishTag := ???, // todo write me
 
-    gitWorkFile := crossTarget.value / "api" / baseDirectory.value.name,
+    gitWorkFile := gitWorkParent.value / baseDirectory.value.name,
+
+    gitWorkParent := crossTarget.value / "api",
 
     gitWorkTree := s"--work-tree=${ gitWorkFile.value }",
 
     publishAndTag := {
-      val log = streams.value.log
+      implicit val log: Logger = streams.value.log
 
       commitAndDoc.in(Compile).value
       publish.value
 
       log.info(s"Creating git tag for v${ version.value }")
-      s"""git tag -a ${ version.value } -m ${ version.value }""".!!
-      s"""git push origin --tags""".!!
+      run(s"""git tag -a ${ version.value } -m ${ version.value }""")
+      run(s"""git push origin --tags""")
       ()
     },
 
     scaladoc := {
-      val log = streams.value.log
+      implicit val log: Logger = streams.value.log
 
       log.info("Creating Scaladoc")
       scaladocSetup.value
@@ -78,36 +93,47 @@ trait PublishPluginImpl { this: AutoPlugin =>
     },
 
     scaladocPush := {
-      s"git ${ gitWorkTree.value } add -a".!!
-      s"git ${ gitWorkTree.value } commit -m -".!!
-      s"git ${ gitWorkTree.value } push origin gh-pages".!!
+      implicit val log: Logger = streams.value.log
+      run(s"git ${ gitWorkTree.value } add -a")
+      run(s"git ${ gitWorkTree.value } commit -m -")
+      run(s"git ${ gitWorkTree.value } push origin gh-pages")
     },
 
     scaladocSetup := {
-      val log = streams.value.log
+      implicit val log: Logger = streams.value.log
       try {
-        val cwd: String = sys.props("user.dir") // save directory so it can be restored at the end
-        log.debug(s"CWD=${ sys.props("user.dir") }")
+        val gitGit = new File(gitWorkFile.value, ".git")
 
-        val path = baseDirectory.value.getAbsolutePath
-        System.setProperty("user.dir", path)
+        val gitParent = gitWorkParent.value.getAbsolutePath
 
-        if (new File(gitWorkFile.value, ".git").exists) {
-          log.debug(s"${ gitWorkFile.value } exists; about to git checkout gh-pages into $path")
-          s"git checkout gh-pages".!!
+        log.debug(s"baseDirectory = ${ baseDirectory.value.getAbsolutePath }")
+        log.debug(s"CWD           = ${ sys.props("user.dir") }")
+        log.debug(s"gitWorkParent = ${ gitWorkParent.value }")
+        log.debug(s"gitParent     = $gitParent")
+        log.debug(s"gitWorkFile   = ${ gitWorkFile.value }")
+        log.debug(s"gitGit        = $gitGit")
+        log.debug(s"apiDir        = ${ apiDir.value }")
+
+        if (gitGit.exists) {
+          log.debug("gitGit exists; about to git checkout gh-pages into gitParent")
+          run(s"git checkout gh-pages", gitWorkParent.value)
         } else {
-          log.debug(s"${ gitWorkFile.value } does not exist; about to create it and git clone the gh-pages branch into $path")
-          gitWorkFile.value.mkdirs()
-          s"git clone -b gh-pages git@github.com:$gitHubName/${ name.value }.git".!!
+          log.debug("gitGit does not exist; about to create it in 2 steps.\n  1) git clone the gh-pages branch into gitParent")
+          gitWorkParent.value.mkdirs() // does not fail if the directories already exist
+          removeUnder(gitWorkParent.value)
+          run(s"git clone -b gh-pages git@github.com:$gitHubName/${ name.value }.git", gitWorkParent.value)
+          log.debug(s"  2) rename ${ name.value } to ${ baseDirectory.value.name }")
+          file(name.value).renameTo(file(baseDirectory.value.name))
         }
-        log.debug(s"About to clear the contents of ${ apiDir.value }")
-        sbt.IO.delete(apiDir.value.listFiles)
-        s"git ${ gitWorkTree.value } add -a".!!
-        s"git ${ gitWorkTree.value } commit -m -".!!
-
-        System.setProperty("user.dir", cwd) // restore previous directory
+        val files: Array[File] = apiDir.value.listFiles
+        if (files.nonEmpty) {
+          log.debug(s"About to clear the contents of apiDir (${ files.mkString(", ") })")
+          removeUnder(apiDir.value)
+        }
+        run(s"git ${ gitWorkTree.value } add -a", gitWorkParent.value)
+        run(s"git ${ gitWorkTree.value } commit -m -", gitWorkParent.value)
       } catch {
-        case e: Exception => println(e.getMessage)
+        case e: Exception => log.error(e.getMessage)
       }
     }
   )
