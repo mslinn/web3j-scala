@@ -17,6 +17,7 @@ jdk:
 language: scala
 
 sbt.version:
+  - 0.13.16
   - 1.0.3
 
 scala:
@@ -24,4 +25,3 @@ scala:
 
 # Use container-based infrastructure
 sudo: false
-
