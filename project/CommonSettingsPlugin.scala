@@ -36,9 +36,9 @@ object CommonSettingsPlugin extends AutoPlugin {
 
     licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html")),
 
-    logBuffered := false,
+//    logBuffered in Global := false,
 
-    logLevel := Level.Debug,
+//    logLevel in Global := Level.Warn,
 
     // Only show warnings and errors on the screen for compilations.
     // This applies to both test:compile and compile and is Info by default

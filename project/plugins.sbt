@@ -1,3 +1,4 @@
+
 // See https://github.com/eed3si9n/sbt-assembly
 addSbtPlugin("com.eed3si9n"                      % "sbt-assembly"      % "0.14.5")
 
@@ -19,3 +20,6 @@ evictionWarningOptions in update :=
     .withWarnTransitiveEvictions(false)
     .withWarnDirectEvictions(false)
     .withWarnScalaVersionEviction(false)
+
+//logLevel in Global := Level.Debug
+//logBuffered in Global := false

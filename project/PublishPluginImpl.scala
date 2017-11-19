@@ -111,7 +111,8 @@ trait PublishPluginImpl { this: AutoPlugin =>
           IO.delete(gitWorkParent.value.listFiles) // clear out any children left over from before
           run(s"git clone -b gh-pages git@github.com:$gitHubName/${ name.value }.git", gitWorkParent.value)
 
-          log.debug(s"  2) rename ${ name.value } to ${ baseDirectory.value.name }")
+          val x = s"  2) rename ${ name.value } to ${ baseDirectory.value.name }"
+          log.debug(x)
           IO.move(file(name.value), file(baseDirectory.value.name))
         }
         val files: Array[File] = apiDir.value.listFiles

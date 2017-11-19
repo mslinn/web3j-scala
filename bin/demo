@@ -16,10 +16,12 @@ Once geth is running, run a demo programs by typing the following into another c
   exit
 }
 
+DEBUG="-jvm-debug 5005"
 case "$1" in
-  Observables)    sbt ";project demo; runMain demo.DemoObservables"    ;;
-  SmartContracts) sbt ";project demo; runMain demo.DemoSmartContracts" ;;
-  Transactions)   sbt ";project demo; runMain demo.DemoTransactions"   ;;
-  All)            sbt ";project demo; runMain demo.Main"               ;;
+  debug)          sbt $DEBUG "; project root" ;;
+  Observables)    sbt $DEBUG ";project demo; runMain demo.DemoObservables"    ;;
+  SmartContracts) sbt $DEBUG ";project demo; runMain demo.DemoSmartContracts" ;;
+  Transactions)   sbt $DEBUG ";project demo; runMain demo.DemoTransactions"   ;;
+  All)            sbt $DEBUG ";project demo; runMain demo.Main"               ;;
   *) help
 esac
