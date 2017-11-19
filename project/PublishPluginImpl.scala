@@ -110,6 +110,7 @@ trait PublishPluginImpl { this: AutoPlugin =>
           IO.createDirectory(gitWorkParent.value) // does not fail if the directories already exist
           IO.delete(gitWorkParent.value.listFiles) // clear out any children left over from before
           run(s"git clone -b gh-pages git@github.com:$gitHubName/${ name.value }.git", gitWorkParent.value)
+
           log.debug(s"  2) rename ${ name.value } to ${ baseDirectory.value.name }")
           IO.move(file(name.value), file(baseDirectory.value.name))
         }
@@ -118,7 +119,7 @@ trait PublishPluginImpl { this: AutoPlugin =>
           log.debug(s"About to clear the contents of apiDir (${ files.mkString(", ") })")
           IO.delete(files)
         }
-        run(s"git ${ gitWorkTree.value } add -a", gitWorkParent.value)
+        run(s"git ${ gitWorkTree.value } add -a",      gitWorkParent.value)
         run(s"git ${ gitWorkTree.value } commit -m -", gitWorkParent.value)
       } catch {
         case e: Exception => log.error(e.getMessage)
