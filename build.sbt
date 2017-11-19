@@ -1,21 +1,18 @@
 import com.micronautics.sbt.PublishPlugin
-import PublishPlugin.autoImport._
 import Settings._
 import sbt.Keys.apiURL
 
 val web3jVersion = "3.1.0"
 
+/* To preview the Scaladoc, run `previewSite`, which launches a static web server, or run `previewAuto`,
+   which launches a dynamic server that updates its content at each modification in your source files.
+   Both launch the server on port 4000 and attempt to connect your browser to http://localhost:4000/.
+   To change the server port, use the key previewFixedPort: {{{previewFixedPort := Some(9999)}}} */
+
 lazy val demo = project
   .enablePlugins(PublishPlugin)
   .settings(
     apiURL := Some(url(s"https://$gitHubName.github.io/web3j-scala/demo/latest/api")),// todo is the demo directory respected?
-
-    // sbt-ghpages settings
-//    ghpagesBranch := "demo-pages",
-    /* To preview the Scaladoc, run `previewSite`, which launches a static web server, or run `previewAuto`,
-       which launches a dynamic server that updates its content at each modification in your source files.
-       Both launch the server on port 4000 and attempt to connect your browser to http://localhost:4000/.
-       To change the server port, use the key previewFixedPort: {{{previewFixedPort := Some(9999)}}} */
 
     // define the statements initially evaluated when entering 'console', 'console-quick', but not 'console-project'
     initialCommands in console := """import java.math.BigInteger
@@ -26,10 +23,6 @@ lazy val demo = project
 
     name := "web3j-scala-demo",
 
-//    publishSite,
-//    siteSubdirName := apiDir.value.getAbsolutePath, // todo append sbt subproject name
-//    siteSourceDirectory := target.value / "latest/api/",
-
     unmanagedSourceDirectories in Compile += baseDirectory.value / "../abiWrapper"
   ).dependsOn(root)
 
@@ -37,13 +30,6 @@ lazy val root = (project in file("root"))
   .enablePlugins(PublishPlugin)
   .settings(
     apiURL := Some(url(s"https://$gitHubName.github.io/web3j-scala/root/latest/api")),
-
-    // sbt-ghpages setting
-//    git.remoteRepo := s"git@github.com:$gitHubName/${ name.value }.git",
-    /* To preview the Scaladoc, run `previewSite`, which launches a static web server, or run `previewAuto`,
-       which launches a dynamic server that updates its content at each modification in your source files.
-       Both launch the server on port 4000 and attempt to connect your browser to http://localhost:4000/.
-       To change the server port, use the key previewFixedPort: {{{previewFixedPort := Some(9999)}}} */
 
     // define the statements initially evaluated when entering 'console', 'console-quick', but not 'console-project'
     initialCommands in console := """import java.math.BigInteger
@@ -77,13 +63,4 @@ lazy val root = (project in file("root"))
     ),
 
     name := "web3j-scala"
-
-//    publishSite
-//    siteSubdirName := apiDir.value.getAbsolutePath, // todo append sbt subproject name
-//    siteSourceDirectory := target.value / "latest/api/"
   )
-
-// todo figure how this works, or if it is even required
-/*scaladocSetup <<= Seq(
-  test in (ThisBuild, Test)
-).dependOn*/

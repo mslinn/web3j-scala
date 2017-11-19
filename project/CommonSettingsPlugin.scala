@@ -4,7 +4,6 @@ import bintray.BintrayPlugin.autoImport.{bintrayOrganization, bintrayPackage, bi
 
 /** @see See [[http://blog.jaceklaskowski.pl/2015/04/12/using-autoplugin-in-sbt-for-common-settings-across-projects-in-multi-project-build.html Using AutoPlugin in Sbt for Common Settings Across Projects in Multi-project Build]] */
 object CommonSettingsPlugin extends AutoPlugin {
-  override def trigger = allRequirements
   override lazy val projectSettings = Seq(
     // See http://www.scala-sbt.org/1.0/docs/Howto-Scaladoc.html
     autoAPIMappings := true,
@@ -118,4 +117,6 @@ object CommonSettingsPlugin extends AutoPlugin {
     //  siteSourceDirectory := target.value / "api"
     //  siteSourceDirectory := apiDir.value
   )
+
+  override def trigger = allRequirements
 }

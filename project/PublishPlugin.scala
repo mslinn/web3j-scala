@@ -1,22 +1,16 @@
 package com.micronautics.sbt
 
-//import com.typesafe.sbt.site.SiteScaladocPlugin
 import sbt.Keys._
 import sbt._
 
 object PublishPlugin extends AutoPlugin {
-//  override def requires = GitPlugin && SiteScaladocPlugin
-  override def projectSettings = Seq(
-  )
-  override def trigger = allRequirements
-
   object autoImport {
     lazy val apiDir = settingKey[File]("File where Scaladoc for a branch is generated into")
 
     /** Best practice is to comment your commits before invoking this task: `git commit -am "Your comment here"`.
       * This task does the following:
       * 1. `git pull` when it starts.
-      * 2. Attempts to build Scaladoc, which fails if there is a compile error
+      * 2. Attempts to build Scaladoc, which fails if there is a compile error; output is to subprojects' target/api directory.
       * 3. Ensures any uncommitted changes are committed before publishing, including new files; it provides the comment as "-".
       * 4. Git pushes all files
       * 5. Uploads new Scaladoc
@@ -36,9 +30,9 @@ object PublishPlugin extends AutoPlugin {
     lazy val scaladoc2 =
       taskKey[Unit]("Rebuilds the Scaladoc and pushes the updated Scaladoc to GitHub pages without committing to the git repository")
 
-    lazy val scaladocSetup = taskKey[Unit]("Sets up gh-pages branch for receiving scaladoc")
-
     lazy val scaladocPush = taskKey[Unit]("")
+
+    lazy val scaladocSetup = taskKey[Unit]("Sets up gh-pages branch for receiving scaladoc")
 
     apiDir := target.value / "latest/api/"
 
@@ -138,4 +132,8 @@ object PublishPlugin extends AutoPlugin {
       }
     }
   }
+
+  override def projectSettings = Seq()
+
+  override def trigger = allRequirements
 }
