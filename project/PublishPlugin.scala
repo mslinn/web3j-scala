@@ -38,7 +38,7 @@ object PublishPlugin extends AutoPlugin {
   import autoImport._
 
   override lazy val projectSettings = Seq(
-    apiDir := target.value / "latest/api/",
+    apiDir := target.value / baseDirectory.value.name / "latest/api/",
 
     commitAndDoc := {
       try {
