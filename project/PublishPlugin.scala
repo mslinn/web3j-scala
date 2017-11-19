@@ -2,6 +2,7 @@ package com.micronautics.sbt
 
 import sbt.Keys._
 import sbt._
+import Settings._
 
 object PublishPlugin extends AutoPlugin {
   object autoImport {
@@ -27,7 +28,7 @@ object PublishPlugin extends AutoPlugin {
     lazy val publishAndTag =
       taskKey[Unit]("Invokes commitAndPublish, then creates a git tag for the version string defined in build.sbt")
 
-    lazy val scaladoc2 =
+    lazy val scaladoc =
       taskKey[Unit]("Rebuilds the Scaladoc and pushes the updated Scaladoc to GitHub pages without committing to the git repository")
 
     lazy val scaladocPush = taskKey[Unit]("")
@@ -79,7 +80,7 @@ object PublishPlugin extends AutoPlugin {
       ()
     },
 
-    gitWorkFile := target.value / "api" / baseDirectory.value.name,
+    gitWorkFile := crossTarget.value / "api" / baseDirectory.value.name,
 
     gitWorkTree := s"--work-tree=${ gitWorkFile.value }",
 
@@ -92,7 +93,7 @@ object PublishPlugin extends AutoPlugin {
       ()
     },
 
-    scaladoc2 := {
+    scaladoc := {
       println("Creating Scaladoc")
       scaladocSetup.value
       doc.in(Compile).value
@@ -112,19 +113,19 @@ object PublishPlugin extends AutoPlugin {
 
     scaladocSetup := {
       try {
-        val cwd: String = sys.props("user.dir") // safe default directory
-        println(s"CWD 1=${ sys.props("user.dir") }")
+        val cwd: String = sys.props("user.dir") // save directory so it can be restored at the end
+//        println(s"CWD 1=${ sys.props("user.dir") }")
+
         val path = baseDirectory.value.getAbsolutePath
-        println(s"path=$path")
         System.setProperty("user.dir", path)
-        println(s"CWD 2=${ sys.props("user.dir") }")
 
         if (new File(gitWorkFile.value, ".git").exists) {
-          println(s"${ gitWorkFile.value } exists; about to git checkout using ${ gitWorkTree.value }")
+          println(s"${ gitWorkFile.value } exists; about to git checkout gh-pages into $path")
           s"git checkout gh-pages".!!
         } else {
-          println(s"${ gitWorkFile.value } does not exist; about to git clone the gh-pages branch using ${ gitWorkTree.value }")
-          s"git clone -b gh-pages git@github.com:mslinn/web3j-scala.git".!!
+          println(s"${ gitWorkFile.value } does not exist; about to create it and git clone the gh-pages branch into $path")
+          gitWorkFile.value.mkdirs()
+          s"git clone -b gh-pages git@github.com:$gitHubName/${ name.value }.git".!!
         }
         println(s"About to clear the contents of ${ apiDir.value }")
         sbt.IO.delete(apiDir.value.listFiles)

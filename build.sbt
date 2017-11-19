@@ -1,5 +1,5 @@
 import com.micronautics.sbt.PublishPlugin
-import Settings._
+import com.micronautics.sbt.Settings._
 import sbt.Keys.apiURL
 
 val web3jVersion = "3.1.0"

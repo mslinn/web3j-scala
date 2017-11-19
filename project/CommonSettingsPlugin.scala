@@ -1,6 +1,7 @@
 import sbt._
 import Keys._
 import bintray.BintrayPlugin.autoImport.{bintrayOrganization, bintrayPackage, bintrayRepository}
+import com.micronautics.sbt.PublishPlugin.autoImport.apiDir
 
 /** @see See [[http://blog.jaceklaskowski.pl/2015/04/12/using-autoplugin-in-sbt-for-common-settings-across-projects-in-multi-project-build.html Using AutoPlugin in Sbt for Common Settings Across Projects in Multi-project Build]] */
 object CommonSettingsPlugin extends AutoPlugin {
@@ -98,12 +99,18 @@ object CommonSettingsPlugin extends AutoPlugin {
     // The REPL can’t cope with -Ywarn-unused:imports or -Xfatal-warnings so turn them off for the console
     scalacOptions in (Compile, console) --= Seq("-Ywarn-unused:imports", "-Xfatal-warnings"),
 
-    scalacOptions in (Compile, doc) ++= baseDirectory.map {
-      (bd: File) => Seq[String](
-         "-sourcepath", bd.getAbsolutePath,
-         "-doc-source-url", "https://github.com/mslinn/web3j-scala/tree/master€{FILE_PATH}.scala" // todo how to compute the url?
+    scalacOptions in (Compile, doc) ++= baseDirectory.map { bd: File =>
+      Seq(
+        "-sourcepath",     bd.getAbsolutePath,
+        "-doc-source-url", "https://github.com/mslinn/web3j-scala/tree/master€{FILE_PATH}.scala" // todo how to compute the url?
       )
     }.value,
+
+    // See https://stackoverflow.com/a/22926413/553865 and "man scaladoc"
+    scalacOptions in (Compile, doc) ++= Seq(
+      "-d",         apiDir.value.toString,
+      "-doc-title", name.value
+    ),
 
     scalaVersion := "2.12.4",
 
