@@ -4,6 +4,7 @@ import sbt.Keys._
 import sbt._
 import Settings._
 
+/** */
 object PublishPlugin extends AutoPlugin {
   object autoImport {
     lazy val apiDir = settingKey[File]("File where Scaladoc for a branch is generated into")
@@ -19,6 +20,8 @@ object PublishPlugin extends AutoPlugin {
     lazy val commitAndDoc =
       taskKey[Unit]("Rebuilds the docs, commits the git repository, and publishes the updated Scaladoc without publishing a new version")
 
+//    lazy val docPublishTag = taskKey[Unit]("Does everything necessary to release Scaladoc for this project: initialize, build, upload, tag")
+
     lazy val gitWorkFile = settingKey[File]("Point git to non-standard location")
 
     lazy val gitWorkTree = settingKey[String]("Point git to non-standard location")
@@ -31,7 +34,7 @@ object PublishPlugin extends AutoPlugin {
     lazy val scaladoc =
       taskKey[Unit]("Rebuilds the Scaladoc and pushes the updated Scaladoc to GitHub pages without committing to the git repository")
 
-    lazy val scaladocPush = taskKey[Unit]("")
+    lazy val scaladocPush = taskKey[Unit]("Upload scaladocPush")
 
     lazy val scaladocSetup = taskKey[Unit]("Sets up gh-pages branch for receiving scaladoc")
   }
@@ -43,13 +46,16 @@ object PublishPlugin extends AutoPlugin {
     apiDir := gitWorkFile.value / "latest/api/",
 
     commitAndDoc := {
+      val log = streams.value.log
       try {
-        println("Fetching latest updates for this git repo")
+        scaladocSetup.value // is this already called elsewhere?
+
+        log.info("Fetching latest updates for this git repo")
         "git pull".!!
 
         val changedFileNames = "git diff --name-only".!!.trim.replace("\n", ", ")
         if (changedFileNames.nonEmpty) {
-          println(s"About to commit these changed files: $changedFileNames")
+          log.info(s"About to commit these changed files: $changedFileNames")
           "git add -A".!!
           "git commit -m -".!!
         }
@@ -59,48 +65,46 @@ object PublishPlugin extends AutoPlugin {
           println(s"About to push these staged files: $stagedFileNames")
         }*/
 
-        println("About to git push to origin")
+        log.info("About to git push to origin")
         "git push origin HEAD".!!  // See https://stackoverflow.com/a/20922141/553865
 
-        println("Creating Scaladoc")
-        //scaladocSetup.value // todo need this here?
+        log.info("Creating Scaladoc")
         doc.in(Compile).value
 
-        println("Uploading Scaladoc to GitHub Pages")
-//        SiteScaladocPlugin.autoImport
-//        siteSubdirName in Global := apiDir.value.getAbsolutePath // todo append sbt subproject name
-//        siteSourceDirectory in Global := target.value / "latest/api/"
-
-//        makeSite.value
+        log.info("Uploading Scaladoc to GitHub Pages")
         scaladocPush.value
-    //    ghpagesPushSite.value // todo does it push to the proper project directory?
       } catch {
         case e: Exception => println(e.getMessage)
       }
       ()
     },
 
+//    docPublishTag := ???, // todo write me
+
     gitWorkFile := crossTarget.value / "api" / baseDirectory.value.name,
 
     gitWorkTree := s"--work-tree=${ gitWorkFile.value }",
 
     publishAndTag := {
+      val log = streams.value.log
+
       commitAndDoc.in(Compile).value
       publish.value
-      println(s"Creating git tag for v${ version.value }")
+
+      log.info(s"Creating git tag for v${ version.value }")
       s"""git tag -a ${ version.value } -m ${ version.value }""".!!
       s"""git push origin --tags""".!!
       ()
     },
 
     scaladoc := {
-      println("Creating Scaladoc")
+      val log = streams.value.log
+
+      log.info("Creating Scaladoc")
       scaladocSetup.value
       doc.in(Compile).value
 
-      println("Uploading Scaladoc to GitHub Pages")
-//      siteSubdirName := apiDir.value.getAbsolutePath // todo append sbt subproject name
-//      makeSite.value
+      log.info("Uploading Scaladoc to GitHub Pages")
       scaladocPush.value
       ()
     },
@@ -112,27 +116,28 @@ object PublishPlugin extends AutoPlugin {
     },
 
     scaladocSetup := {
+      val log = streams.value.log
       try {
         val cwd: String = sys.props("user.dir") // save directory so it can be restored at the end
-//        println(s"CWD 1=${ sys.props("user.dir") }")
+        log.debug(s"CWD=${ sys.props("user.dir") }")
 
         val path = baseDirectory.value.getAbsolutePath
         System.setProperty("user.dir", path)
 
         if (new File(gitWorkFile.value, ".git").exists) {
-          println(s"${ gitWorkFile.value } exists; about to git checkout gh-pages into $path")
+          log.debug(s"${ gitWorkFile.value } exists; about to git checkout gh-pages into $path")
           s"git checkout gh-pages".!!
         } else {
-          println(s"${ gitWorkFile.value } does not exist; about to create it and git clone the gh-pages branch into $path")
+          log.debug(s"${ gitWorkFile.value } does not exist; about to create it and git clone the gh-pages branch into $path")
           gitWorkFile.value.mkdirs()
           s"git clone -b gh-pages git@github.com:$gitHubName/${ name.value }.git".!!
         }
-        println(s"About to clear the contents of ${ apiDir.value }")
+        log.debug(s"About to clear the contents of ${ apiDir.value }")
         sbt.IO.delete(apiDir.value.listFiles)
         s"git ${ gitWorkTree.value } add -a".!!
         s"git ${ gitWorkTree.value } commit -m -".!!
 
-        System.setProperty("user.dir", cwd) // restore default directory
+        System.setProperty("user.dir", cwd) // restore previous directory
       } catch {
         case e: Exception => println(e.getMessage)
       }

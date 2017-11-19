@@ -180,10 +180,10 @@ The following scripts are provided in the `bin/` directory:
 ### Updating Scaladoc
 If you just want to republish the Scaladoc for this project, without creating a new version, use this command:
 
-    $ sbt scaladoc2
+    $ sbt scaladoc
 
 ### Updating Scaladoc and Committing Changes Without Publishing a New Version
-This task rebuilds the docs, commits the git repository, and publishes the updated Scaladoc without publishing a new version:
+This task rebuilds the docs, commits the git repository, publishes a new git tag, and publishes the updated Scaladoc without affecting the current software version:
 
     $ sbt commitAndDoc
 
