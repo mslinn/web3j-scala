@@ -13,6 +13,8 @@ object LogMessage {
 
 case class LogMessage(level: Level, message: String)
                      (implicit logger: Logger) {
+  lazy val isEmpty: Boolean = message.isEmpty
+
   def log(): Unit = level match {
     case Level.DEBUG => logger.debug(message)
     case Level.ERROR => logger.error(message)
@@ -20,6 +22,8 @@ case class LogMessage(level: Level, message: String)
     case Level.TRACE => logger.trace(message)
     case Level.WARN  => logger.warn(message)
   }
+
+  lazy val nonEmpty: Boolean = message.nonEmpty
 }
 
 object CommandLine {
@@ -69,7 +73,7 @@ object CommandLine {
 
     val tokens: Array[String] = cmd.split(" ")
     val command: List[String] = whichOrThrow(tokens(0)).toString :: tokens.tail.toList
-    if (logMessage.message.nonEmpty) logMessage.log()
+    if (logMessage.nonEmpty) logMessage.log()
     log.debug(s"Running $cmd from '$cwd'") //, which translates to ${ command.mkString("\"", "\", \"", "\"") }")
     Process(command=command, cwd=cwd).!!.trim
   }
@@ -80,7 +84,7 @@ object CommandLine {
     import scala.sys.process._
 
     val command: List[String] = whichOrThrow(cmd(0)).toString :: cmd.tail.toList
-    if (logMessage.message.nonEmpty) logMessage.log()
+    if (logMessage.nonEmpty) logMessage.log()
     log.debug(s"Running ${ cmd.mkString(" ") } from '$cwd'")
     Process(command=command, cwd=cwd).!!.trim
   }
