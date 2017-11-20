@@ -12,7 +12,7 @@ object CommandLine {
     if (x.toFile.exists) Some(x) else None
   }
 
-  protected def which(program: String): Option[Path] = {
+  def which(program: String): Option[Path] = {
     val _path = sys.env.getOrElse("PATH", sys.env.getOrElse("Path", sys.env("path")))
 
     val paths =
@@ -36,7 +36,7 @@ object CommandLine {
       case Some(programPath) => programPath
     }
 
-  def run(cmd: String, cwd: File = new File(sys.props("user.dir")))
+  def run(cwd: File = new File(sys.props("user.dir")), cmd: String)
          (implicit log: Logger): String = {
     import scala.sys.process._
 
@@ -46,8 +46,21 @@ object CommandLine {
     Process(command=command, cwd=cwd).!!.trim
   }
 
+  def run(cwd: File, cmd: String*)
+         (implicit log: Logger): String = {
+    import scala.sys.process._
+
+    val command: List[String] = whichOrThrow(cmd(0)).toString :: cmd.tail.toList
+    log.debug(s"Running ${ cmd.mkString(" ") } from '$cwd'")
+    Process(command=command, cwd=cwd).!!.trim
+  }
+
   @inline def run(cmd: String)
          (implicit log: Logger): String =
-    run(cmd, new File(sys.props("user.dir")))
+    run(new File(sys.props("user.dir")), cmd)
+
+  @inline def run(cmd: String*)
+         (implicit log: Logger): String =
+    run(new File(sys.props("user.dir")), cmd: _*)
 }
 

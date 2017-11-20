@@ -8,9 +8,6 @@ object CommonSettingsPlugin extends AutoPlugin {
   override lazy val projectSettings = Seq(
     apiURL := Some(url(s"https://$gitHubName.github.io/${ name.value }/${ baseDirectory.value.name }/latest/api")),
 
-    // See http://www.scala-sbt.org/1.0/docs/Howto-Scaladoc.html
-    autoAPIMappings := true,
-
     bintrayOrganization := Some("micronautics"),
     bintrayRepository := "scala",
     bintrayPackage := name.value,
@@ -102,19 +99,6 @@ object CommonSettingsPlugin extends AutoPlugin {
 
     // The REPL can’t cope with -Ywarn-unused:imports or -Xfatal-warnings so turn them off for the console
     scalacOptions in (Compile, console) --= Seq("-Ywarn-unused:imports", "-Xfatal-warnings"),
-
-    scalacOptions in (Compile, doc) ++= baseDirectory.map { bd: File =>
-      Seq(
-        "-sourcepath",     bd.getAbsolutePath,
-        "-doc-source-url", "https://github.com/mslinn/web3j-scala/tree/master€{FILE_PATH}.scala" // todo how to compute the url?
-      )
-    }.value,
-
-    // See https://stackoverflow.com/a/22926413/553865 and "man scaladoc"
-    /*scalacOptions in (Compile, doc) ++= Seq(
-      "-d",         apiDir.value.toString,
-      "-doc-title", name.value
-    ),*/
 
     scalaVersion := "2.12.4",
 

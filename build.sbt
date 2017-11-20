@@ -1,12 +1,16 @@
 val web3jVersion = "3.1.0"
 
 lazy val publish = project
+  .enablePlugins(BuildInfoPlugin)
   .settings(
+    buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
+    buildInfoPackage := "buildInfo",
+
     // define the statements initially evaluated when entering 'console', 'console-quick', but not 'console-project'
     initialCommands in console := """
                                     |""".stripMargin,
     libraryDependencies ++= Seq(
-      "ch.qos.logback"         %  "logback-classic"       % "1.2.3",
+      "ch.qos.logback"          %  "logback-classic"       % "1.2.3",
        //
        "org.scalatest"          %% "scalatest"   % "3.0.3" % Test withSources(),
        "junit"                  %  "junit"       % "4.12"  % Test
