@@ -51,8 +51,8 @@ case class Scaladoc(
   @inline protected def option(name: String, value: Boolean): List[String] =
     if (value) List(name) else Nil
 
-  def run(cwd: File): String = {
-    val dotIsInstalled = CommandLine.which("dot").nonEmpty
+  def run(cwd: File, commandLine: CommandLine): String = {
+    val dotIsInstalled = commandLine.which("dot").nonEmpty
     if (diagrams && !dotIsInstalled)
       log.warn("Inheritance diagrams were requested, but the 'dot' program from the 'graphviz' package is not installed.")
 
@@ -70,6 +70,6 @@ case class Scaladoc(
       option("-sourcepath",       sourcePath) :::
       option("-verbose",          verbose)
 
-    CommandLine.run(cwd, "scaladoc" :: options: _*)
+    commandLine.run(cwd, "scaladoc" :: options: _*)
   }
 }

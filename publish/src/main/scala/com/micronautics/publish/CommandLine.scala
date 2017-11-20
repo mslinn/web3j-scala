@@ -23,7 +23,7 @@ case class LogMessage(level: Level, message: String)
   lazy val nonEmpty: Boolean = message.nonEmpty
 }
 
-object CommandLine {
+class CommandLine(config: Config = Config.default) {
   import java.io.File
   import java.nio.file.{Path, Paths}
   import java.util.regex.Pattern
@@ -45,8 +45,12 @@ object CommandLine {
     val tokens: Array[String] = cmd.split(" ")
     val command: List[String] = whichOrThrow(tokens(0)).toString :: tokens.tail.toList
     if (logMessage.nonEmpty) logMessage.display()
-    log.debug(s"Running $cmd from '$cwd'") //, which translates to ${ command.mkString("\"", "\", \"", "\"") }")
-    Process(command=command, cwd=cwd).!!.trim
+    log.debug(s"# Running $cmd from '$cwd'") //, which translates to ${ command.mkString("\"", "\", \"", "\"") }")
+    if (config.dryRun) {
+      log.debug(command.mkString(" "))
+      ""
+    } else
+      Process(command=command, cwd=cwd).!!.trim
   }
 
 
@@ -55,7 +59,11 @@ object CommandLine {
     val command: List[String] = whichOrThrow(cmd(0)).toString :: cmd.tail.toList
     if (logMessage.nonEmpty) logMessage.display()
     log.debug(s"Running ${ cmd.mkString(" ") } from '$cwd'")
-    Process(command=command, cwd=cwd).!!.trim
+    if (config.dryRun) {
+      log.debug(command.mkString(" "))
+      ""
+    } else
+      Process(command=command, cwd=cwd).!!.trim
   }
 
 

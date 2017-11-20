@@ -6,6 +6,8 @@ import java.io.File
 /** Utility for creating combined Scaladoc for an SBT multi-project.
   * Must be run from top-level git repo directory */
 object Publish extends App {
+  val config = Config.default
+
   implicit val project: Project = Project(
     gitHubName = "mslinn",
     name       = BuildInfo.name,
@@ -18,5 +20,5 @@ object Publish extends App {
     List("root", "demo")
       .map(x => new SubProject(x, new File(x).getAbsoluteFile))
 
-  new Documenter(subprojects).publish()
+  new Documenter(config, subprojects).publish()
 }

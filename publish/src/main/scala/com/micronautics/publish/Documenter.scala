@@ -2,8 +2,12 @@ package com.micronautics.publish
 
 import java.io.File
 import java.nio.file.Path
-import com.micronautics.publish.CommandLine.run
 import org.slf4j.event.Level._
+
+object Config {
+  val default: Config = Config()
+}
+case class Config(dryRun: Boolean = false)
 
 object Documenter {
   @inline def file(name: String): File = new File(name)
@@ -11,8 +15,11 @@ object Documenter {
   implicit val log: org.slf4j.Logger = org.slf4j.LoggerFactory.getLogger("pub")
 }
 
-class Documenter(subprojects: List[SubProject])(implicit project: Project) {
+class Documenter(config: Config, subprojects: List[SubProject])(implicit project: Project) {
   import Documenter._
+
+  val commandLine = new CommandLine(config = config)
+  import commandLine.run
 
   lazy val ghPages = GhPages()
 
@@ -89,7 +96,7 @@ class Documenter(subprojects: List[SubProject])(implicit project: Project) {
       sourceUrl = externalDoc, // todo is this correct?
       title = project.title,
       version = project.version
-    ).run(subProject.baseDirectory)
+    ).run(subProject.baseDirectory, commandLine)
     ()
   }
 
