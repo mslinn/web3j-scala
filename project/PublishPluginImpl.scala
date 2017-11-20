@@ -117,7 +117,7 @@ trait PublishPluginImpl { this: AutoPlugin =>
           run(s"git clone -b gh-pages git@github.com:$gitHubName/${ name.value }.git", gitWorkParent.value)
 
           log.debug(s"#  2) rename ${ name.value } to ${ baseDirectory.value.name }")
-          log.debug(s"(cd file(baseDirectory.value.name; mv ${ name.value } ${ baseDirectory.value.name })")
+          log.debug(s"(cd ${ file(baseDirectory.value.name) }; mv ${ name.value } ${ baseDirectory.value.name })")
           IO.move(file(name.value), file(baseDirectory.value.name))
         }
         val files: Array[File] = apiDir.value.listFiles
