@@ -5,7 +5,13 @@ import sbt.Keys._
 import Settings._
 import CommandLine.run
 
-/** To see debug output: {{{set logLevel := Level.Debug}}} */
+/** To debug, run sbt from the command line, attach from IDEA, and type into the sbt prompt: {{{
+  * sbt debug
+  project root
+  set logLevel := Level.Debug
+  logBuffered in Global := false
+  scaladocSetup
+  * }}} */
 trait PublishPluginImpl { this: AutoPlugin =>
   import PublishPlugin._
   import autoImport._
