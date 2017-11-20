@@ -6,9 +6,6 @@ import java.io.File
 /** Utility for creating combined Scaladoc for an SBT multi-project.
   * Must be run from top-level git repo directory */
 object Publish extends App {
-  val scalaVer = scala.util.Properties.versionNumberString
-  implicit val scalaCompiler: ScalaCompiler = ScalaCompiler(scalaVer.split(".").take(2).mkString("."))
-
   implicit val project: Project = Project(
     gitHubName = "mslinn",
     name       = BuildInfo.name,

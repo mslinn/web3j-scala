@@ -20,14 +20,21 @@ case class GhPages(
         }
     })
 
-  lazy val apiRoot: Path = root.resolve(s"latest/api/").toAbsolutePath
+  /** Common root for Scaladoc for every SBT sub-project */
+  lazy val apiRoots: Path = root.resolve(s"latest/api/").toAbsolutePath
 
-  def apiDirFor(subProject: SubProject): Path = apiRoot.resolve(subProject.name).toAbsolutePath
+  /** Root for Scaladoc for the given SBT sub-project */
+  def apiRootFor(subProject: SubProject): Path = apiRoots.resolve(subProject.name).toAbsolutePath
 
   /** Does not mess with top-level contents */
-  def deleteScaladoc(): Unit = Nuke.removeUnder(apiRoot)
+  def deleteScaladoc(): Unit = Nuke.removeUnder(apiRoots)
 }
 
+/** @param gitHubName GitHub account id for the git repo for this SBT project
+  * @param name GitHub repo name for this SBT project
+  * @param version Git release version of this SBT project
+  * @param title Full name of this project; this value is used to create the Scaladoc title
+  * @param copyright Scaladoc copyright info for this project */
 case class Project(
   gitHubName: String,
   override val name: String,
@@ -39,8 +46,9 @@ case class Project(
   assert(io.Source.fromURL(gitHub).mkString.nonEmpty, s"$gitHub does not exist")
 }
 
-case class ScalaCompiler(version: String) extends AnyVal {
-  override def toString: String = version
+object ScalaCompiler {
+  lazy val fullVersion: String = scala.util.Properties.versionNumberString
+  lazy val majorMinorVersion: String = fullVersion.split(".").take(2).mkString(".")
 }
 
 class SubProject(val name: String, val baseDirectory: File) {
