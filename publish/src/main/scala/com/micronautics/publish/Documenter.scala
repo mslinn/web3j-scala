@@ -20,20 +20,20 @@ class Documenter(implicit project: Project) {
   def publishFor(subprojects: List[SubProject]): Unit = {
     try {
       setup()
-      run("git pull")(LogMessage(INFO, "Fetching latest updates for this git repo"))
+      run("git pull")(LogMessage(INFO, "Fetching latest updates for this git repo"), log)
 
-      run("git diff --name-only")(emptyMessage).replace("\n", ", ") foreach { changedFileNames =>
-        run("git add -A")(LogMessage(INFO, s"About to commit these changed files: $changedFileNames"))
-        run("git commit -m -")(emptyMessage)
+      run("git diff --name-only").replace("\n", ", ") foreach { changedFileNames =>
+        run("git add -A")(LogMessage(INFO, s"About to commit these changed files: $changedFileNames"), log)
+        run("git commit -m -")
       }
 
-      /* run("git diff --cached --name-only")(emptyMessage).replace("\n", ", ") foreach { stagedFileNames.nonEmpty =>
-        log.info(s"About to push these staged files: $stagedFileNames")
-      }*/
+      run("git diff --cached --name-only").replace("\n", ", ") foreach { stagedFileNames =>
+        log.debug(s"About to push these staged files: $stagedFileNames")
+      }
 
       // See https://stackoverflow.com/a/20922141/553865
-      run("git push origin HEAD")(LogMessage(INFO, "About to git push to origin"))
-      subprojects.foreach(x => makeScaladoc(x.baseDirectory))
+      run("git push origin HEAD")(LogMessage(INFO, "About to git push to origin"), log)
+      subprojects.foreach(sp => makeScaladoc(sp.baseDirectory))
       gitPush()
     } catch {
       case e: Exception => log.error(e.getMessage)
@@ -42,38 +42,41 @@ class Documenter(implicit project: Project) {
   }
 
 
-  @inline protected def dumpDirs(subProject: SubProject, gitGit: Path): Unit = {
-    log.debug(s"baseDirectory    = ${ subProject.baseDirectory.getAbsolutePath }")
-    log.debug(s"CWD              = ${ sys.props("user.dir") }")
-    log.debug(s"ghPages.root     = ${ ghPages.root }")
-    log.debug(s"ghPages.apiRoots = ${ ghPages.apiRoots }")
-    log.debug(s"gitWorkFile      = ${ gitWorkPath }")
-    log.debug(s"gitGit           = $gitGit")
-  }
-
-  @inline protected def gitWorkPath(implicit subProject: SubProject): Path =
-    ghPages.apiRootFor(subProject)
+  @inline protected def dumpDirs(subProject: SubProject, gitGit: Path): Unit =
+    log.debug(s"""baseDirectory    = ${ subProject.baseDirectory.getAbsolutePath }
+                 |cwd              = ${ sys.props("user.dir") }
+                 |ghPages.root     = ${ ghPages.root }
+                 |ghPages.apiRoots = ${ ghPages.apiRoots }
+                 |gitWorkPath      = ${ gitWorkPath }
+                 |gitGit           = $gitGit
+                 |""".stripMargin)
 
   protected def gitPush()(implicit subProject: SubProject): Unit = {
-    run(s"git $gitWorkTree add -a")(LogMessage(INFO, "Uploading Scaladoc to GitHub Pages"))
-    run(s"git $gitWorkTree commit -m -")(emptyMessage)
-    run(s"git $gitWorkTree push origin gh-pages")(emptyMessage)
+    val workTree: String = gitWorkTree
+    run(s"git $workTree add -a")(LogMessage(INFO, "Uploading Scaladoc to GitHub Pages"), log)
+    run(s"git $workTree commit -m -")
+    run(s"git $workTree push origin -u gh-pages")
   }
 
  /* protected @inline def gitWorkParent(implicit subProject: SubProject, scalaCompiler: ScalaCompiler): File =
     new File(subProject.crossTarget, "api")*/
 
+  @inline protected def gitWorkPath(implicit subProject: SubProject): Path =
+    ghPages.apiRootFor(subProject)
+
   @inline protected def gitWorkTree(implicit subProject: SubProject): String =
     s"--work-tree=$gitWorkPath"
 
   protected def makeScaladoc(cwd: File)
-                  (implicit subProject: SubProject): Unit = {
+                            (implicit subProject: SubProject): Unit = {
     log.info("Creating Scaladoc")
     setup()
 
-    val classPath: String = run( "sbt", s"; project ${ subProject.name }; export runtime:fullClasspath")(emptyMessage)
-    val externalDoc: String = s"https://github.com/${ project.gitHubName }/${ project.name }/tree/master€{FILE_PATH}.scala"
-    val outputDirectory: String = ghPages.apiRootFor(subProject).toString
+    val classPath: String = run("sbt", s"; project ${ subProject.name }; export runtime:fullClasspath")
+    val externalDoc: String =
+      s"https://github.com/${ project.gitHubName }/${ project.name }/tree/master€{FILE_PATH}.scala"
+    val outputDirectory: Path = ghPages.apiRootFor(subProject)
+
     Scaladoc(
       classPath = classPath,
       externalDoc = externalDoc, // todo is this correct?
@@ -98,10 +101,10 @@ class Documenter(implicit project: Project) {
       dumpDirs(subProject, gitGitPath)
 
       if (gitGitPath.toFile.exists) {
-        run(ghPages.apiRoots, "git checkout gh-pages")(LogMessage(DEBUG, "gitGit exists; about to git checkout gh-pages into gitParent"))
+        run(ghPages.apiRoots, "git checkout gh-pages")(LogMessage(DEBUG, "gitGit exists; about to git checkout gh-pages into gitParent"), log)
       } else {
         val lm = LogMessage(DEBUG, "gitGit does not exist; about to create it in 2 steps.\n#  1) git clone the gh-pages branch into gitParent")
-        run(ghPages.apiRootFor(subProject), s"git clone -b gh-pages ${ subProject.gitHubProjectUrl }.git")(lm)
+        run(ghPages.apiRootFor(subProject), s"git clone -b gh-pages ${ subProject.gitHubProjectUrl }.git")(lm, log)
 
         LogMessage(DEBUG, s"  2) rename ${ subProject.name } to ${ subProject.baseDirectory.getName }").log()
         file(project.name).renameTo(file(subProject.baseDirectory.getName))
@@ -109,9 +112,9 @@ class Documenter(implicit project: Project) {
 
       //Nuke.removeUnder(ghPages.root) // just making sure
 
-      run(ghPages.root, s"git ${ gitWorkTree } add -a")(emptyMessage)
-      run(ghPages.root, s"git ${ gitWorkTree } commit -m -")(emptyMessage)
-      run(ghPages.root, "git push origin HEAD")(emptyMessage)
+      run(ghPages.root, s"git ${ gitWorkTree } add -a")
+      run(ghPages.root, s"git ${ gitWorkTree } commit -m -")
+      run(ghPages.root, "git push origin HEAD")
     } catch {
       case e: Exception => log.error(e.getMessage)
     }
@@ -119,9 +122,9 @@ class Documenter(implicit project: Project) {
   }
 
   protected def tag(cwd: File)
-         (implicit subProject: SubProject): Unit = {
-    run(s"""git tag -a ${ project.version } -m ${ project.version }""")(LogMessage(INFO, s"Creating git tag for v${ project.version }"))
-    run(s"""git push origin --tags""")(emptyMessage)
+                   (implicit subProject: SubProject): Unit = {
+    run(s"""git tag -a ${ project.version } -m ${ project.version }""")(LogMessage(INFO, s"Creating git tag for v${ project.version }"), log)
+    run(s"""git push origin --tags""")
     ()
   }
 }

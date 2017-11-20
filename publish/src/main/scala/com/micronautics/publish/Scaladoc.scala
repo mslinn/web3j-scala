@@ -1,6 +1,7 @@
 package com.micronautics.publish
 
 import java.io.File
+import java.nio.file.{Path, Paths}
 
 /** @param classPath Specify where to find user class files (on Unix-based systems a colon-separated list of paths, on Windows-based systems, a semicolon-separate list  of
   *            paths). This does not override the built-in ("boot") search path.
@@ -28,15 +29,15 @@ import java.io.File
   * @param version An optional version number to be appended to the title.
   */
 case class Scaladoc(
-  classPath: String = ".",
+  classPath: String = ".", // is this the best default value?
   deprecation: String = "on",
   diagrams: Boolean = true,
   encoding: String = "",
   externalDoc: String = "",
   footer: String = "&nbsp;",
   implicits: Boolean = true,
-  outputDirectory: String = "",
-  sourcePath: String = ".",
+  outputDirectory: Path = Paths.get(""),
+  sourcePath: String = ".", // todo this may not be a good default value
   sourceUrl: String = "",
   title: String = "",
   verbose: Boolean = false,
@@ -57,7 +58,7 @@ case class Scaladoc(
 
     val options =
       option("-classpath",        classPath) :::
-      option("-d",                outputDirectory) :::
+      option("-d",                outputDirectory.toString) :::
       option("-deprecation",      deprecation) :::
       option("-diagrams",         diagrams && dotIsInstalled) :::
       option("-doc-external-doc", externalDoc) :::
@@ -69,6 +70,6 @@ case class Scaladoc(
       option("-sourcepath",       sourcePath) :::
       option("-verbose",          verbose)
 
-    CommandLine.run(cwd, "scaladoc" :: options: _*)(LogMessage.empty)
+    CommandLine.run(cwd, "scaladoc" :: options: _*)
   }
 }

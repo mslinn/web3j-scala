@@ -8,7 +8,7 @@ import scala.util.Properties.isWin
 import org.slf4j.event.Level
 
 object LogMessage {
-  val empty: LogMessage = LogMessage(Level.INFO, "")(LoggerFactory.getLogger(""))
+  implicit val empty: LogMessage = LogMessage(Level.INFO, "")(LoggerFactory.getLogger(""))
 }
 
 case class LogMessage(level: Level, message: String)
@@ -57,14 +57,12 @@ object CommandLine {
     }
 
   @inline def run(cmd: String)
-                 (logMessage: LogMessage)
-                 (implicit log: Logger): String =
-    run(new File(sys.props("user.dir")), cmd)(logMessage)
+                 (implicit logMessage: LogMessage, log: Logger): String =
+    run(new File(sys.props("user.dir")), cmd)
 
   @inline def run(cmd: String*)
-                 (logMessage: LogMessage)
-         (implicit log: Logger): String =
-    run(new File(sys.props("user.dir")), cmd: _*)(logMessage)
+                 (implicit logMessage: LogMessage, log: Logger): String =
+    run(new File(sys.props("user.dir")), cmd: _*)
 
   def run(cwd: File = new File(sys.props("user.dir")), cmd: String)
          (logMessage: LogMessage)
@@ -79,8 +77,7 @@ object CommandLine {
   }
 
   def run(cwd: File, cmd: String*)
-         (logMessage: LogMessage)
-         (implicit log: Logger): String = {
+         (implicit logMessage: LogMessage, log: Logger): String = {
     import scala.sys.process._
 
     val command: List[String] = whichOrThrow(cmd(0)).toString :: cmd.tail.toList
@@ -90,12 +87,11 @@ object CommandLine {
   }
 
   def run(cwd: Path, cmd: String)
-         (logMessage: LogMessage)
-         (implicit log: Logger): String =
+         (implicit logMessage: LogMessage, log: Logger): String =
     run(cwd.toFile, cmd)(logMessage)
 
   def run(cwd: Path, cmd: String*)
-         (logMessage: LogMessage)
-         (implicit log: Logger): String = run(cwd.toFile, cmd: _*)(logMessage)
+         (implicit logMessage: LogMessage, log: Logger): String =
+    run(cwd.toFile, cmd: _*)
 }
 
