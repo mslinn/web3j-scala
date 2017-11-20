@@ -85,14 +85,13 @@ class CommandLine(config: Config = Config.default) {
         .split(Pattern.quote(File.pathSeparator))
         .map(Paths.get(_))
 
-    val result: Option[Path] = paths.collectFirst {
+    paths.collectFirst {
       case path if resolve(path, program).exists(_.toFile.exists) => resolve(path, program)
 
       case path if isWin && resolve(path, s"$program.cmd").exists(_.toFile.exists) => resolve(path, s"$program.cmd")
 
       case path if isWin && resolve(path, s"$program.bat").exists(_.toFile.exists) => resolve(path, s"$program.bat")
     }.flatten
-    result
   }
 
 
