@@ -20,7 +20,7 @@ DEBUG="-jvm-debug 5005"
 # To see sbt debug output: sbt "last scaladocSetup"
 case "$1" in
   doc)
-  sbt "; project publish; runMain Main"
+  sbt "; project publish; runMain com.micronautics.publish.Publish"
   ;;
 
   Observables)    sbt ";project demo; runMain demo.DemoObservables"    ;;

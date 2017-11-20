@@ -6,7 +6,7 @@ import CommandLine._
 
 /** Utility for creating combined Scaladoc for an SBT multi-project.
   * Must be run from top-level git repo directory */
-object Main extends App {
+object Publish extends App {
   val scalaVer = scala.util.Properties.versionNumberString
   implicit val scalaCompiler: ScalaCompiler = ScalaCompiler(scalaVer.split(".").take(2).mkString("."))
 
@@ -35,7 +35,7 @@ class SubProject(val name: String, val baseDirectory: File) {
 class MultiScaladoc(project: Project) {
   implicit val log: Logger = org.slf4j.LoggerFactory.getLogger(classOf[MultiScaladoc])
 
-  def apiDir(implicit subProject: SubProject) = new File(gitWorkFile, "latest/api/")
+  def apiDir(implicit subProject: SubProject, scalaCompiler: ScalaCompiler) = new File(gitWorkFile, "latest/api/")
 
   def commitAndDoc(implicit subProject: SubProject, scalaCompiler: ScalaCompiler): Unit = {
     try {
@@ -70,13 +70,16 @@ class MultiScaladoc(project: Project) {
 
   @inline def file(name: String): File = new File(name)
 
-  @inline def gitWorkFile(implicit subProject: SubProject): File = new File(gitWorkParent, subProject.baseDirectory.getName)
+  @inline def gitWorkFile(implicit subProject: SubProject, scalaCompiler: ScalaCompiler): File =
+    new File(gitWorkParent, subProject.baseDirectory.getName)
 
-  @inline def gitWorkParent(implicit subProject: SubProject): File = new File(subProject.crossTarget, "api")
+  @inline def gitWorkParent(implicit subProject: SubProject, scalaCompiler: ScalaCompiler): File =
+    new File(subProject.crossTarget, "api")
 
-  @inline def gitWorkTree(implicit subProject: SubProject): String = s"--work-tree=$gitWorkFile"
+  @inline def gitWorkTree(implicit subProject: SubProject, scalaCompiler: ScalaCompiler): String =
+    s"--work-tree=$gitWorkFile"
 
-  def publishAndTag(implicit subProject: SubProject): Unit = {
+  def publishAndTag(implicit subProject: SubProject, scalaCompiler: ScalaCompiler): Unit = {
     commitAndDoc
     makeScaladoc
 
@@ -86,7 +89,7 @@ class MultiScaladoc(project: Project) {
     ()
   }
 
-  def makeScaladoc(implicit subProject: SubProject): Unit = {
+  def makeScaladoc(implicit subProject: SubProject, scalaCompiler: ScalaCompiler): Unit = {
     log.info("Creating Scaladoc")
     scaladocSetup
     makeScaladoc
@@ -96,14 +99,14 @@ class MultiScaladoc(project: Project) {
     ()
   }
 
-  def pushScaladoc(implicit subProject: SubProject): Unit = {
+  def pushScaladoc(implicit subProject: SubProject, scalaCompiler: ScalaCompiler): Unit = {
     log.info("Uploading Scaladoc to GitHub Pages")
     run(s"git $gitWorkTree add -a")
     run(s"git $gitWorkTree commit -m -")
     run(s"git $gitWorkTree push origin gh-pages")
   }
 
-  def scaladocSetup(implicit subProject: SubProject): Unit = {
+  def scaladocSetup(implicit subProject: SubProject, scalaCompiler: ScalaCompiler): Unit = {
     try {
       val gitGit: File = new File(gitWorkFile, ".git")
 
