@@ -19,9 +19,8 @@ Once geth is running, run a demo programs by typing the following into another c
 DEBUG="-jvm-debug 5005"
 # To see sbt debug output: sbt "last scaladocSetup"
 case "$1" in
-  debug)
-  sbt $DEBUG "; project root; set logLevel := Level.Debug; set logBuffered in Global := false; scaladocSetup"
-  sbt "last scaladocSetup" | less
+  doc)
+  sbt "; project publish; runMain Main"
   ;;
 
   Observables)    sbt ";project demo; runMain demo.DemoObservables"    ;;

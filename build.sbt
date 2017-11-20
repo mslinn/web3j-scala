@@ -1,12 +1,21 @@
-import com.micronautics.sbt.PublishPlugin
-import com.micronautics.sbt.Settings._
-import sbt.Keys.apiURL
-
 val web3jVersion = "3.1.0"
+
+lazy val publish = project
+    .settings(
+      // define the statements initially evaluated when entering 'console', 'console-quick', but not 'console-project'
+      initialCommands in console := """
+                                      |""".stripMargin,
+      libraryDependencies ++= Seq(
+        "ch.qos.logback"         %  "logback-classic"       % "1.2.3",
+         //
+         "org.scalatest"          %% "scalatest"   % "3.0.3" % Test withSources(),
+         "junit"                  %  "junit"       % "4.12"  % Test
+      ),
+      name := "publish",
+    )
 
 lazy val demo = project
   .aggregate(root)
-  .enablePlugins(PublishPlugin)
   .settings(
     // define the statements to be evaluated when entering 'console' and 'consoleQuick' but not 'consoleProject'
     initialCommands in console := """import java.math.BigInteger
@@ -21,14 +30,12 @@ lazy val demo = project
   ).dependsOn(root)
 
 lazy val root = (project in file("root"))
-  .enablePlugins(PublishPlugin)
   .settings(
     // define the statements initially evaluated when entering 'console', 'console-quick', but not 'console-project'
     initialCommands in console := """
                                     |""".stripMargin,
 
     libraryDependencies ++= Seq(
-      "ch.qos.logback"         %  "logback-classic"       % "1.2.3",
       // See https://docs.web3j.io/modules.html
       "org.web3j"              %  "abi"                   % web3jVersion withSources(), // Application Binary Interface encoders
       "org.web3j"              %  "codegen"               % web3jVersion withSources(), // Code generators
