@@ -41,9 +41,9 @@ case class Project(
   version: String,
   title: String = "",
   copyright: String = "&nbsp;"
-) extends SubProject(name, new File(".").getAbsoluteFile) {
-  val gitHub = s"https://github.com/$gitHubName/$name"
-  assert(io.Source.fromURL(gitHub).mkString.nonEmpty, s"$gitHub does not exist")
+) extends SubProject(name, new File(sys.props("user.dir")).getAbsoluteFile) {
+  val gitHubUserUrl = s"https://github.com/$gitHubName/$name"
+  require(io.Source.fromURL(gitHubUserUrl).mkString.nonEmpty, s"$gitHubUserUrl does not exist")
 }
 
 object ScalaCompiler {
