@@ -13,10 +13,10 @@ class Documenter(implicit project: Project) {
 
   lazy val ghPages = GhPages()
 
-  def commitAndDoc(cwd: File)
-                  (implicit subProject: SubProject, scalaCompiler: ScalaCompiler): Unit = {
+  def publishFor(subprojects: List[SubProject])
+                (implicit scalaCompiler: ScalaCompiler): Unit = {
     try {
-      scaladocSetup // is this already called elsewhere?
+      setup()
 
       log.info("Fetching latest updates for this git repo")
       run("git pull")
@@ -36,9 +36,9 @@ class Documenter(implicit project: Project) {
       log.info("About to git push to origin")
       run("git push origin HEAD")  // See https://stackoverflow.com/a/20922141/553865
 
-      makeScaladoc(cwd)
+      subprojects.foreach(x => makeScaladoc(x.baseDirectory))
 
-      pushScaladoc
+      gitPush()
     } catch {
       case e: Exception => log.error(e.getMessage)
     }
@@ -56,10 +56,8 @@ class Documenter(implicit project: Project) {
   @inline def gitWorkTree(implicit subProject: SubProject, scalaCompiler: ScalaCompiler): String =
     s"--work-tree=$gitWorkPath"
 
-  def publishAndTag(cwd: File)
-                   (implicit subProject: SubProject, scalaCompiler: ScalaCompiler): Unit = {
-    commitAndDoc(cwd)
-
+  def tag(cwd: File)
+         (implicit subProject: SubProject): Unit = {
     log.info(s"Creating git tag for v${ project.version }")
     run(s"""git tag -a ${ project.version } -m ${ project.version }""")
     run(s"""git push origin --tags""")
@@ -69,7 +67,7 @@ class Documenter(implicit project: Project) {
   def makeScaladoc(cwd: File)
                   (implicit subProject: SubProject, scalaCompiler: ScalaCompiler): Unit = {
     log.info("Creating Scaladoc")
-    scaladocSetup
+    setup()
 
     val classPath: String = run( "sbt", s"; project ${ subProject.name }; export runtime:fullClasspath")
     val externalDoc: String = s"https://github.com/${ project.gitHubName }/${ project.name }/tree/master€{FILE_PATH}.scala"
@@ -85,19 +83,18 @@ class Documenter(implicit project: Project) {
       version = project.version
     ).run(cwd)
 
-    log.info("Uploading Scaladoc to GitHub Pages")
-    pushScaladoc
+    gitPush
     ()
   }
 
-  def pushScaladoc(implicit subProject: SubProject, scalaCompiler: ScalaCompiler): Unit = {
+  def gitPush()(implicit subProject: SubProject, scalaCompiler: ScalaCompiler): Unit = {
     log.info("Uploading Scaladoc to GitHub Pages")
     run(s"git $gitWorkTree add -a")
     run(s"git $gitWorkTree commit -m -")
     run(s"git $gitWorkTree push origin gh-pages")
   }
 
-  def scaladocSetup(implicit project: Project, subProject: SubProject, scalaCompiler: ScalaCompiler): Unit = {
+  def setup()(implicit project: Project, subProject: SubProject, scalaCompiler: ScalaCompiler): Unit = {
     try {
       val gitGit: File = gitWorkPath.resolve(".git").toFile
 

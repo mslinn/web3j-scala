@@ -15,11 +15,11 @@ object Publish extends App {
     version    = BuildInfo.version,
     copyright  = "Copyright 2017 Micronautics Research Corporation. All rights reserved."
   )
-  // subprojects to document; others are ignored (such as this one)
-  val subprojects = List("root", "demo").map(x => new SubProject(x, new File(x).getAbsoluteFile))
 
-  val multiScaladoc = new Documenter
-  subprojects.foreach { subProject =>
-    multiScaladoc.commitAndDoc(subProject.baseDirectory)(subProject, scalaCompiler)
-  }
+  // subprojects to document; others are ignored (such as this one)
+  val subprojects =
+    List("root", "demo")
+      .map(x => new SubProject(x, new File(x).getAbsoluteFile))
+
+  new Documenter().publishFor(subprojects)
 }
