@@ -18,7 +18,7 @@ Once geth is running, run a demo programs by typing the following into another c
 
 DEBUG="-jvm-debug 5005"
 case "$1" in
-  debug)          sbt $DEBUG ;;
+  debug)          sbt $DEBUG "; project root; set logLevel := Level.Debug; logBuffered in Global := false; scaladocSetup" ;;
   Observables)    sbt ";project demo; runMain demo.DemoObservables"    ;;
   SmartContracts) sbt ";project demo; runMain demo.DemoSmartContracts" ;;
   Transactions)   sbt ";project demo; runMain demo.DemoTransactions"   ;;

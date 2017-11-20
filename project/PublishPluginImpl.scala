@@ -5,13 +5,7 @@ import sbt.Keys._
 import Settings._
 import CommandLine.run
 
-/** To debug, run sbt from the command line, attach from IDEA, and type into the sbt prompt: {{{
-  * sbt debug
-  project root
-  set logLevel := Level.Debug
-  logBuffered in Global := false
-  scaladocSetup
-  * }}} */
+/** To debug, run `bin/demo debug` from the command line and attach from IDEA. */
 trait PublishPluginImpl { this: AutoPlugin =>
   import PublishPlugin._
   import autoImport._
@@ -118,6 +112,7 @@ trait PublishPluginImpl { this: AutoPlugin =>
           run(s"git clone -b gh-pages git@github.com:$gitHubName/${ name.value }.git", gitWorkParent.value)
 
           val x = s"  2) rename ${ name.value } to ${ baseDirectory.value.name }"
+          println(x)
           log.debug(x)
           IO.move(file(name.value), file(baseDirectory.value.name))
         }
