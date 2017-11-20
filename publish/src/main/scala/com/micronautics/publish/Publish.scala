@@ -18,5 +18,5 @@ object Publish extends App {
     List("root", "demo")
       .map(x => new SubProject(x, new File(x).getAbsoluteFile))
 
-  new Documenter().publishFor(subprojects)
+  new Documenter(subprojects).publish()
 }

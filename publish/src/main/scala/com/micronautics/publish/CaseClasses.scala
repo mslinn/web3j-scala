@@ -43,7 +43,7 @@ case class Project(
   copyright: String = "&nbsp;"
 ) extends SubProject(name, new File(sys.props("user.dir")).getAbsoluteFile) {
   val gitHubUserUrl = s"https://github.com/$gitHubName/$name"
-  require(io.Source.fromURL(gitHubUserUrl).mkString.nonEmpty, s"$gitHubUserUrl does not exist")
+  require(io.Source.fromURL(gitHubUserUrl).mkString.trim.nonEmpty, s"$gitHubUserUrl does not exist")
 }
 
 object ScalaCompiler {
@@ -54,6 +54,5 @@ object ScalaCompiler {
 class SubProject(val name: String, val baseDirectory: File) {
   def gitHubProjectUrl(implicit project: Project) = s"git@github.com:${ project.gitHubName }/$name.git"
 
-  /*def crossTarget(implicit scalaCompilerVersion: ScalaCompiler): File =
-    new File(s"root/target/scala-$scalaCompilerVersion/")*/
+//  lazy val crossTarget: File = new File(s"target/scala-${ ScalaCompiler.majorMinorVersion }")
 }

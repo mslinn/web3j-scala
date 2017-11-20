@@ -30,16 +30,50 @@ object CommandLine {
   import scala.sys.process._
   import scala.util.Properties.isWin
 
-  protected def resolve(path: Path, program: String): Option[Path] = {
-    val x = path.resolve(program)
-    if (x.toFile.exists) Some(x) else None
+  @inline def run(cmd: String)
+                 (implicit logMessage: LogMessage, log: Logger): String =
+    run(new File(sys.props("user.dir")), cmd)
+
+
+  @inline def run(cmd: String*)
+                 (implicit logMessage: LogMessage, log: Logger): String =
+    run(new File(sys.props("user.dir")), cmd: _*)
+
+
+  def run(cwd: File = new File(sys.props("user.dir")), cmd: String)
+         (implicit logMessage: LogMessage, log: Logger): String = {
+    val tokens: Array[String] = cmd.split(" ")
+    val command: List[String] = whichOrThrow(tokens(0)).toString :: tokens.tail.toList
+    if (logMessage.nonEmpty) logMessage.display()
+    log.debug(s"Running $cmd from '$cwd'") //, which translates to ${ command.mkString("\"", "\", \"", "\"") }")
+    Process(command=command, cwd=cwd).!!.trim
   }
 
+
+  def run(cwd: File, cmd: String*)
+         (implicit logMessage: LogMessage, log: Logger): String = {
+    val command: List[String] = whichOrThrow(cmd(0)).toString :: cmd.tail.toList
+    if (logMessage.nonEmpty) logMessage.display()
+    log.debug(s"Running ${ cmd.mkString(" ") } from '$cwd'")
+    Process(command=command, cwd=cwd).!!.trim
+  }
+
+
+  def run(cwd: Path, cmd: String)
+         (implicit logMessage: LogMessage, log: Logger): String =
+    run(cwd.toFile, cmd)
+
+
+  def run(cwd: Path, cmd: String*)
+         (implicit logMessage: LogMessage, log: Logger): String =
+    run(cwd.toFile, cmd: _*)
+
+
   def which(program: String): Option[Path] = {
-    val _path = sys.env.getOrElse("PATH", sys.env.getOrElse("Path", sys.env("path")))
+    val pathEnv = sys.env.getOrElse("PATH", sys.env.getOrElse("Path", sys.env("path")))
 
     val paths =
-      _path
+      pathEnv
         .split(Pattern.quote(File.pathSeparator))
         .map(Paths.get(_))
 
@@ -53,45 +87,19 @@ object CommandLine {
     result
   }
 
+
+  @inline protected def resolve(path: Path, program: String): Option[Path] = {
+    val x = path.resolve(program)
+    if (x.toFile.exists) Some(x) else None
+  }
+
   @inline protected def whichOrThrow(program: String): Path =
     which(program) match {
-      case None => throw new Exception(s"Error: $program not found on ${ if (isWin) "Path" else "PATH" }")
+      case None =>
+        Console.err.println(s"Error: $program not found on ${ if (isWin) "Path" else "PATH" }")
+        System.exit(0)
+        Paths.get("Bogus, dude, just making the compiler happy.")
+
       case Some(programPath) => programPath
     }
-
-  @inline def run(cmd: String)
-                 (implicit logMessage: LogMessage, log: Logger): String =
-    run(new File(sys.props("user.dir")), cmd)
-
-  @inline def run(cmd: String*)
-                 (implicit logMessage: LogMessage, log: Logger): String =
-    run(new File(sys.props("user.dir")), cmd: _*)
-
-  def run(cwd: File = new File(sys.props("user.dir")), cmd: String)
-         (implicit logMessage: LogMessage, log: Logger): String = {
-    val tokens: Array[String] = cmd.split(" ")
-    val command: List[String] = whichOrThrow(tokens(0)).toString :: tokens.tail.toList
-    if (logMessage.nonEmpty) logMessage.display()
-    log.debug(s"Running $cmd from '$cwd'") //, which translates to ${ command.mkString("\"", "\", \"", "\"") }")
-    Process(command=command, cwd=cwd).!!.trim
-  }
-
-  def run(cwd: File, cmd: String*)
-         (implicit logMessage: LogMessage, log: Logger): String = {
-    import scala.sys.process._
-
-    val command: List[String] = whichOrThrow(cmd(0)).toString :: cmd.tail.toList
-    if (logMessage.nonEmpty) logMessage.display()
-    log.debug(s"Running ${ cmd.mkString(" ") } from '$cwd'")
-    Process(command=command, cwd=cwd).!!.trim
-  }
-
-  def run(cwd: Path, cmd: String)
-         (implicit logMessage: LogMessage, log: Logger): String =
-    run(cwd.toFile, cmd)
-
-  def run(cwd: Path, cmd: String*)
-         (implicit logMessage: LogMessage, log: Logger): String =
-    run(cwd.toFile, cmd: _*)
 }
-
