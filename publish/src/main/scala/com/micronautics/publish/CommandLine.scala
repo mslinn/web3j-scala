@@ -1,10 +1,6 @@
 package com.micronautics.publish
 
-import java.io.File
-import java.nio.file.{Path, Paths}
-import java.util.regex.Pattern
 import org.slf4j.{Logger, LoggerFactory}
-import scala.util.Properties.isWin
 import org.slf4j.event.Level
 
 object LogMessage {
@@ -15,7 +11,8 @@ case class LogMessage(level: Level, message: String)
                      (implicit logger: Logger) {
   lazy val isEmpty: Boolean = message.isEmpty
 
-  def log(): Unit = level match {
+  /** Conditionally displays the message, according to SLF4J's logging precedence rules */
+  def display(): Unit = level match {
     case Level.DEBUG => logger.debug(message)
     case Level.ERROR => logger.error(message)
     case Level.INFO  => logger.info(message)
@@ -27,6 +24,12 @@ case class LogMessage(level: Level, message: String)
 }
 
 object CommandLine {
+  import java.io.File
+  import java.nio.file.{Path, Paths}
+  import java.util.regex.Pattern
+  import scala.sys.process._
+  import scala.util.Properties.isWin
+
   protected def resolve(path: Path, program: String): Option[Path] = {
     val x = path.resolve(program)
     if (x.toFile.exists) Some(x) else None
@@ -65,13 +68,10 @@ object CommandLine {
     run(new File(sys.props("user.dir")), cmd: _*)
 
   def run(cwd: File = new File(sys.props("user.dir")), cmd: String)
-         (logMessage: LogMessage)
-         (implicit log: Logger): String = {
-    import scala.sys.process._
-
+         (implicit logMessage: LogMessage, log: Logger): String = {
     val tokens: Array[String] = cmd.split(" ")
     val command: List[String] = whichOrThrow(tokens(0)).toString :: tokens.tail.toList
-    if (logMessage.nonEmpty) logMessage.log()
+    if (logMessage.nonEmpty) logMessage.display()
     log.debug(s"Running $cmd from '$cwd'") //, which translates to ${ command.mkString("\"", "\", \"", "\"") }")
     Process(command=command, cwd=cwd).!!.trim
   }
@@ -81,14 +81,14 @@ object CommandLine {
     import scala.sys.process._
 
     val command: List[String] = whichOrThrow(cmd(0)).toString :: cmd.tail.toList
-    if (logMessage.nonEmpty) logMessage.log()
+    if (logMessage.nonEmpty) logMessage.display()
     log.debug(s"Running ${ cmd.mkString(" ") } from '$cwd'")
     Process(command=command, cwd=cwd).!!.trim
   }
 
   def run(cwd: Path, cmd: String)
          (implicit logMessage: LogMessage, log: Logger): String =
-    run(cwd.toFile, cmd)(logMessage)
+    run(cwd.toFile, cmd)
 
   def run(cwd: Path, cmd: String*)
          (implicit logMessage: LogMessage, log: Logger): String =

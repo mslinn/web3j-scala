@@ -4,7 +4,6 @@ import java.io.File
 import java.nio.file.Path
 import com.micronautics.publish.CommandLine.run
 import org.slf4j.event.Level._
-import LogMessage.{empty => emptyMessage}
 
 object Documenter {
   @inline def file(name: String): File = new File(name)
@@ -106,7 +105,7 @@ class Documenter(implicit project: Project) {
         val lm = LogMessage(DEBUG, "gitGit does not exist; about to create it in 2 steps.\n#  1) git clone the gh-pages branch into gitParent")
         run(ghPages.apiRootFor(subProject), s"git clone -b gh-pages ${ subProject.gitHubProjectUrl }.git")(lm, log)
 
-        LogMessage(DEBUG, s"  2) rename ${ subProject.name } to ${ subProject.baseDirectory.getName }").log()
+        LogMessage(DEBUG, s"  2) rename ${ subProject.name } to ${ subProject.baseDirectory.getName }").display()
         file(project.name).renameTo(file(subProject.baseDirectory.getName))
       }
 
