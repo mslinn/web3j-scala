@@ -113,6 +113,7 @@ trait PublishPluginImpl { this: AutoPlugin =>
 
           val x = s"  2) rename ${ name.value } to ${ baseDirectory.value.name }"
           println(x)
+          scala.Console.out.flush()
           log.debug(x)
           IO.move(file(name.value), file(baseDirectory.value.name))
         }

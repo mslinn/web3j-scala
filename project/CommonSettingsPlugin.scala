@@ -36,7 +36,7 @@ object CommonSettingsPlugin extends AutoPlugin {
 
     licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html")),
 
-//    logBuffered in Global := false,
+    logBuffered in Global := false,
 
 //    logLevel in Global := Level.Warn,
 

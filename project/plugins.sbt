@@ -22,4 +22,4 @@ evictionWarningOptions in update :=
     .withWarnScalaVersionEviction(false)
 
 //logLevel in Global := Level.Debug
-//logBuffered in Global := false
+logBuffered in Global := false

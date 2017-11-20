@@ -45,7 +45,7 @@ object CommandLine {
 
     val tokens: Array[String] = cmd.split(" ")
     val command: List[String] = whichOrThrow(tokens(0)).toString :: tokens.tail.toList
-    log.debug(s"Running $cmd from '$cwd', which translates to ${ command.mkString("\"", "\", \"", "\"") }")
+    log.debug(s"Running $cmd from '$cwd'") //, which translates to ${ command.mkString("\"", "\", \"", "\"") }")
     Process(command=command, cwd=cwd).!!.trim
   }
 
