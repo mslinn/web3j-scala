@@ -9,7 +9,7 @@ object Publish extends App {
   val scalaVer = scala.util.Properties.versionNumberString
   implicit val scalaCompiler: ScalaCompiler = ScalaCompiler(scalaVer.split(".").take(2).mkString("."))
 
-  val project = Project(
+  implicit val project: Project = Project(
     gitHubName = "mslinn",
     name       = BuildInfo.name,
     version    = BuildInfo.version,
@@ -18,7 +18,7 @@ object Publish extends App {
   // subprojects to document; others are ignored (such as this one)
   val subprojects = List("root", "demo").map(x => new SubProject(x, new File(x).getAbsoluteFile))
 
-  val multiScaladoc = new MultiScaladoc(project)
+  val multiScaladoc = new Documenter
   subprojects.foreach { subProject =>
     multiScaladoc.commitAndDoc(subProject.baseDirectory)(subProject, scalaCompiler)
   }

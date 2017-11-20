@@ -42,7 +42,7 @@ case class Scaladoc(
   verbose: Boolean = false,
   version: String = ""
 ) {
-  import MultiScaladoc._
+  import Documenter._
 
   @inline protected def option(name: String, value: String): List[String] =
     if (value.nonEmpty) List(name, value) else Nil

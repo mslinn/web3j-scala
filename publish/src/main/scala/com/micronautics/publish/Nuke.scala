@@ -1,12 +1,12 @@
 package com.micronautics.publish
 
+import java.io.File
+import java.io.IOException
+import java.nio.file.{Files, Paths, Path, SimpleFileVisitor, FileVisitResult}
+import java.nio.file.attribute.BasicFileAttributes
 import org.slf4j.Logger
 
 object Nuke {
-  import java.io.IOException
-  import java.nio.file.{Files, Paths, Path, SimpleFileVisitor, FileVisitResult}
-  import java.nio.file.attribute.BasicFileAttributes
-
   /** Adapted from https://stackoverflow.com/a/45703150/553865 */
   def remove(root: Path, deleteRoot: Boolean = true)
             (implicit log: Logger): Unit = {
@@ -28,15 +28,21 @@ object Nuke {
     })
   }
 
-  def removeUnder(string: String)
-                 (implicit log: Logger): Unit = remove(Paths.get(string), deleteRoot=false)
-
   def removeAll(string: String)
                (implicit log: Logger): Unit = remove(Paths.get(string))
 
-  def removeUnder(file: java.io.File)
+  def removeAll(file: File)
+               (implicit log: Logger): Unit = remove(file.toPath)
+
+  def removeAll(path: Path)
+               (implicit log: Logger): Unit = remove(path)
+
+  def removeUnder(string: String)
+                 (implicit log: Logger): Unit = remove(Paths.get(string), deleteRoot=false)
+
+  def removeUnder(file: File)
                  (implicit log: Logger): Unit = remove(file.toPath, deleteRoot=false)
 
-  def removeAll(file: java.io.File)
-               (implicit log: Logger): Unit = remove(file.toPath)
+  def removeUnder(path: Path)
+                 (implicit log: Logger): Unit = remove(path, deleteRoot=false)
 }

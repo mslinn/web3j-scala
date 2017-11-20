@@ -36,6 +36,14 @@ object CommandLine {
       case Some(programPath) => programPath
     }
 
+  @inline def run(cmd: String)
+         (implicit log: Logger): String =
+    run(new File(sys.props("user.dir")), cmd)
+
+  @inline def run(cmd: String*)
+         (implicit log: Logger): String =
+    run(new File(sys.props("user.dir")), cmd: _*)
+
   def run(cwd: File = new File(sys.props("user.dir")), cmd: String)
          (implicit log: Logger): String = {
     import scala.sys.process._
@@ -55,12 +63,11 @@ object CommandLine {
     Process(command=command, cwd=cwd).!!.trim
   }
 
-  @inline def run(cmd: String)
+  def run(cwd: Path, cmd: String)
          (implicit log: Logger): String =
-    run(new File(sys.props("user.dir")), cmd)
+    run(cwd.toFile, cmd)
 
-  @inline def run(cmd: String*)
-         (implicit log: Logger): String =
-    run(new File(sys.props("user.dir")), cmd: _*)
+  def run(cwd: Path, cmd: String*)
+         (implicit log: Logger): String = run(cwd.toFile, cmd: _*)
 }
 
