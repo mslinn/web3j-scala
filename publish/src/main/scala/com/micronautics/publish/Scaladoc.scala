@@ -69,6 +69,6 @@ case class Scaladoc(
       option("-sourcepath",       sourcePath) :::
       option("-verbose",          verbose)
 
-    CommandLine.run(cwd, "scaladoc" :: options: _*)
+    CommandLine.run(cwd, "scaladoc" :: options: _*)(LogMessage.empty)
   }
 }
