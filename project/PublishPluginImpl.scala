@@ -94,32 +94,36 @@ trait PublishPluginImpl { this: AutoPlugin =>
 
         val gitParent = gitWorkParent.value.getAbsolutePath
 
-        log.debug(s"baseDirectory = ${ baseDirectory.value.getAbsolutePath }")
-        log.debug(s"CWD           = ${ sys.props("user.dir") }")
-        log.debug(s"gitWorkParent = ${ gitWorkParent.value }")
-        log.debug(s"gitParent     = $gitParent")
-        log.debug(s"gitWorkFile   = ${ gitWorkFile.value }")
-        log.debug(s"gitGit        = $gitGit")
-        log.debug(s"apiDir        = ${ apiDir.value }")
+        log.debug("#")
+        log.debug("#")
+        log.debug("#")
+        log.debug(s"# baseDirectory = ${ baseDirectory.value.getAbsolutePath }")
+        log.debug(s"# CWD           = ${ sys.props("user.dir") }")
+        log.debug(s"# gitWorkParent = ${ gitWorkParent.value }")
+        log.debug(s"# gitParent     = $gitParent")
+        log.debug(s"# gitWorkFile   = ${ gitWorkFile.value }")
+        log.debug(s"# gitGit        = $gitGit")
+        log.debug(s"# apiDir        = ${ apiDir.value }")
 
         if (gitGit.exists) {
-          log.debug("gitGit exists; about to git checkout gh-pages into gitParent")
+          log.debug("# gitGit exists; about to git checkout gh-pages into gitParent")
           run(s"git checkout gh-pages", gitWorkParent.value)
         } else {
-          log.debug("gitGit does not exist; about to create it in 2 steps.\n  1) git clone the gh-pages branch into gitParent")
+          log.debug("# gitGit does not exist; about to create it in 2 steps.\n#  1) git clone the gh-pages branch into gitParent")
+          log.debug(s"mkdir -p ${ gitWorkParent.value.getAbsolutePath }")
           IO.createDirectory(gitWorkParent.value) // does not fail if the directories already exist
+          log.debug(s"rm -rf ${ gitWorkParent.value.listFiles.mkString(" ") }")
           IO.delete(gitWorkParent.value.listFiles) // clear out any children left over from before
           run(s"git clone -b gh-pages git@github.com:$gitHubName/${ name.value }.git", gitWorkParent.value)
 
-          val x = s"  2) rename ${ name.value } to ${ baseDirectory.value.name }"
-          println(x)
-          scala.Console.out.flush()
-          log.debug(x)
+          log.debug(s"#  2) rename ${ name.value } to ${ baseDirectory.value.name }")
+          log.debug(s"(cd file(baseDirectory.value.name; mv ${ name.value } ${ baseDirectory.value.name })")
           IO.move(file(name.value), file(baseDirectory.value.name))
         }
         val files: Array[File] = apiDir.value.listFiles
         if (files.nonEmpty) {
-          log.debug(s"About to clear the contents of apiDir (${ files.mkString(", ") })")
+          log.debug(s"# About to clear the contents of apiDir (${ files.mkString(", ") })")
+          log.debug(s"rm -rf ${ files.mkString(" ") }")
           IO.delete(files)
         }
         run(s"git ${ gitWorkTree.value } add -a",      gitWorkParent.value)
