@@ -77,7 +77,7 @@ case class Scaladoc(
     commandLine.run(cwd, command: _*)
   }
 
-  def scalaFilesUnder(sourcePath: Path): List[String] = try {
+  def scalaFilesUnder(sourcePath: Path): List[String] = {
     import scala.collection.JavaConverters._
     import org.apache.commons.io.FileUtils.listFiles
 
@@ -86,8 +86,5 @@ case class Scaladoc(
       .asScala
       .toList
       .map(y => parent.relativize(y.toPath).toString)
-  } catch {
-    case e: Exception =>
-      s
   }
 }
