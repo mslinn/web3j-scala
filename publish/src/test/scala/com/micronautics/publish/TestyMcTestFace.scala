@@ -27,7 +27,7 @@ class TestyMcTestFace extends WordSpec with MustMatchers {
 
   "" should {
     "" in {
-      "Hello world".length === 11
+
     }
   }
 }

@@ -4,11 +4,6 @@ import java.io.File
 import java.nio.file.Path
 import org.slf4j.event.Level._
 
-object Config {
-  val default: Config = Config()
-}
-case class Config(dryRun: Boolean = false)
-
 object Documenter {
   @inline def file(name: String): File = new File(name)
 
@@ -29,16 +24,22 @@ class Documenter(config: Config, subprojects: List[SubProject])(implicit project
       run("git pull")(LogMessage(INFO, "Fetching latest updates for this git repo"), log)
 
       // Ensure that everything is checked in
-      // todo optionally stop the train if anything is not checked in
       run("git diff --name-only").replace("\n", ", ") foreach { changedFileNames =>
-        run("git add -A")(LogMessage(INFO, s"About to commit these changed files: $changedFileNames"), log)
-        run("git commit -m -")
+        if (config.autoCheckIn) {
+          run("git add -A")(LogMessage(INFO, s"About to commit these changed files: $changedFileNames"), log)
+          run("git commit -m -")
+        } else {
+          log.error(s"These changed files need to be checked in: $changedFileNames")
+          System.exit(0)
+        }
       }
 
       if (log.isDebugEnabled) {
         val stagedFileNames =  run("git diff --cached --name-only").replace("\n", ", ")
-        if (stagedFileNames.nonEmpty)
+        if (stagedFileNames.nonEmpty) {
           log.debug(s"These files have not yet been git pushed: ${ stagedFileNames.mkString(", ") }")
+          if (!config.autoCheckIn) System.exit(0)
+        }
       }
 
       // See https://stackoverflow.com/a/20922141/553865
