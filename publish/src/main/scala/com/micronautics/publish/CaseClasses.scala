@@ -9,13 +9,13 @@ import java.io.File
   * @param copyright Scaladoc copyright info for this project */
 case class Project(
   gitHubName: String,
+  gitRemoteOriginUrl: String,
   override val name: String,
   version: String,
   title: String = "",
   copyright: String = "&nbsp;"
 ) extends SubProject(name, new File(sys.props("user.dir")).getAbsoluteFile) {
-  val gitHubUserUrl = s"https://github.com/$gitHubName/$name"
-  require(io.Source.fromURL(gitHubUserUrl).mkString.trim.nonEmpty, s"$gitHubUserUrl does not exist")
+  require(io.Source.fromURL(gitRemoteOriginUrl).mkString.trim.nonEmpty, s"$gitRemoteOriginUrl does not exist")
 }
 
 object ScalaCompiler {
@@ -24,7 +24,5 @@ object ScalaCompiler {
 }
 
 class SubProject(val name: String, val baseDirectory: File) {
-  def gitHubProjectUrl(implicit project: Project) = s"git@github.com:${ project.gitHubName }/$name.git"
-
 //  lazy val crossTarget: File = new File(s"target/scala-${ ScalaCompiler.majorMinorVersion }")
 }

@@ -39,7 +39,7 @@ case class GhPages(
       run(apisRoot, "git checkout gh-pages")
     } else {
       LogMessage(DEBUG, "gitGit does not exist; about to create it in 2 steps.\n#  1) git clone the gh-pages branch into gitParent").display()
-      run(apiRootFor(subProject), s"git clone -b gh-pages ${ subProject.gitHubProjectUrl }.git")
+      run(apiRootFor(subProject), s"git clone -b gh-pages ${ project.gitRemoteOriginUrl }.git")
 
       LogMessage(DEBUG, s"  2) rename ${ subProject.name } to ${ subProject.baseDirectory.getName }").display()
       file(project.name).renameTo(file(subProject.baseDirectory.getName))

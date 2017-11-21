@@ -23,7 +23,7 @@ case class LogMessage(level: Level, message: String)
   lazy val nonEmpty: Boolean = message.nonEmpty
 }
 
-class CommandLine(config: Config = Config.default) {
+class CommandLine(implicit config: Config = Config.default) {
   import java.io.File
   import java.nio.file.{Path, Paths}
   import java.util.regex.Pattern

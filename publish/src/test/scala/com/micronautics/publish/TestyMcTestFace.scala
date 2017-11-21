@@ -7,17 +7,25 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest._
 import org.scalatest.Matchers._
 import org.scalatest.OptionValues._
+import org.slf4j.Logger
 
 @RunWith(classOf[JUnitRunner])
 class TestyMcTestFace extends WordSpec with MustMatchers {
-  val config: Config =
+  implicit val logger: Logger = org.slf4j.LoggerFactory.getLogger("pub")
+
+  implicit val config: Config =
     Config
       .default
       .copy(subProjectNames = List("root", "demo"))
       //.copy(deleteAfterUse = false)
 
+  implicit protected [publish] val commandLine: CommandLine = new CommandLine
+
+  val gitHubUserUrl: String = commandLine.run("git config --get remote.origin.url")
+
   implicit val project: Project = Project(
     gitHubName = "mslinn",
+    gitRemoteOriginUrl = gitHubUserUrl,
     name       = BuildInfo.gitRepoName,
     version    = BuildInfo.version,
     copyright  = "Copyright 2017 Micronautics Research Corporation. All rights reserved."
@@ -28,7 +36,7 @@ class TestyMcTestFace extends WordSpec with MustMatchers {
     List("root", "demo")
       .map(x => new SubProject(x, new File(x).getAbsoluteFile))
 
-  val documenter = new Documenter(config, subprojects)
+  val documenter = new Documenter(subprojects)
   val subProjects: List[SubProject] = documenter.subProjects
   val ghPages: GhPages = documenter.ghPages
 

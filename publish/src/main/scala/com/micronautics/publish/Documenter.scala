@@ -10,11 +10,10 @@ object Documenter {
   implicit val log: org.slf4j.Logger = org.slf4j.LoggerFactory.getLogger("pub")
 }
 
-class Documenter(config: Config, val subProjects: List[SubProject])
-                (implicit project: Project) {
+class Documenter(val subProjects: List[SubProject])
+                (implicit commandLine: CommandLine, config: Config, project: Project) {
   import Documenter._
 
-  implicit protected [publish] val commandLine: CommandLine = new CommandLine(config = config)
   import commandLine.run
 
   protected[publish] lazy val ghPages = GhPages(deleteAfterUse=config.deleteAfterUse)
