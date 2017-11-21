@@ -6,6 +6,10 @@ lazy val publish = project
     buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
     buildInfoPackage := "buildInfo",
 
+    buildInfoKeys ++= Seq[BuildInfoKey]( // assumes that the git repo directory has not been renamed
+      "gitRepoName" -> new File(sys.props("user.dir")).getName
+    ),
+
     // define the statements initially evaluated when entering 'console', 'console-quick', but not 'console-project'
     initialCommands in console := """
                                     |""".stripMargin,

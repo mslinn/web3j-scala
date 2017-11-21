@@ -18,7 +18,7 @@ class TestyMcTestFace extends WordSpec with MustMatchers {
 
   implicit val project: Project = Project(
     gitHubName = "mslinn",
-    name       = BuildInfo.name,
+    name       = BuildInfo.gitRepoName,
     version    = BuildInfo.version,
     copyright  = "Copyright 2017 Micronautics Research Corporation. All rights reserved."
   )
