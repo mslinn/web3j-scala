@@ -23,6 +23,7 @@ class Documenter(val subProjects: List[SubProject])
       setup()
       gitPull()
       cautiousGitCommitPush()
+      writeIndex(overWriteIndex = config.overWriteIndex)
 
       log.info(s"Making Scaladoc for ${ subProjects.size } SBT subprojects.")
       subProjects.foreach(runScaladoc)
@@ -57,6 +58,37 @@ class Documenter(val subProjects: List[SubProject])
 
     // See https://stackoverflow.com/a/20922141/553865
     run("git push origin HEAD")(LogMessage(INFO, "About to git push to origin"), log)
+  }
+
+  protected def writeIndex(overWriteIndex: Boolean = false): Unit = {
+    val ghFile = ghPages.root.toFile
+    if (overWriteIndex || ghFile.list.isEmpty) {
+      import java.io.PrintWriter
+      val pw = new PrintWriter(new File(ghFile, "index.html" ))
+      val contents: String = subProjects.map { sb =>
+        s"<a href='api/latest/${ sb.name }/index.html'>${ sb.name }</a><br/>"
+      }.mkString("\n")
+
+      pw.write(
+        s"""
+           |<!DOCTYPE html >
+           |<html>
+           |<head>
+           |  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+           |  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+           |  <title>${ project.name } v${ project.version } API</title>
+           |  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+           |  <link href="lib/index.css" media="screen" type="text/css" rel="stylesheet" />
+           |  <link href="lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+           |</head>
+           |<body>
+           |  $contents
+           |</body>
+           |</html>
+           |""".stripMargin
+      )
+      pw.close()
+    }
   }
 
   protected[publish] def gitPull(): Unit =

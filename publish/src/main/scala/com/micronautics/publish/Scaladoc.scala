@@ -77,6 +77,7 @@ case class Scaladoc(
     commandLine.run(cwd, command: _*)
   }
 
+  /** @return relativized list of scala file names under `sourcePath`, including `sourcePath` */
   def scalaFilesUnder(sourcePath: Path): List[String] = {
     import scala.collection.JavaConverters._
     import org.apache.commons.io.FileUtils.listFiles
@@ -85,6 +86,6 @@ case class Scaladoc(
     listFiles(sourcePath.toFile, Array("scala"), true)
       .asScala
       .toList
-      .map(y => parent.relativize(y.toPath).toString)
+      .map(x => parent.relativize(x.toPath).toString)
   }
 }

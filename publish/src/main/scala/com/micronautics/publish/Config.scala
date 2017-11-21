@@ -11,5 +11,6 @@ case class Config(
   autoCheckIn: Boolean = true,
   deleteAfterUse: Boolean = true,
   dryRun: Boolean = false,
+  overWriteIndex: Boolean = false,
   subProjectNames: List[String] = List("root", "demo")
 )
