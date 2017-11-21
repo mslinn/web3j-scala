@@ -66,8 +66,8 @@ class Documenter(val subProjects: List[SubProject])
       import java.io.PrintWriter
       val pw = new PrintWriter(new File(ghFile, "index.html" ))
       val contents: String = subProjects.map { sb =>
-        s"<a href='api/latest/${ sb.name }/index.html'>${ sb.name }</a><br/>"
-      }.mkString("\n")
+        s"<a href='api/latest/${ sb.name }/index.html' class='extype'><code>${ sb.name }</code></a><br/>"
+      }.mkString("<p>", "\n", "</p>")
 
       pw.write(
         s"""
@@ -82,7 +82,15 @@ class Documenter(val subProjects: List[SubProject])
            |  <link href="lib/template.css" media="screen" type="text/css" rel="stylesheet" />
            |</head>
            |<body>
-           |  $contents
+           |<div id="content-scroll-container" style="-webkit-overflow-scrolling: touch;">
+           |  <div id="content-container" style="-webkit-overflow-scrolling: touch;">
+           |    <div id="subpackage-spacer">
+           |      <div id="packages">
+           |        $contents
+           |      </div>
+           |    </div>
+           |  </div>
+           |</div>
            |</body>
            |</html>
            |""".stripMargin
