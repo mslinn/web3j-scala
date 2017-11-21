@@ -96,10 +96,9 @@ class Documenter(val subProjects: List[SubProject])
 
   protected[publish] def gitAddCommitPush(message: LogMessage = LogMessage.empty)
                                          (implicit subProject: SubProject): Unit = {
-    val workTree: String = gitWorkTree
-    run(s"git $workTree add -a")(message, log)
-    run(s"git $workTree commit -m -")
-    run(s"git $workTree push origin HEAD")
+    run(gitWorkPath, "git add -a")(message, log)
+    run(gitWorkPath, "git commit -m -")
+    run(gitWorkPath, "git push origin HEAD")
   }
 
   protected[publish] def gitTag(cwd: File)
@@ -116,8 +115,8 @@ class Documenter(val subProjects: List[SubProject])
   @inline protected[publish] def gitWorkPath(implicit subProject: SubProject): Path =
     ghPages.apiRootFor(subProject)
 
-  @inline protected[publish] def gitWorkTree(implicit subProject: SubProject): String =
-    s"--work-tree=$gitWorkPath"
+//  @inline protected[publish] def gitWorkTree(implicit subProject: SubProject): String =
+//    s"--work-tree=$gitWorkPath"
 
   protected[publish] def runScaladoc(subProject: SubProject): Unit = {
     log.info(s"Creating Scaladoc for ${ subProject.name }.")
