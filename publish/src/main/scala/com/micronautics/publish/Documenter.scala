@@ -90,18 +90,20 @@ class Documenter(val subProjects: List[SubProject])
   protected[publish] def runScaladoc(subProject: SubProject): Unit = {
     log.info(s"Creating Scaladoc for ${ subProject.name }.")
 
-    val classPath: String = run("sbt", s"; project ${ subProject.name }; export runtime:fullClasspath")
-    val externalDoc: String =
-      s"https://github.com/${ project.gitHubName }/${ project.name }/tree/master€{FILE_PATH}.scala"
+    val classPath: String =
+      run("sbt", "-no-colors", s"; project ${ subProject.name }; export runtime:fullClasspath")
+        .split("\n")
+        .last
+    val sourceUrl: String = s"https://github.com/${ project.gitHubName }/${ project.name }/tree/master€{FILE_PATH}.scala"
     val outputDirectory: Path = ghPages.apiRootFor(subProject)
 
     Scaladoc(
       classPath = classPath,
-      externalDoc = externalDoc, // todo is this correct?
+      externalDoc = "", // todo figure this out
       footer = project.copyright,
       outputDirectory = outputDirectory,
       sourcePath = new File(subProject.baseDirectory, "src/main/scala").getAbsolutePath, // todo is this correct?
-      sourceUrl = externalDoc, // todo is this correct?
+      sourceUrl = sourceUrl,
       title = project.title,
       version = project.version
     ).run(subProject.baseDirectory, commandLine)

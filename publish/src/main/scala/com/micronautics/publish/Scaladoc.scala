@@ -30,14 +30,14 @@ import java.nio.file.{Path, Paths}
   */
 case class Scaladoc(
   classPath: String = ".", // is this the best default value?
-  deprecation: String = "on",
+  deprecation: Boolean = true,
   diagrams: Boolean = true,
   encoding: String = "",
   externalDoc: String = "",
   footer: String = "&nbsp;",
   implicits: Boolean = true,
   outputDirectory: Path = Paths.get(""),
-  sourcePath: String = ".", // todo this may not be a good default value
+  sourcePath: String = ".",
   sourceUrl: String = "",
   title: String = "",
   verbose: Boolean = false,
@@ -52,6 +52,8 @@ case class Scaladoc(
     if (value) List(name) else Nil
 
   def run(cwd: File, commandLine: CommandLine): String = {
+    outputDirectory.toFile.mkdirs()
+
     val dotIsInstalled = commandLine.which("dot").nonEmpty
     if (diagrams && !dotIsInstalled)
       log.warn("Inheritance diagrams were requested, but the 'dot' program from the 'graphviz' package is not installed.")
@@ -70,6 +72,22 @@ case class Scaladoc(
       option("-sourcepath",       sourcePath) :::
       option("-verbose",          verbose)
 
-    commandLine.run(cwd, "scaladoc" :: options: _*)
+    val sourceFiles: List[String] = scalaFilesUnder(Paths.get(sourcePath))
+    val command = "scaladoc" :: options ::: sourceFiles
+    commandLine.run(cwd, command: _*)
+  }
+
+  def scalaFilesUnder(sourcePath: Path): List[String] = try {
+    import scala.collection.JavaConverters._
+    import org.apache.commons.io.FileUtils.listFiles
+
+    val parent: Path = sourcePath.getParent.getParent.getParent
+    listFiles(sourcePath.toFile, Array("scala"), true)
+      .asScala
+      .toList
+      .map(y => parent.relativize(y.toPath).toString)
+  } catch {
+    case e: Exception =>
+      s
   }
 }

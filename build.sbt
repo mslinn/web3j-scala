@@ -14,10 +14,11 @@ lazy val publish = project
     initialCommands in console := """
                                     |""".stripMargin,
     libraryDependencies ++= Seq(
-      "ch.qos.logback"          %  "logback-classic"       % "1.2.3",
+      "commons-io"              %  "commons-io"      % "2.6"   withSources(),
+      "ch.qos.logback"          %  "logback-classic" % "1.2.3",
        //
-       "org.scalatest"          %% "scalatest"   % "3.0.3" % Test withSources(),
-       "junit"                  %  "junit"       % "4.12"  % Test
+       "org.scalatest"          %% "scalatest"       % "3.0.3" % Test withSources(),
+       "junit"                  %  "junit"           % "4.12"  % Test
     ),
     name := "publish",
   )

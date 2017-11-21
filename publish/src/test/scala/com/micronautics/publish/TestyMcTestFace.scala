@@ -1,6 +1,7 @@
 package com.micronautics.publish
 
 import java.io.File
+import java.nio.file.Path
 import buildInfo.BuildInfo
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
@@ -50,10 +51,11 @@ class TestyMcTestFace extends WordSpec with MustMatchers {
   "Setup" should {
     "work" in {
       documenter.setup()
-      ghPages.root.toFile.listFiles.length mustBe 2
+      val rootFileNames: Array[String] = ghPages.root.toFile.listFiles.map(_.getName)
+      logger.info(s"ghPages.root (${ ghPages.root }) contains ${ rootFileNames.mkString(", ") }")
+      rootFileNames mustBe Array("latest")
       ghPages.deleteScaladoc()
-      ghPages.root.resolve("latest/api/demo").toFile.listFiles.length mustBe 0
-      ghPages.root.resolve("latest/api/root").toFile.listFiles.length mustBe 0
+      ghPages.root.resolve("latest/api").toFile.listFiles.length mustBe 0
     }
   }
 
@@ -62,11 +64,17 @@ class TestyMcTestFace extends WordSpec with MustMatchers {
 //      documenter.runScaladoc(subProjects.head)
       subProjects.foreach(documenter.runScaladoc)
 
+      ghPages.root.resolve("latest/api/demo").toFile.listFiles.length must be > 0
+      ghPages.root.resolve("latest/api/root").toFile.listFiles.length must be > 0
+
       import java.awt.Desktop
       import java.net.URI
 
-      if (Desktop.isDesktopSupported)
-        Desktop.getDesktop.browse(new URI(ghPages.root.resolve("latest/api/demo").toString))
+      if (Desktop.isDesktopSupported) {
+        val demo: Path = ghPages.root.resolve("latest/api/demo")
+        val uri: URI = new URI(demo.toString)
+        Desktop.getDesktop.browse(uri)
+      }
     }
   }
 }

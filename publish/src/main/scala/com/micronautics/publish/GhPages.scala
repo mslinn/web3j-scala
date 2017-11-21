@@ -9,7 +9,7 @@ import org.slf4j.event.Level.DEBUG
   * @param root directory to place the contents of GhPages */
 case class GhPages(
   deleteAfterUse: Boolean = true,
-  root: Path = Files.createTempDirectory(sys.props("java.io.tmpdir"))
+  root: Path = Files.createTempDirectory("ghPages")
 )(implicit log: Logger) {
   if (deleteAfterUse)
     Runtime.getRuntime.addShutdownHook(new Thread {

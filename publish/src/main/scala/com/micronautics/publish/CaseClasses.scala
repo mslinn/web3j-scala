@@ -15,7 +15,7 @@ case class Project(
   title: String = "",
   copyright: String = "&nbsp;"
 ) extends SubProject(name, new File(sys.props("user.dir")).getAbsoluteFile) {
-  require(io.Source.fromURL(gitRemoteOriginUrl).mkString.trim.nonEmpty, s"$gitRemoteOriginUrl does not exist")
+  //require(io.Source.fromURL(gitRemoteOriginUrl).mkString.trim.nonEmpty, s"$gitRemoteOriginUrl does not exist")
 }
 
 object ScalaCompiler {
