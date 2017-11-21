@@ -1,11 +1,14 @@
 package com.micronautics.publish
 
-import buildInfo.BuildInfo
 import java.io.File
+import buildInfo.BuildInfo
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
+import org.scalatest._
+import org.scalatest.Matchers._
 
-/** Utility for creating combined Scaladoc for an SBT multi-project.
-  * Must be run from top-level git repo directory */
-object Publish extends App {
+@RunWith(classOf[JUnitRunner])
+class TestyMcTestFace extends WordSpec with MustMatchers {
   val config: Config = Config.default
 
   implicit val project: Project = Project(
@@ -20,5 +23,11 @@ object Publish extends App {
     List("root", "demo")
       .map(x => new SubProject(x, new File(x).getAbsoluteFile))
 
-  new Documenter(config, subprojects).publish()
+  val documenter = new Documenter(config, subprojects)
+
+  "" should {
+    "" in {
+      "Hello world".length === 11
+    }
+  }
 }
