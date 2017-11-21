@@ -61,20 +61,19 @@ class TestyMcTestFace extends WordSpec with MustMatchers {
 
   "RunScaladoc" should {
     "work" in {
-//      documenter.runScaladoc(subProjects.head)
       subProjects.foreach(documenter.runScaladoc)
 
       ghPages.root.resolve("latest/api/demo").toFile.listFiles.length must be > 0
       ghPages.root.resolve("latest/api/root").toFile.listFiles.length must be > 0
 
-      import java.awt.Desktop
+      /*import java.awt.Desktop
       import java.net.URI
 
       if (Desktop.isDesktopSupported) {
         val demo: Path = ghPages.root.resolve("latest/api/demo")
-        val uri: URI = new URI(demo.toString)
+        val uri: URI = new URI(s"file://$demo")
         Desktop.getDesktop.browse(uri)
-      }
+      }*/
     }
   }
 }
