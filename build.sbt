@@ -16,7 +16,8 @@ lazy val publish = project
     libraryDependencies ++= Seq(
       "commons-io"              %  "commons-io"      % "2.6"   withSources(),
       "ch.qos.logback"          %  "logback-classic" % "1.2.3",
-       //
+      "com.github.scopt"        %% "scopt"           % "3.7.0"  withSources(),
+      //
        "org.scalatest"          %% "scalatest"       % "3.0.3" % Test withSources(),
        "junit"                  %  "junit"           % "4.12"  % Test
     ),

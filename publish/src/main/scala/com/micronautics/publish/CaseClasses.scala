@@ -8,12 +8,10 @@ import java.io.File
   * @param title Full name of this project; this value is used to create the Scaladoc title
   * @param copyright Scaladoc copyright info for this project */
 case class Project(
-  gitHubName: String,
   gitRemoteOriginUrl: String,
   override val name: String,
   version: String,
-  title: String = "",
-  copyright: String = "&nbsp;"
+  title: String = ""
 ) extends SubProject(name, new File(sys.props("user.dir")).getAbsoluteFile) {
   //require(io.Source.fromURL(gitRemoteOriginUrl).mkString.trim.nonEmpty, s"$gitRemoteOriginUrl does not exist")
 }

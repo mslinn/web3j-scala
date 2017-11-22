@@ -25,11 +25,9 @@ class TestyMcTestFace extends WordSpec with MustMatchers {
   val gitHubUserUrl: String = commandLine.run("git config --get remote.origin.url")
 
   implicit val project: Project = Project(
-    gitHubName = "mslinn",
     gitRemoteOriginUrl = gitHubUserUrl,
-    name       = BuildInfo.gitRepoName,
-    version    = BuildInfo.version,
-    copyright  = "Copyright 2017 Micronautics Research Corporation. All rights reserved."
+    name               = BuildInfo.gitRepoName,
+    version            = BuildInfo.version
   )
 
   // subprojects to document; others are ignored (such as this one)

@@ -40,7 +40,7 @@ class Documenter(val subProjects: List[SubProject])
     // Ensure that everything is committed
     run("git diff --name-only").replace("\n", ", ") foreach { changedFileNames =>
       if (config.autoCheckIn) {
-        run("git add -A")(LogMessage(INFO, s"About to commit these changed files: $changedFileNames"), log)
+        run("git add -a")(LogMessage(INFO, s"About to commit these changed files: $changedFileNames"), log)
         run("git commit -m -")
       } else {
         log.error(s"These changed files need to be checked in: $changedFileNames")
@@ -133,13 +133,13 @@ class Documenter(val subProjects: List[SubProject])
       run("sbt", "-no-colors", s"; project ${ subProject.name }; export runtime:fullClasspath")
         .split("\n")
         .last
-    val sourceUrl: String = s"https://github.com/${ project.gitHubName }/${ project.name }/tree/master€{FILE_PATH}.scala"
+    val sourceUrl: String = s"https://github.com/${ config.gitHubName }/${ project.name }/tree/master€{FILE_PATH}.scala"
     val outputDirectory: Path = ghPages.apiRootFor(subProject)
 
     Scaladoc(
       classPath = classPath,
       externalDoc = "", // todo figure this out
-      footer = project.copyright,
+      footer = config.copyright,
       outputDirectory = outputDirectory,
       sourcePath = new File(subProject.baseDirectory, "src/main/scala").getAbsolutePath, // todo is this correct?
       sourceUrl = sourceUrl,
