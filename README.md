@@ -187,14 +187,26 @@ To change the server port, set `previewFixedPort`:
    ```
 
 ### Updating Scaladoc
-If you just want to republish the Scaladoc for this project, without creating a new version, use this command:
+The documentation for this project is generated separately for both subprojects: `root` (the library) and `demo`.
+For usage, simply type:
+```
+$ bin/doc
+Publish 0.2.1
+Usage: bin/doc [options]
 
-    $ sbt scaladoc
-
-### Updating Scaladoc and Committing Changes Without Publishing a New Version
-This task rebuilds the docs, commits the git repository, publishes a new git tag, and publishes the updated Scaladoc without affecting the current software version:
-
-    $ sbt commitAndDoc
+  -a, --autoCheckIn <value>
+                           Stop program if any files need to be committed or pushed
+  -c, --copyright <value>  Scaladoc footer
+  -d, --deleteAfterUse <value>
+                           remove the GhPages temporary directory when the program ends
+  -n, --gitHubName <value>
+                           Github ID for project
+  -o, --overWriteIndex <value>
+                           Do not preserve any pre-existing index.html in the Scaladoc root
+  -r, --dryRun <value>     Show the commands that would be run
+  -s, --subProjectNames <value>
+                           Comma-delimited names of subprojects to generate Scaladoc for
+```
 
 ## Sponsor
 <img src='https://www.micronauticsresearch.com/images/robotCircle400shadow.png' align='right' width='15%'>

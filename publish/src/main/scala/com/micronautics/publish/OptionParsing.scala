@@ -4,35 +4,35 @@ import buildInfo.BuildInfo
 import scopt.OptionParser
 
 trait OptionParsing {
-  val parser: OptionParser[Config] = new scopt.OptionParser[Config]("bin/publish") {
+  val parser: OptionParser[Config] = new scopt.OptionParser[Config]("bin/doc") {
     head("Publish", BuildInfo.version)
 
-    opt[Boolean]('a', "autoCheckIn").action { (x, c) =>
-      c.copy(autoCheckIn = x)
+    opt[Boolean]('a', "autoCheckIn").action { (value, config) =>
+      config.copy(autoCheckIn = value)
     }.text("Stop program if any files need to be committed or pushed")
 
-    opt[String]('c', "copyright").action { (x, c) =>
-      c.copy(copyright = x)
-    }.required.text("Scaladoc footer")
+    opt[String]('c', "copyright").action { (value, config) =>
+      config.copy(copyright = value)
+    }.text("Scaladoc footer")
 
-    opt[Boolean]('d', "deleteAfterUse").action { (x, c) =>
-      c.copy(deleteAfterUse = x)
+    opt[Boolean]('d', "deleteAfterUse").action { (value, config) =>
+      config.copy(deleteAfterUse = value)
     }.text("remove the GhPages temporary directory when the program ends")
 
-    opt[String]('n', "gitHubName").action { (x, c) =>
-      c.copy(gitHubName = x)
+    opt[String]('n', "gitHubName").action { (value, config) =>
+      config.copy(gitHubName = value)
     }.required.text("Github ID for project")
 
-    opt[Boolean]('o', "overWriteIndex").action { (x, c) =>
-      c.copy(overWriteIndex = x)
+    opt[Boolean]('o', "overWriteIndex").action { (value, config) =>
+      config.copy(overWriteIndex = value)
     }.text(s"Do not preserve any pre-existing index.html in the Scaladoc root")
 
-    opt[Boolean]('r', "dryRun").action { (x, c) =>
-      c.copy(dryRun = x)
+    opt[Boolean]('r', "dryRun").action { (value, config) =>
+      config.copy(dryRun = value)
     }.text("Show the commands that would be run")
 
-    opt[String]('s', "subProjectNames").action { (x, c) =>
-      c.copy(subProjectNames = x.split(",").toList)
+    opt[String]('s', "subProjectNames").action { (value, config) =>
+      config.copy(subProjectNames = value.split(",").toList)
     }.text(s"Comma-delimited names of subprojects to generate Scaladoc for")
   }
 }
