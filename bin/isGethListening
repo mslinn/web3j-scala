@@ -1,7 +1,0 @@
-#!/bin/bash
-
-# Verify that geth is listening on port 8545
-
-sudo netstat -pan | grep 8545
-
-#  tcp        0      0 127.0.0.1:8545          0.0.0.0:*               LISTEN      22296/geth
