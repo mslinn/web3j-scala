@@ -143,7 +143,7 @@ class Documenter(val subProjects: List[SubProject])
       outputDirectory = outputDirectory,
       sourcePath = new File(subProject.baseDirectory, "src/main/scala").getAbsolutePath, // todo is this correct?
       sourceUrl = sourceUrl,
-      title = project.title,
+      title = project.name,
       version = project.version
     ).run(subProject.baseDirectory, commandLine)
     ()

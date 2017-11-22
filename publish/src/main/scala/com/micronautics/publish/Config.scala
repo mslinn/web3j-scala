@@ -16,7 +16,7 @@ case class Config(
   copyright: String = "&nbsp;",
   deleteAfterUse: Boolean = true,
   dryRun: Boolean = false,
-  gitHubName: String = "", // todo invalid value, but config requires it must be specified, so we are good
+  gitHubName: String = "mslinn", // Not a generally useful default value, but config requires a value must be specified, so we are good
   overWriteIndex: Boolean = false,
   subProjectNames: List[String] = List("root", "demo")
 )

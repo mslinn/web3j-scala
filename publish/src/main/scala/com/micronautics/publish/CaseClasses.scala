@@ -2,16 +2,13 @@ package com.micronautics.publish
 
 import java.io.File
 
-/** @param gitHubName GitHub account id for the git repo for this SBT project
-  * @param name GitHub repo name for this SBT project
-  * @param version Git release version of this SBT project
-  * @param title Full name of this project; this value is used to create the Scaladoc title
-  * @param copyright Scaladoc copyright info for this project */
+/** @param name GitHub repo name for this SBT project
+  * @param gitRemoteOriginUrl taken from `.git/config`
+  * @param version Git release version of this SBT project */
 case class Project(
   gitRemoteOriginUrl: String,
   override val name: String,
-  version: String,
-  title: String = ""
+  version: String
 ) extends SubProject(name, new File(sys.props("user.dir")).getAbsoluteFile) {
   //require(io.Source.fromURL(gitRemoteOriginUrl).mkString.trim.nonEmpty, s"$gitRemoteOriginUrl does not exist")
 }
