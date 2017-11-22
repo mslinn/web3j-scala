@@ -1,6 +1,5 @@
 package com.micronautics.publish
 
-import buildInfo.BuildInfo
 import java.io.File
 import org.slf4j.Logger
 
