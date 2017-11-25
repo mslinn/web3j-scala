@@ -8,7 +8,7 @@ import scala.sys.process._
 
 /** Command-line invocation / process control */
 object Cmd {
-  val logger: Logger = org.slf4j.LoggerFactory.getLogger("gitStats")
+  val logger: Logger = org.slf4j.LoggerFactory.getLogger("web3j-scala")
 
   protected lazy val os: String = sys.props("os.name").toLowerCase
 

@@ -162,26 +162,51 @@ The following scripts are provided in the `bin/` directory:
 * [The Web3J JavaDoc is here](https://jar-download.com/java-documentation-javadoc.php?a=core&g=org.web3j&v=3.0.2),
   and here is the [Web3J gitter channel](https://gitter.im/web3j/web3j).
 
+### Previewing Scaladoc
+To preview Scaladoc, you can either run the `previewSite` task, which launches a static web server, or
+run the `previewAuto` task, which launches a dynamic server that updates its content at each modification in your source files.
+Both servers run from port 4000 and both SBT tasks attempt to connect your browser to `http://localhost:4000/`.
+
+To change the server port, set `previewFixedPort`: 
+
+    previewFixedPort := Some(9999)
+   
 ### Publishing
 1. Update the version string in `build.sbt` and in this `README.md` before attempting to publish to Bintray.
 2. Commit changes with a descriptive comment:
    ```
    $ git add -a && git commit -m "Comment here"
    ```
-3. Publish a new version of this library, including committing changes and updating the Scaladoc with this command:
+3. Tell the `sbt-git` SBT plugin where the `.git` directory is:
+   ```
+   export GIT_DIR="$(pwd)/.git"
+   ```
+4. Publish a new version of this library, including committing changes and updating the Scaladoc with this command:
    ```
    $ sbt publishAndTag
    ```
 
 ### Updating Scaladoc
-If you just want to republish the Scaladoc for this project, without creating a new version, use this command:
+The documentation for this project is generated separately for both subprojects: `root` (the library) and `demo`.
+For usage, simply type:
+```
+$ bin/doc
+Publish 0.2.1
+Usage: bin/doc [options]
 
-    $ sbt scaladoc
-
-### Updating Scaladoc and Committing Changes Without Publishing a New Version
-This task rebuilds the docs, commits the git repository, and publishes the updated Scaladoc without publishing a new version:
-
-    $ sbt commitAndDoc
+  -a, --autoCheckIn <value>
+                           Stop program if any files need to be committed or pushed
+  -c, --copyright <value>  Scaladoc footer
+  -d, --deleteAfterUse <value>
+                           remove the GhPages temporary directory when the program ends
+  -n, --gitHubName <value>
+                           Github ID for project
+  -o, --overWriteIndex <value>
+                           Do not preserve any pre-existing index.html in the Scaladoc root
+  -r, --dryRun <value>     Show the commands that would be run
+  -s, --subProjectNames <value>
+                           Comma-delimited names of subprojects to generate Scaladoc for
+```
 
 ## Sponsor
 <img src='https://www.micronauticsresearch.com/images/robotCircle400shadow.png' align='right' width='15%'>

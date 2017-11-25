@@ -1,5 +1,3 @@
-import Settings._
-
 val web3jVersion = "3.1.0"
 
 lazy val commonSettings = Seq(
@@ -29,6 +27,7 @@ lazy val commonSettings = Seq(
   resolvers ++= Seq(
     "Ethereum Maven" at "https://dl.bintray.com/ethereum/maven/"
   ),
+
   scalacOptions ++= Seq( // From https://tpolecat.github.io/2017/04/25/scalac-flags.html
     "-deprecation",                      // Emit warning and location for usages of deprecated APIs.
     "-encoding", "utf-8",                // Specify character encoding used by source files.
@@ -87,34 +86,43 @@ lazy val commonSettings = Seq(
     )
   }.value,
 
-  scalaVersion := "2.12.4",
-
-  version := "0.2.1"
-)
-
-lazy val demo = project
-  .settings(
-    commonSettings,
+    buildInfoKeys ++= Seq[BuildInfoKey]( // assumes that the git repo directory has not been renamed
+      "gitRepoName" -> new File(sys.props("user.dir")).getName
+    ),
 
     // define the statements initially evaluated when entering 'console', 'console-quick', but not 'console-project'
+    initialCommands in console := """
+                                    |""".stripMargin,
+    libraryDependencies ++= Seq(
+      "commons-io"              %  "commons-io"      % "2.6"    withSources(),
+      "ch.qos.logback"          %  "logback-classic" % "1.2.3",
+      "com.github.scopt"        %% "scopt"           % "3.7.0"  withSources(),
+      //
+       "org.scalatest"          %% "scalatest"       % "3.0.3" % Test withSources(),
+       "junit"                  %  "junit"           % "4.12"  % Test
+    ),
+    name := "publish",
+  )
+
+lazy val demo = project
+  .aggregate(root)
+  .settings(
+    // define the statements to be evaluated when entering 'console' and 'consoleQuick' but not 'consoleProject'
     initialCommands in console := """import java.math.BigInteger
                                     |import java.util.concurrent.Future
                                     |import org.web3j.protocol._
                                     |import org.web3j.protocol.infura._
                                     |""".stripMargin,
 
+    name := "web3j-scala-demo",
+
     unmanagedSourceDirectories in Compile += baseDirectory.value / "../abiWrapper"
   ).dependsOn(root)
 
-lazy val root = (project in file("."))
+lazy val root = (project in file("root"))
   .settings(
-    commonSettings,
-
     // define the statements initially evaluated when entering 'console', 'console-quick', but not 'console-project'
-    initialCommands in console := """import java.math.BigInteger
-                                    |import java.util.concurrent.Future
-                                    |import org.web3j.protocol._
-                                    |import org.web3j.protocol.infura._
+    initialCommands in console := """
                                     |""".stripMargin,
 
     libraryDependencies ++= Seq(

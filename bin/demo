@@ -16,6 +16,8 @@ Once geth is running, run a demo programs by typing the following into another c
   exit
 }
 
+DEBUG="-jvm-debug 5005"
+# To see sbt debug output: sbt "last scaladocSetup"
 case "$1" in
   Observables)    sbt ";project demo; runMain demo.DemoObservables"    ;;
   SmartContracts) sbt ";project demo; runMain demo.DemoSmartContracts" ;;
