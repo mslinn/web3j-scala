@@ -3,15 +3,13 @@ val web3jVersion = "3.1.0"
 lazy val commonSettings = Seq(
   cancelable := true,
 
-  logLevel := Level.Warn,
+  buildInfoKeys ++= Seq[BuildInfoKey]( // assumes that the git repo directory has not been renamed
+    "gitRepoName" -> new File(sys.props("user.dir")).getName
+  ),
 
-  // Only show warnings and errors on the screen for compilations.
-  // This applies to both test:compile and compile and is Info by default
-  logLevel in compile := Level.Warn,
-
-  // Level.INFO is needed to see detailed output when running tests
-  logLevel in test := Level.Info,
-
+  // define the statements initially evaluated when entering 'console', 'console-quick', but not 'console-project'
+  initialCommands in console := """
+                                  |""".stripMargin,
   javacOptions ++= Seq(
     "-Xlint:deprecation",
     "-Xlint:unchecked",
@@ -20,7 +18,25 @@ lazy val commonSettings = Seq(
     "-g:vars"
   ),
 
+  libraryDependencies ++= Seq(
+    "commons-io"              %  "commons-io"      % "2.6"    withSources(),
+    "ch.qos.logback"          %  "logback-classic" % "1.2.3",
+    "com.github.scopt"        %% "scopt"           % "3.7.0"  withSources(),
+    //
+     "org.scalatest"          %% "scalatest"       % "3.0.3" % Test withSources(),
+     "junit"                  %  "junit"           % "4.12"  % Test
+  ),
+
   licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html")),
+
+  logLevel := Level.Warn,
+
+  // Only show warnings and errors on the screen for compilations.
+  // This applies to both test:compile and compile and is Info by default
+  logLevel in compile := Level.Warn,
+
+  // Level.INFO is needed to see detailed output when running tests
+  logLevel in test := Level.Info,
 
   organization := "com.micronautics",
 
@@ -79,30 +95,8 @@ lazy val commonSettings = Seq(
   // The REPL can’t cope with -Ywarn-unused:imports or -Xfatal-warnings so turn them off for the console
   scalacOptions in (Compile, console) --= Seq("-Ywarn-unused:imports", "-Xfatal-warnings"),
 
-  scalacOptions in (Compile, doc) ++= baseDirectory.map {
-    (bd: File) => Seq[String](
-       "-sourcepath", bd.getAbsolutePath,
-       "-doc-source-url", "https://github.com/mslinn/web3j-scala/tree/master€{FILE_PATH}.scala" // todo how to compute the url?
-    )
-  }.value,
-
-    buildInfoKeys ++= Seq[BuildInfoKey]( // assumes that the git repo directory has not been renamed
-      "gitRepoName" -> new File(sys.props("user.dir")).getName
-    ),
-
-    // define the statements initially evaluated when entering 'console', 'console-quick', but not 'console-project'
-    initialCommands in console := """
-                                    |""".stripMargin,
-    libraryDependencies ++= Seq(
-      "commons-io"              %  "commons-io"      % "2.6"    withSources(),
-      "ch.qos.logback"          %  "logback-classic" % "1.2.3",
-      "com.github.scopt"        %% "scopt"           % "3.7.0"  withSources(),
-      //
-       "org.scalatest"          %% "scalatest"       % "3.0.3" % Test withSources(),
-       "junit"                  %  "junit"           % "4.12"  % Test
-    ),
-    name := "publish",
-  )
+  version := "0.5.0"
+)
 
 lazy val demo = project
   .aggregate(root)
@@ -114,7 +108,7 @@ lazy val demo = project
                                     |import org.web3j.protocol.infura._
                                     |""".stripMargin,
 
-    name := "web3j-scala-demo",
+    name := "demo",
 
     unmanagedSourceDirectories in Compile += baseDirectory.value / "../abiWrapper"
   ).dependsOn(root)
@@ -148,5 +142,5 @@ lazy val root = (project in file("root"))
       "junit"                  %  "junit"       % "4.12"  % Test
     ),
 
-    name := "web3j-scala"
+    name := "root"
   )
