@@ -80,7 +80,7 @@ Each demo program starts with a
 [DemoContext](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoContext.scala), 
 which performs some setup common to all the demo programs.
 `DemoContext` demonstrates how to use `web3j-scala`'s 
-[synchrounous and asynchronous APIs](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoContext.scala).
+[synchronous and asynchronous APIs](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoContext.scala).
 
 The demo programs are:
  - `DemoObservables` - Web3J's functional-reactive nature makes it easy to set up observers that notify subscribers of events taking place on the blockchain.
