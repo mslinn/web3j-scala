@@ -6,15 +6,16 @@
 [![Build Status](https://travis-ci.org/mslinn/web3j-scala.svg?branch=master)](https://travis-ci.org/mslinn/web3j-scala)
 [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
 
-`web3j-scala` is an idiomatic Scala wrapper around [Web3J](https://www.web3j.io) for Ethereum.
+`web3j-scala` is an idiomatic Scala wrapper around [web3j](https://www.web3j.io) for Ethereum.
 `web3j` is a lightweight, reactive, somewhat type safe Java and Android library for integrating with nodes on Ethereum blockchains.
-These 3 libraries all leverage the [json-rpc](https://github.com/ethereum/wiki/wiki/JSON-RPC) protocol that all Ethereum clients support.
+`web3.js` is a Node.js library that inspired `web3j` and `web3j-scala`.
+All three of these 3 libraries leverage the [json-rpc](https://github.com/ethereum/wiki/wiki/JSON-RPC) protocol that all Ethereum clients support.
 `web3j-scala` provides type safety and enhanced scalability over its Java and JavaScript cousins,
 as well as the pleasure of writing solutions in Scala.
 
 Another important feature common to all of these libraries is their ability to compile Solidity smart contracts; 
 `web3j-scala` and `web3j` translate Solidity programs into Java code, 
-while `web3` emits JavaScript for `node.js` programs.
+while `web3.js` emits JavaScript for `node.js` programs.
  
 This project promotes idiomatic Scala in the following ways:
   - Variables and no-argument methods are actually names of properties, so `set` and `get` prefixes are not used.
