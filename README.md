@@ -152,15 +152,15 @@ Once geth is running, run a demo programs by typing the following into another c
 ## More Scripts!
 The following scripts are provided in the `bin/` directory:
 - [bin/attachHttp](https://github.com/mslinn/web3j-scala/blob/master/bin/attachHttp) &ndash;
-  Attach to a running geth instance via HTTP and open a 
+  Attach to a running Ethereum client via HTTP and open a 
   [JavaScript console](https://godoc.org/github.com/robertkrimen/otto)
 - [bin/attachIpc](https://github.com/mslinn/web3j-scala/blob/master/bin/attachIpc) &ndash;
-  Attach to a running geth instance via IPC and open a JavaScript console.
+  Attach to a running Ethereum client via IPC and open a JavaScript console.
   This script might need to be edited if a network other than `devnet` is used.
 - [bin/getApis](https://github.com/mslinn/web3j-scala/blob/master/bin/gethApis) &ndash;
-  Reports the available APIs exposed by this `geth` instance.
+  Reports the available APIs exposed by an Ethereum client.
 - [bin/isGethListening](https://github.com/mslinn/web3j-scala/blob/master/bin/isGethListening) &ndash;
-  Verifies that `geth` is listening on HTTP port 8545
+  Verifies that an Ethereum client is listening on HTTP port 8545
 - [bin/web3j](https://github.com/mslinn/web3j-scala/blob/master/bin/web3j) &ndash; 
   Runs the [Web3J command-line console](https://docs.web3j.io/command_line.html).
   The script builds a fat jar the first time it is run, so the command runs quickly on subsequent invocations.
