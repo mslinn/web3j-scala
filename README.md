@@ -25,20 +25,21 @@ This project promotes idiomatic Scala in the following ways:
     For example, [scala.concurrent.Future](http://www.scala-lang.org/api/current/scala/concurrent/Future.html).
   - A functional programming style is encouraged by always returning immutable data types from methods.
     For example, [scala.collection.immutable.List](http://www.scala-lang.org/api/current/scala/collection/immutable/List.html)
-  - `Web3j` features RxJava extensions, and `web3j-scala` wraps that syntax in Scala goodness.
-    For example, the `web3j-scala` [observe methods](http://mslinn.github.io/web3j-scala/latest/api/com/micronautics/web3j/Web3JScala$.html)
-    provide [simple and efficient application code](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoObservables.scala#L14-L22):
-    ```
-    //  Display all new blocks as they are added to the blockchain:
-    observe(web3j.blockObservable(false)) { ethBlock =>
-      println(format(ethBlock))
-    }
     
-    // Display only the first 10 new transactions as they are added to the blockchain:
-    observe(10)(web3j.transactionObservable) { tx =>
-      println(format(tx))
-    }
-    ```
+`Web3j` features RxJava extensions, and `web3j-scala` wraps that syntax in Scala goodness.
+For example, the `web3j-scala` [observe methods](http://mslinn.github.io/web3j-scala/latest/api/com/micronautics/web3j/Web3JScala$.html)
+provide [simple and efficient application code](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoObservables.scala#L14-L22):
+```
+//  Display all new blocks as they are added to the blockchain:
+observe(web3j.blockObservable(false)) { ethBlock =>
+  println(format(ethBlock))
+}
+
+// Display only the first 10 new transactions as they are added to the blockchain:
+observe(10)(web3j.transactionObservable) { tx =>
+  println(format(tx))
+}
+```
 
 <h2>Value Classes Provide Efficient Type Safety</h2>
 
