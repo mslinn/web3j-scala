@@ -112,8 +112,8 @@ You can specify this value with the option `--etherbase 0`.
 
 ## Running the Demo Programs
 The demo programs follow the general outline of the 
-[Web3J Getting Started](https://docs.web3j.io/getting_started.html#start-sending-requests) documentation, 
-adapted for Web3J-Scala, including synchronous and asynchronous versions of the available methods.
+[web3j Getting Started](https://docs.web3j.io/getting_started.html#start-sending-requests) documentation, 
+adapted for `web3j-scala`, including synchronous and asynchronous versions of the available methods.
 
 Each demo program starts with a 
 [DemoContext](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoContext.scala), 
@@ -122,13 +122,13 @@ which performs some setup common to all the demo programs.
 [synchronous and asynchronous APIs](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoContext.scala).
 
 The demo programs are:
- - `DemoObservables` - Web3J's functional-reactive nature makes it easy to set up observers that notify subscribers of events taking place on the blockchain.
+ - `DemoObservables` - `web3j`'s functional-reactive nature makes it easy to set up observers that notify subscribers of events taking place on the blockchain.
    This demo shows how to work with [RxJava's Observables from Scala](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoObservables.scala).
  - `DemoSmartContracts` - Compiles an example Solidity program that defines a smart contract,
    [creates a JVM wrapper](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoSmartContracts.scala) for the
    [sample smart contract](https://github.com/mslinn/web3j-scala/blob/master/src/test/resources/basic_info_getter.sol), 
    and exercises the smart contract from Scala.
- - `DemoTransaction` - Demonstrates enhanced support beyond what Web3J provides for working with Ethereum wallet files
+ - `DemoTransaction` - Demonstrates enhanced support beyond what `web3j` provides for working with Ethereum wallet files
    and Ethereum client admin commands for sending 
    [transactions](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoTransactions.scala).
 
