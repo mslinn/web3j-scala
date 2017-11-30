@@ -1,4 +1,4 @@
-# Web3J-Scala Library
+# Web3J-Scala Ethereum Library
 
 <img src='https://docs.web3j.io/_static/web3j.png' align='right' width='15%'>
 
@@ -7,8 +7,15 @@
 [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
 
 `web3j-scala` is an idiomatic Scala wrapper around [Web3J](https://www.web3j.io) for Ethereum.
-Web3J is a lightweight, reactive, somewhat type safe Java and Android library for integrating with nodes on Ethereum blockchains.
+`web3j` is a lightweight, reactive, somewhat type safe Java and Android library for integrating with nodes on Ethereum blockchains.
+These 3 libraries all leverage the [json-rpc](https://github.com/ethereum/wiki/wiki/JSON-RPC) protocol that all Ethereum clients support.
+`web3j-scala` provides type safety and enhanced scalability over its Java and JavaScript cousins,
+as well as the pleasure of writing solutions in Scala.
 
+Another important feature common to all of these libraries is their ability to compile Solidity smart contracts; 
+`web3j-scala` and `web3j` translate Solidity programs into Java code, 
+while `web3` emits JavaScript for `node.js` programs.
+ 
 This project promotes idiomatic Scala in the following ways:
   - Variables and no-argument methods are actually names of properties, so `set` and `get` prefixes are not used.
     This means some properties do not have exactly the same name as their Web3J counterpart.
@@ -18,8 +25,8 @@ This project promotes idiomatic Scala in the following ways:
   - A functional programming style is encouraged by always returning immutable data types from methods.
     For example, [scala.collection.immutable.List](http://www.scala-lang.org/api/current/scala/collection/immutable/List.html)
 
-Web3J features RxJava extensions, and `web3j-scala` wraps that syntax in Scala goodness.
-For example, the `web3j-scala` [observable methods](http://mslinn.github.io/web3j-scala/latest/api/com/micronautics/web3j/Web3JScala$.html)
+`Web3j` features RxJava extensions, and `web3j-scala` wraps that syntax in Scala goodness.
+For example, the `web3j-scala` [observe methods](http://mslinn.github.io/web3j-scala/latest/api/com/micronautics/web3j/Web3JScala$.html)
 provide [simple and efficient application code](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoObservables.scala#L14-L22):
 ```
 //  Display all new blocks as they are added to the blockchain:
@@ -40,6 +47,36 @@ For example, the following code implicitly converts the `String` returned by `ba
 into an `Address`:
 
     val basicInfoContractAddress: Address = basicInfoContract.send.getContractAddress
+
+<h2>Value Classes Provide Efficient Type Safety</h2>
+<p>
+  Scala&rsquo;s <i>value classes</i> provide additional type safety without a runtime penalty by wrapping JVM code.
+  <code>web3j-scala</code> does this by providing the following value classes:
+</p>
+<ul class="columns triple">
+  <li><a href="https://github.com/mslinn/web3j-scala/blob/master/root/src/main/scala/com/micronautics/web3j/ValueClasses.scala#L6-L14"><code>Address</code></a></li>
+  <li><a href="https://github.com/mslinn/web3j-scala/blob/master/root/src/main/scala/com/micronautics/web3j/ValueClasses.scala#L17-L25"><code>BlockHash</code></a></li>
+  <li><a href="https://github.com/mslinn/web3j-scala/blob/master/root/src/main/scala/com/micronautics/web3j/ValueClasses.scala#L28-L36"><code>Compiler</code></a></li>
+  <li><a href="https://github.com/mslinn/web3j-scala/blob/master/root/src/main/scala/com/micronautics/web3j/ValueClasses.scala#L39-L47"><code>Digest</code></a></li>
+  <li><a href="https://github.com/mslinn/web3j-scala/blob/master/root/src/main/scala/com/micronautics/web3j/ValueClasses.scala#L50-L59"><code>EtHash</code></a></li>
+  <li><a href="https://github.com/mslinn/web3j-scala/blob/master/root/src/main/scala/com/micronautics/web3j/Ether.scala"><code>Ether</code></a></li>
+  <li><a href="https://github.com/mslinn/web3j-scala/blob/master/root/src/main/scala/com/micronautics/web3j/ValueClasses.scala#L62-L70"><code>FilterId</code></a></li>
+  <li><a href="https://github.com/mslinn/web3j-scala/blob/master/root/src/main/scala/com/micronautics/web3j/ValueClasses.scala#L73-L85"><code>Keccak256Hash</code></a></li>
+  <li><a href="https://github.com/mslinn/web3j-scala/blob/master/root/src/main/scala/com/micronautics/web3j/ValueClasses.scala#L88-L96"><code>LLLCompiled</code></a></li>
+  <li><a href="https://github.com/mslinn/web3j-scala/blob/master/root/src/main/scala/com/micronautics/web3j/ValueClasses.scala#L99-L107"><code>LLLSource</code></a></li>
+  <li><a href="https://github.com/mslinn/web3j-scala/blob/master/root/src/main/scala/com/micronautics/web3j/ValueClasses.scala#L110-L124"><code>Nonce</code></a></li>
+  <li><a href="https://github.com/mslinn/web3j-scala/blob/master/root/src/main/scala/com/micronautics/web3j/ValueClasses.scala#L127-L135"><code>Password</code></a></li>
+  <li><a href="https://github.com/mslinn/web3j-scala/blob/master/root/src/main/scala/com/micronautics/web3j/ValueClasses.scala#L138-L148"><code>PrivateKey</code></a></li>
+  <li><a href="https://github.com/mslinn/web3j-scala/blob/master/root/src/main/scala/com/micronautics/web3j/ValueClasses.scala#L151-L159"><code>PublicKey</code></a></li>
+  <li><a href="https://github.com/mslinn/web3j-scala/blob/master/root/src/main/scala/com/micronautics/web3j/package.scala#L72-L74"><code>RichBlock</code></a></li>
+  <li><a href="https://github.com/mslinn/web3j-scala/blob/master/root/src/main/scala/com/micronautics/web3j/ValueClasses.scala#L162-L170"><code>SerpentCompiled</code></a></li>
+  <li><a href="https://github.com/mslinn/web3j-scala/blob/master/root/src/main/scala/com/micronautics/web3j/ValueClasses.scala#L173-L181"><code>SerpentSource</code></a></li>
+  <li><a href="https://github.com/mslinn/web3j-scala/blob/master/root/src/main/scala/com/micronautics/web3j/ValueClasses.scala#L184-L192"><code>Signature</code></a></li>
+  <li><a href="https://github.com/mslinn/web3j-scala/blob/master/root/src/main/scala/com/micronautics/web3j/ValueClasses.scala#L195-L203"><code>SignedData</code></a></li>
+  <li><a href="https://github.com/mslinn/web3j-scala/blob/master/root/src/main/scala/com/micronautics/web3j/ValueClasses.scala#L206-L215"><code>SoliditySource</code></a></li>
+  <li><a href="https://github.com/mslinn/web3j-scala/blob/master/root/src/main/scala/com/micronautics/web3j/ValueClasses.scala#L218-L226 "><code>TransactionHash</code></a></li>
+  <li><a href="https://github.com/mslinn/web3j-scala/blob/master/root/src/main/scala/com/micronautics/web3j/Wallet.scala"><code>Wallet</code></a></li>
+</ul>
     
 ## Use As a Library
 Add this to your SBT project's `build.sbt`:
