@@ -162,7 +162,7 @@ The following scripts are provided in the `bin/` directory:
 - [bin/isGethListening](https://github.com/mslinn/web3j-scala/blob/master/bin/isGethListening) &ndash;
   Verifies that an Ethereum client is listening on HTTP port 8545
 - [bin/web3j](https://github.com/mslinn/web3j-scala/blob/master/bin/web3j) &ndash; 
-  Runs the [Web3J command-line console](https://docs.web3j.io/command_line.html).
+  Runs the [web3j command-line console](https://docs.web3j.io/command_line.html).
   The script builds a fat jar the first time it is run, so the command runs quickly on subsequent invocations.
   Invoke the script without any arguments to see the help message:
   ```
@@ -200,8 +200,8 @@ The following scripts are provided in the `bin/` directory:
 you can go directly to the [library Scaladoc](http://mslinn.github.io/web3j-scala/latest/api/root/com/micronautics/web3j/index.html) 
 and the [demo Scaladoc](http://mslinn.github.io/web3j-scala/latest/api/demo/demo/index.html).
 
-* [The Web3J JavaDoc is here](https://jar-download.com/java-documentation-javadoc.php?a=core&g=org.web3j&v=3.0.2),
-  and here is the [Web3J gitter channel](https://gitter.im/web3j/web3j).
+* [The web3j JavaDoc is here](https://jar-download.com/java-documentation-javadoc.php?a=core&g=org.web3j&v=3.0.2),
+  and here is the [web3j gitter channel](https://gitter.im/web3j/web3j).
 
 ### Previewing Scaladoc
 To preview Scaladoc, you can either run the `previewSite` task, which launches a static web server, or
