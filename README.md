@@ -40,6 +40,8 @@ observe(10)(web3j.transactionObservable) { tx =>
 }
 ```
 
+<h2>Value Classes Provide Efficient Type Safety</h2>
+
 Scala's [value classes are used](https://github.com/mslinn/web3j-scala/blob/master/src/main/scala/com/micronautics/web3j/ValueClasses.scala) 
 to provide much stronger type safety than Web3J, without incurring a runtime penalty.
 Implicit conversions are provided that make it easy to obtain instances of the desired value classes, without sacrificing type safety.
@@ -48,7 +50,6 @@ into an `Address`:
 
     val basicInfoContractAddress: Address = basicInfoContract.send.getContractAddress
 
-<h2>Value Classes Provide Efficient Type Safety</h2>
 <p>
   Scala&rsquo;s <i>value classes</i> provide additional type safety without a runtime penalty by wrapping JVM code.
   <code>web3j-scala</code> does this by providing the following value classes:
