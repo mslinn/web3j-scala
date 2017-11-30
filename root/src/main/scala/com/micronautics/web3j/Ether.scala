@@ -122,53 +122,53 @@ class Ether(val wei: BigInt) extends Ordered[Ether] {
   /** @return the underlying [[java.math.BigInteger]] */
   @inline def bigInteger: java.math.BigInteger = wei.bigInteger
 
-  /** Do not use the return value for computations unless special care is token.
+  /** Do not use the return value for computations unless special care is taken.
     * @param scale used when constructing the [[java.math.BigDecimal]] return value; defaults to 16.
     * This class is intended for output formatting only. */
   @inline def asWei(scale: Int = 16): BigDecimal   = bigDecimal(wei, scale)
 
   /** This class is intended for output formatting only.
-    * Do not use the return value for computations unless special care is token.
+    * Do not use the return value for computations unless special care is taken.
     * @param scale used when constructing the [[java.math.BigDecimal]] return value; defaults to 16. */
   @inline def asKWei(scale: Int = 16): BigDecimal   = bigDecimal(wei / e(3), scale)
 
   /** This class is intended for output formatting only.
-    * Do not use the return value for computations unless special care is token.
+    * Do not use the return value for computations unless special care is taken.
     * @param scale used when constructing the [[java.math.BigDecimal]] return value; defaults to 16. */
   @inline def asMWei(scale: Int = 16): BigDecimal   = bigDecimal(wei / e(6))
 
   /** This class is intended for output formatting only.
-    * Do not use the return value for computations unless special care is token.
+    * Do not use the return value for computations unless special care is taken.
     * @param scale used when constructing the [[java.math.BigDecimal]] return value; defaults to 16. */
   @inline def asGWei(scale: Int = 16): BigDecimal   = bigDecimal(wei / e(9))
 
   /** This class is intended for output formatting only.
-    * Do not use the return value for computations unless special care is token.
+    * Do not use the return value for computations unless special care is taken.
     * @param scale used when constructing the [[java.math.BigDecimal]] return value; defaults to 16. */
   @inline def asSzabo(scale: Int = 16): BigDecimal  = bigDecimal(wei / e(12))
 
   /** This class is intended for output formatting only.
-    * Do not use the return value for computations unless special care is token.
+    * Do not use the return value for computations unless special care is taken.
     * @param scale used when constructing the [[java.math.BigDecimal]] return value; defaults to 16. */
   @inline def asFinney(scale: Int = 16): BigDecimal = bigDecimal(wei / e(15))
 
   /** This class is intended for output formatting only.
-    * Do not use the return value for computations unless special care is token.
+    * Do not use the return value for computations unless special care is taken.
     * @param scale used when constructing the [[java.math.BigDecimal]] return value; defaults to 16. */
   @inline def asEther(scale: Int = 16): BigDecimal  = bigDecimal(wei / e(18))
 
   /** This class is intended for output formatting only.
-    * Do not use the return value for computations unless special care is token.
+    * Do not use the return value for computations unless special care is taken.
     * @param scale used when constructing the [[java.math.BigDecimal]] return value; defaults to 16. */
   @inline def asKEther(scale: Int = 16): BigDecimal = bigDecimal(wei / e(21))
 
   /** This class is intended for output formatting only.
-    * Do not use the return value for computations unless special care is token.
+    * Do not use the return value for computations unless special care is taken.
     * @param scale used when constructing the [[java.math.BigDecimal]] return value; defaults to 16. */
   @inline def asMEther(scale: Int = 16): BigDecimal = bigDecimal(wei / e(24))
 
   /** This class is intended for output formatting only.
-    * Do not use the return value for computations unless special care is token.
+    * Do not use the return value for computations unless special care is taken.
     * @param scale used when constructing the [[java.math.BigDecimal]] return value; defaults to 16. */
   @inline def asGEther(scale: Int = 16): BigDecimal = bigDecimal(wei / e(27))
 
