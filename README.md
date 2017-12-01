@@ -1,4 +1,4 @@
-# Web3J-Scala Ethereum Library
+# web3j-scala Ethereum Library
 
 <img src='https://docs.web3j.io/_static/web3j.png' align='right' width='15%'>
 
@@ -26,7 +26,7 @@ This project promotes idiomatic Scala in the following ways:
   - A functional programming style is encouraged by always returning immutable data types from methods.
     For example, [scala.collection.immutable.List](http://www.scala-lang.org/api/current/scala/collection/immutable/List.html)
     
-`Web3j` features RxJava extensions, and `web3j-scala` wraps that syntax in Scala goodness.
+`web3j` features RxJava extensions, and `web3j-scala` wraps that syntax in Scala goodness.
 For example, the `web3j-scala` [observe methods](http://mslinn.github.io/web3j-scala/latest/api/com/micronautics/web3j/Web3JScala$.html)
 provide [simple and efficient application code](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoObservables.scala#L14-L22):
 ```
@@ -44,7 +44,7 @@ observe(10)(web3j.transactionObservable) { tx =>
 <h2>Value Classes Provide Efficient Type Safety</h2>
 
 Scala's [value classes are used](https://github.com/mslinn/web3j-scala/blob/master/src/main/scala/com/micronautics/web3j/ValueClasses.scala) 
-to provide much stronger type safety than Web3J, without incurring a runtime penalty.
+to provide much stronger type safety than `web3j`, without incurring a runtime penalty.
 Implicit conversions are provided that make it easy to obtain instances of the desired value classes, without sacrificing type safety.
 For example, the following code implicitly converts the `String` returned by `basicInfoContract.send.getContractAddress`
 into an `Address`:
