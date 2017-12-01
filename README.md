@@ -16,7 +16,7 @@ as well as the pleasure of writing solutions in Scala.
 Another important feature common to all of these libraries is their ability to compile 
 [Solidity smart contracts](http://solidity.readthedocs.io/en/develop/introduction-to-smart-contracts.html); 
 `web3j-scala` and `web3j` translate Solidity programs into Java code, 
-while `web3.js` emits JavaScript for `node.js` programs.
+while `web3.js` [emits JavaScript](https://github.com/ethereum/wiki/wiki/JavaScript-API) for `node.js` programs.
  
 This project promotes idiomatic Scala in the following ways:
   - Variables and no-argument methods are actually names of properties, so `set` and `get` prefixes are not used.
