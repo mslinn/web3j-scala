@@ -9,7 +9,7 @@
 `web3j-scala` is an idiomatic Scala wrapper around [web3j](https://www.web3j.io) for Ethereum.
 `web3j` is a lightweight, reactive, somewhat type safe Java and Android library for integrating with nodes on Ethereum blockchains.
 [web3.js](https://github.com/ethereum/web3.js/) is the Node.js library that inspired `web3j` and `web3j-scala`.
-All three of these 3 libraries leverage the [json-rpc](https://github.com/ethereum/wiki/wiki/JSON-RPC) protocol that Ethereum clients like [geth](https://github.com/ethereum/wiki/wiki) support.
+All three of these 3 libraries leverage the [json-rpc](https://github.com/ethereum/wiki/wiki/JSON-RPC) protocol that Ethereum clients like [geth](https://github.com/ethereum/go-ethereum/wiki/geth) support.
 `web3j-scala` provides type safety and enhanced scalability over its Java and JavaScript cousins,
 as well as the pleasure of writing solutions in Scala.
 
