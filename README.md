@@ -13,7 +13,8 @@ All three of these 3 libraries leverage the [json-rpc](https://github.com/ethere
 `web3j-scala` provides type safety and enhanced scalability over its Java and JavaScript cousins,
 as well as the pleasure of writing solutions in Scala.
 
-Another important feature common to all of these libraries is their ability to compile Solidity smart contracts; 
+Another important feature common to all of these libraries is their ability to compile 
+[Solidity smart contracts](http://solidity.readthedocs.io/en/develop/introduction-to-smart-contracts.html); 
 `web3j-scala` and `web3j` translate Solidity programs into Java code, 
 while `web3.js` emits JavaScript for `node.js` programs.
  
