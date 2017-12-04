@@ -13,7 +13,7 @@ addSbtPlugin("com.thoughtworks.sbt-api-mappings" % "sbt-api-mappings"  % "2.0.0"
 // See https://github.com/sbt/sbt-bintray
 addSbtPlugin("org.foundweekends"                 % "sbt-bintray"       % "0.5.1" exclude("org.slf4j", "slf4j-nop"))
 
-libraryDependencies += "ch.qos.logback"          %  "logback-classic"  % "1.2.3"
+libraryDependencies += "ch.qos.logback"          % "logback-classic"   % "1.2.3"
 
 // See https://stackoverflow.com/a/27858890/553865
 evictionWarningOptions in update :=
