@@ -81,10 +81,20 @@ into an `Address`:
   <li><a href="https://github.com/mslinn/web3j-scala/blob/master/root/src/main/scala/com/micronautics/web3j/Wallet.scala"><code>Wallet</code></a></li>
 </ul>
     
+## A Few Words Of Explanation
+A sample Solidity smart contract is in the `abiWrapper/com/micronautics/solidity` directory.
+A Java file in the `abiWrapper` directory is created when SBT runs by compiling the Solidity smart contract provided with this project.
+This line in `build.sbt` adds the `abiWrapper` directory to the collection of source code directories:
+
+    unmanagedSourceDirectories in Compile += baseDirectory.value / "../abiWrapper"
+
 ## Use As a Library
 Add this to your SBT project's `build.sbt`:
 
-    resolvers += "micronautics/scala on bintray" at "http://dl.bintray.com/micronautics/scala"
+    resolvers ++= Seq(
+      "ethereum" at "https://dl.bintray.com/ethereum/maven/",
+      "micronautics/scala on bintray" at "http://dl.bintray.com/micronautics/scala"
+    )
 
     libraryDependencies += "com.micronautics" %% "web3j-scala" % "0.2.0" withSources()
 
