@@ -260,7 +260,7 @@ Usage: bin/doc [options]
                            Comma-delimited names of subprojects to generate Scaladoc for
 ```
 
-## Sponsor
+## Sponsorship and Proofs of Concept
 <img src='https://www.micronauticsresearch.com/images/robotCircle400shadow.png' align='right' width='15%'>
 
 To date this project has been sponsored by [Micronautics Research Corporation](http://www.micronauticsresearch.com/),
