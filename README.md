@@ -263,13 +263,13 @@ Usage: bin/doc [options]
 ## Sponsor
 <img src='https://www.micronauticsresearch.com/images/robotCircle400shadow.png' align='right' width='15%'>
 
-This project is sponsored by [Micronautics Research Corporation](http://www.micronauticsresearch.com/),
+To date this project has been sponsored by [Micronautics Research Corporation](http://www.micronauticsresearch.com/),
 the company that delivers online Scala training via [ScalaCourses.com](http://www.ScalaCourses.com).
-You can learn Scala by taking the [Introduction to Scala](http://www.ScalaCourses.com/showCourse/40),
-and [Intermediate Scala](http://www.ScalaCourses.com/showCourse/45) courses.
 
-Micronautics Research also offers Ethereum and Scala consulting.
-Please [contact us](mailto:sales@micronauticsresearch.com) to discuss your organization&rsquo;s needs.
+The only way to provide value is to serve customers.
+We actively seek opportunities to develop blockchain-related prototypes and proofs of concept.
+We would be happy to [present our work and discuss sponsorship opportunities](https://www.micronauticsresearch.com/portfolio.html#ethereum) for our open-source libraries.
+Please [contact us](mailto:sales@micronauticsresearch.com) to discuss.
 
 ## License
 This software is published under the [Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html).
