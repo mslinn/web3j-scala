@@ -7,6 +7,14 @@ lazy val commonSettings = Seq(
     "gitRepoName" -> new File(sys.props("user.dir")).getName
   ),
 
+  developers := List(
+    Developer("mslinn",
+              "Mike Slinn",
+              "mslinn@micronauticsresearch.com",
+              url("https://github.com/mslinn")
+    )
+  ),
+
   // define the statements initially evaluated when entering 'console', 'console-quick', but not 'console-project'
   initialCommands in console := """
                                   |""".stripMargin,
@@ -94,6 +102,13 @@ lazy val commonSettings = Seq(
 
   // The REPL can’t cope with -Ywarn-unused:imports or -Xfatal-warnings so turn them off for the console
   scalacOptions in (Compile, console) --= Seq("-Ywarn-unused:imports", "-Xfatal-warnings"),
+
+  scmInfo := Some(
+    ScmInfo(
+      url("https://github.com/mslinn/web3j-scala"),
+      "git@github.com:mslinn/web3j-scala.git"
+    )
+  ),
 
   version := "0.5.0"
 )
