@@ -1,5 +1,5 @@
 
-val web3jVersion = "3.1.0"
+val web3jVersion = "3.3.1"
 
 lazy val demo = project
   .settings(
@@ -101,7 +101,7 @@ lazy val commonSettings = Seq(
 
   // Version Configuration
   scalaVersion := "2.12.4",
-  version      := "0.5.0",
+  version      := "0.2.1",
 
   // Project Meta Information
   organization := "com.micronautics",
