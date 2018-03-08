@@ -18,13 +18,13 @@ Add this to your SBT project's `build.sbt`:
 
     resolvers += "micronautics/scala on bintray" at "http://dl.bintray.com/micronautics/scala"
 
-    libraryDependencies += "com.micronautics" %% "web3j-scala" % "0.2.0" withSources()
+    libraryDependencies += "com.micronautics" %% "web3j-scala" % "0.2.2" withSources()
 
 Only Scala 2.12 with JDK 8 is supported at present; this is a limitation of the Scala ecosystem as of November 7, 2017.
 
 ## Run the Demo Program
 The demo program performs the following:
- - Follows the outline of the [Web3J Getting Started](https://docs.web3j.io/getting_started.html#start-sending-requests) documentation, 
+ - Follows the outline of the [Web3J Getting Started](https://docs.web3j.io/getting_started.html#start-sending-requests) documentation,
    adapted for Web3J-Scala, including synchronous and asynchronous versions of the available methods.
  - Compiles an example Solidity program that defines a smart contract.
  - Creates a JVM wrapper from an example smart contract.
@@ -32,11 +32,11 @@ The demo program performs the following:
 To run the demo:
 1. Start up an Ethereum client if you don’t already have one running, such as `geth`.
    The `bin/runGeth` script invokes `geth` with the following options, which are convenient for development but not secure enough for production:
-     - The Ethereum data directory is set to `~/.ethereum`, or a subdirectory that depends on the network chosen; 
+     - The Ethereum data directory is set to `~/.ethereum`, or a subdirectory that depends on the network chosen;
        the directory will be created if required.
      - HTTP-RPC server at `localhost:8545` is enabled, and all APIs are allowed.
      - Ethereum's experimental Whisper message facility is enabled.
-     - Inter-process communication will be via a virtual file called `geth.ipc`, 
+     - Inter-process communication will be via a virtual file called `geth.ipc`,
        located at `~/.ethereum` or a subdirectory.
      - WS-RPC server at `localhost:8546` is enabled, and all APIs are allowed.
      - Info verbosity is specified.
@@ -71,22 +71,22 @@ To run the demo:
       - Examples of using `web3j-scala`'s [synchrounous and asynchronous APIs](https://github.com/mslinn/web3j-scala/blob/master/demo/Demo.scala)
       - Examples of working with [RxJava's Observables from Scala](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoObservables.scala)
       - Examples of working with [JVM wrappers around Ethereum smart contracts](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoSmartContracts.scala).
-      - Examples of using [transactions](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoTransaction.scala) 
+      - Examples of using [transactions](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoTransaction.scala)
         with Ethereum wallet files and the Ethereum client.
 3. The `bin/web3j` script runs the [Web3J command-line console](https://docs.web3j.io/command_line.html).
    The script builds a fat jar the first time it is run, so the command runs quickly on subsequent invocations.
 4. More scripts are provided in the `bin/` directory, including:
-   - [bin/attachHttp](https://github.com/mslinn/web3j-scala/blob/master/bin/attachHttp) - 
-     Attach to a running geth instance via HTTP and open a 
+   - [bin/attachHttp](https://github.com/mslinn/web3j-scala/blob/master/bin/attachHttp) -
+     Attach to a running geth instance via HTTP and open a
      [JavaScript console](https://godoc.org/github.com/robertkrimen/otto)
-   - [bin/attachIpc](https://github.com/mslinn/web3j-scala/blob/master/bin/attachIpc) - 
+   - [bin/attachIpc](https://github.com/mslinn/web3j-scala/blob/master/bin/attachIpc) -
      Attach to a running geth instance via IPC and open a JavaScript console.
      This script might need to be edited if a network other than `devnet` is used.
-   - [bin/getApis](https://github.com/mslinn/web3j-scala/blob/master/bin/gethApis) - 
+   - [bin/getApis](https://github.com/mslinn/web3j-scala/blob/master/bin/gethApis) -
      Reports the available APIs exposed by this `geth` instance.
-   - [bin/isGethListening](https://github.com/mslinn/web3j-scala/blob/master/bin/isGethListening) - 
+   - [bin/isGethListening](https://github.com/mslinn/web3j-scala/blob/master/bin/isGethListening) -
      Verifies that `geth` is listening on HTTP port 8545
-   
+
 ## Developers
 ### API Documentation
 * [This library's Scaladoc is here](http://mslinn.github.io/web3j-scala/latest/api/com/micronautics/web3j/index.html).
