@@ -2,7 +2,7 @@ organization := "com.micronautics"
 
 name := "web3j-scala"
 
-version := "0.2.0"
+version := "0.2.2"
 
 scalaVersion := "2.12.4"
 
@@ -79,7 +79,7 @@ resolvers ++= Seq(
   "Ethereum Maven" at "https://dl.bintray.com/ethereum/maven/"
 )
 
-val web3jVersion = "3.0.2"
+val web3jVersion = "3.3.1"
 libraryDependencies ++= Seq(
   // See https://docs.web3j.io/modules.html
   "org.web3j"              %  "abi"                   % web3jVersion withSources(), // Application Binary Interface encoders
@@ -96,7 +96,7 @@ libraryDependencies ++= Seq(
   "org.web3j"              %  "utils"                 % web3jVersion withSources(), // Minimal set of utility classes
   "org.web3j"              %  "web3j-maven-plugin"    % "0.1.2"      withSources(), // Create Java classes from solidity contract files
   //
-  "org.scala-lang.modules" %% "scala-java8-compat" % "0.8.0",
+  "org.scala-lang.modules" %% "scala-java8-compat"    % "0.8.0",
   "ch.qos.logback"         %  "logback-classic"       % "1.2.3",
   //
   "org.scalatest"          %% "scalatest"   % "3.0.3" % Test withSources(),
@@ -123,3 +123,4 @@ initialCommands in console := """import java.math.BigInteger
                                 |""".stripMargin
 
 cancelable := true
+fork in Test := true
