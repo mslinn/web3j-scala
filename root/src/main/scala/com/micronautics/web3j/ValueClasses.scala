@@ -60,12 +60,14 @@ case class EtHash(value: String) extends AnyVal {
 
 
 object FilterId {
-  /** This implicit conversion allows for a convenient way of constructing a `FilterId` instance from a [[java.math.BigInteger]].
+  /** This implicit conversion allows for a convenient way of constructing a `FilterId` instance from a [[scala.BigInt]].
     * {{{val filterId: FilterId = "0xdeadbeef"}}} */
-  implicit def stringToFilterId(value: BigInteger): FilterId = FilterId(value)
+  implicit def bigIntToFilterId(value: BigInt): FilterId = FilterId(value)
 }
 
-case class FilterId(value: BigInteger) extends AnyVal {
+case class FilterId(value: BigInt) extends AnyVal {
+  @inline def bigInteger: BigInteger = value.bigInteger
+
   @inline override def toString: String = value.toString
 }
 
@@ -110,7 +112,7 @@ case class LLLSource(value: String) extends AnyVal {
 object Nonce {
   /** This implicit conversion allows for a convenient way of constructing a `Nonce` instance from a [[scala.BigInt]].
     * {{{val nonce: Nonce = BigInt("123456789")}}} */
-  implicit def stringToNonce(value: BigInt): Nonce = Nonce(value)
+  implicit def bigIntToNonce(value: BigInt): Nonce = Nonce(value)
 }
 
 /** An account nonce is a transaction counter, provided by Ethereum for each Account.
