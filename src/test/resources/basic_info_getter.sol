@@ -7,7 +7,7 @@ pragma solidity ^0.4.18;
 contract basicInfoGetter {
   address creator;
 
-  function basicInfoGetter() public {
+  constructor() public {
     creator = msg.sender;
   }
 
@@ -55,7 +55,7 @@ contract basicInfoGetter {
    */
 
   function getMsgGas() public constant returns (uint) {
-    return msg.gas;
+    return gasleft();
   }
 
   function getTxGasprice() public constant returns (uint) { // "gasprice" is the amount of gas the sender was *willing* to pay. 50000000 for me. (geth default)
@@ -72,7 +72,7 @@ contract basicInfoGetter {
   }
 
   function getContractBalance() public constant returns (uint) {
-    return this.balance;
+    return address(this).balance;
   }
 
   /**********
