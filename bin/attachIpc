@@ -2,7 +2,7 @@
 
 # Attach to a running geth (dev) instance via IPC:
 
-geth attach ipc:$HOME/.ethereum/devnet/geth.ipc
+geth attach ipc:"${HOME}/.ethereum/devnet/geth.ipc"
 
 #  Welcome to the Geth JavaScript console!
 #

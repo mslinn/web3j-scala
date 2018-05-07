@@ -34,7 +34,7 @@ case "$1" in
     echo "Error: The Kovan test network is only supported by Parity"
     exit 1
     ;;
-    
+
   main)   # Live network, takes hours to boot, real money is at risk with this choice
     ETHEREUM_NETWORK=mainnet
     ETHEREUM_HOME="$ETHEREUM_HOME"
@@ -70,7 +70,7 @@ case "$1" in
     ;;
 esac
 
-echo "Using $ETHEREUM_NETWORK Ethereum network with home $ETHEREUM_HOME at timestamp `date`"
+echo "Using $ETHEREUM_NETWORK Ethereum network with home $ETHEREUM_HOME at timestamp $(date)"
 
 mkdir -p "$ETHEREUM_HOME"
 mkdir -p logs/
@@ -90,7 +90,7 @@ export APIS="$APIS_MIN,clique,debug,eth,miner,personal,rpc,ssh,txpool"  # Edit t
 
 set -xv
 geth \
-  $DATADIR \
+  ${DATADIR} \
   --ipcpath geth.ipc \
   --metrics \
   --rpc \

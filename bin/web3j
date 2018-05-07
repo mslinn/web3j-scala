@@ -6,7 +6,7 @@
 # -j option forces rebuild of jar
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/.."
-cd "$DIR"
+cd "$DIR" || exit 1
 
 # Scan build.sbt for program name, Scala version and program version
 function findValue {
@@ -28,9 +28,9 @@ SCALA_VERSION() {
 
 NAME="$( findValue name )"
 VERSION="$( findValue version )"
-JAR=target/scala-`SCALA_VERSION`/$NAME-assembly-$VERSION.jar
+JAR=target/scala-$(SCALA_VERSION)/$NAME-assembly-$VERSION.jar
 
-if [ "$1" == -j ] || [ ! -f $JAR ]; then
+if [ "$1" == -j ] || [ ! -f "${JAR}" ]; then
   echo "Building $JAR"
   sbt assembly
 
