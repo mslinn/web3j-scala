@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ETHEREUM_HOME="~/.ethereum"
+ETHEREUM_HOME="${HOME}/.ethereum"
 
 function help {
   echo "
