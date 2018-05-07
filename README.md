@@ -32,8 +32,11 @@ The demo program performs the following:
 
 ### Prerequisites
 
-You must have the `solc` Solidity compiler installed on your machine. If you're running Debian/Ubuntu:
+- You must have the `solc` Solidity compiler installed on your machine. If you're running Debian/Ubuntu:
   `apt install solc`
+- The `bin/web3j` CLI must be in your `PATH` environment variable.
+  `export PATH=$(pwd):${PATH}`
+
 
 ### To run the demo:
 1. Start up an Ethereum client if you don’t already have one running, such as `geth`.
