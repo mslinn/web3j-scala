@@ -10,7 +10,7 @@ cd "$DIR"
 
 # Scan build.sbt for program name, Scala version and program version
 function findValue {
-  echo "$( grep "$1 :=" build.sbt | cut -d' ' -f 3 | tr -d \" )"
+  grep "$1 :=" build.sbt | cut -d' ' -f 3 | tr -d \"
 }
 
 SCALA_VERSION() {
