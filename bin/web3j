@@ -14,7 +14,7 @@ function findValue {
 }
 
 SCALA_VERSION() {
-  V=`grep "scalaVersion :=" build.sbt |  cut -d' ' -f 3 | tr -d \"`
+  V=$( findValue scalaVersion )
    case $V in
     2.10.*) echo 2.10 ;;
     2.11.*) echo 2.11 ;;
