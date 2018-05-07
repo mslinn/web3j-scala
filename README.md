@@ -29,7 +29,13 @@ The demo program performs the following:
  - Compiles an example Solidity program that defines a smart contract.
  - Creates a JVM wrapper from an example smart contract.
 
-To run the demo:
+
+### Prerequisites
+
+You must have the `solc` Solidity compiler installed on your machine. If you're running Debian/Ubuntu:
+  `apt install solc`
+
+### To run the demo:
 1. Start up an Ethereum client if you don’t already have one running, such as `geth`.
    The `bin/runGeth` script invokes `geth` with the following options, which are convenient for development but not secure enough for production:
      - The Ethereum data directory is set to `~/.ethereum`, or a subdirectory that depends on the network chosen;
