@@ -98,7 +98,7 @@ The demo program performs the following:
 
 ## Developers
 ### API Documentation
-* [This library's Scaladoc is here](http://mslinn.github.io/web3j-scala/latest/api/com/micronautics/web3j/index.html) and the [gitter channel is here](https://gitter.im/web3j-scala/Lobby).
+* [This library's Scaladoc is here](http://blog.mslinn.com/web3j-scala/latest/api/root/com/micronautics/web3j/index.html) and the [gitter channel is here](https://gitter.im/web3j-scala/Lobby).
 
 * [The Web3J JavaDoc is here](https://jar-download.com/java-documentation-javadoc.php?a=core&g=org.web3j&v=3.0.2),
   and here is the [Web3J gitter channel](https://gitter.im/web3j/web3j).
