@@ -18,7 +18,7 @@ Add this to your SBT project's `build.sbt`:
 
     resolvers += "micronautics/scala on bintray" at "http://dl.bintray.com/micronautics/scala"
 
-    libraryDependencies += "com.micronautics" %% "web3j-scala" % "0.2.2" withSources()
+    libraryDependencies += "com.micronautics" %% "web3j-scala" % "0.3.0" withSources()
 
 Only Scala 2.12 with JDK 8 is supported at present; this is a limitation of the Scala ecosystem as of November 7, 2017.
 
@@ -89,7 +89,8 @@ To run the demo:
 
 ## Developers
 ### API Documentation
-* [This library's Scaladoc is here](http://mslinn.github.io/web3j-scala/latest/api/com/micronautics/web3j/index.html) and the [gitter channel is here](https://gitter.im/web3j-scala/Lobby).
+* [This library's Scaladoc is here](http://mslinn.github.io/web3j-scala/latest/api/com/micronautics/web3j/index.html) 
+  and the [gitter channel is here](https://gitter.im/web3j-scala/Lobby).
 
 * [The Web3J JavaDoc is here](https://jar-download.com/java-documentation-javadoc.php?a=core&g=org.web3j&v=3.0.2),
   and here is the [Web3J gitter channel](https://gitter.im/web3j/web3j).
@@ -106,9 +107,22 @@ To run the demo:
    ```
 
 ### Updating Scaladoc
-If you just want to republish the Scaladoc for this project, without creating a new version, use this command:
+1. Use the Scaladoc project; first do a [preflight check of the Scaladoc output](https://github.com/mslinn/multi-scaladoc#preflight-check-optimize-your-scaladoc-source):
+   ```
+    sbt "; project web3j-scala; doc; project demo; doc"
+   ```
 
-    $ sbt scaladoc
+2. Now [Update the Git Version String and Make a New Tag](https://github.com/mslinn/multi-scaladoc#update-the-git-version-string-and-make-a-new-tag).
+
+3. Now [edit the multi-scaladoc settings](https://github.com/mslinn/multi-scaladoc#running-this-program)
+   ```
+   export SCALADOC_SUB_PROJECT_NAMES="web3j-scala,demo"
+   ``` 
+
+4. Run multi-scaladoc:
+   ```
+   ../scaladoc/bin/run
+   ```
 
 ### Updating Scaladoc and Committing Changes Without Publishing a New Version
 This task rebuilds the docs, commits the git repository, and publishes the updated Scaladoc without publishing a new version:

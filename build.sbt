@@ -2,9 +2,9 @@ organization := "com.micronautics"
 
 name := "web3j-scala"
 
-version := "0.2.2"
+version := "0.3.0"
 
-scalaVersion := "2.12.4"
+scalaVersion := "2.12.6"
 
 // If you want to apply a license, such as the Apache 2 license, uncomment the following:
 licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
@@ -60,8 +60,8 @@ scalacOptions ++= Seq( // From https://tpolecat.github.io/2017/04/25/scalac-flag
 // The REPL can’t cope with -Ywarn-unused:imports or -Xfatal-warnings so turn them off for the console
 scalacOptions in (Compile, console) --= Seq("-Ywarn-unused:imports", "-Xfatal-warnings")
 
-scalacOptions in (Compile, doc) ++= baseDirectory.map {
-  (bd: File) => Seq[String](
+scalacOptions in (Compile, doc) ++= baseDirectory.map { bd: File =>
+  Seq[String](
      "-sourcepath", bd.getAbsolutePath,
      "-doc-source-url", "https://github.com/mslinn/web3j-scala/tree/master€{FILE_PATH}.scala"
   )
@@ -94,7 +94,7 @@ libraryDependencies ++= Seq(
   "org.web3j"              %  "rlp"                   % web3jVersion withSources(), // Recursive Length Prefix (RLP) encoders
 //  "org.web3j"              %  "tuples"                % web3jVersion withSources(), // See http://www.javatuples.org ... not needed for Scala?
   "org.web3j"              %  "utils"                 % web3jVersion withSources(), // Minimal set of utility classes
-  "org.web3j"              %  "web3j-maven-plugin"    % "0.1.2"      withSources(), // Create Java classes from solidity contract files
+  "org.web3j"              %  "web3j-maven-plugin"    % "0.2.0"      withSources(), // Create Java classes from solidity contract files
   //
   "org.scala-lang.modules" %% "scala-java8-compat"    % "0.8.0",
   "ch.qos.logback"         %  "logback-classic"       % "1.2.3",
