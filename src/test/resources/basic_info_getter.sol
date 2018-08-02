@@ -7,28 +7,28 @@ pragma solidity ^0.4.18;
 contract basicInfoGetter {
   address creator;
 
-  function basicInfoGetter() public {
+  constructor() public {
     creator = msg.sender;
   }
 
-  function getCurrentMinerAddress() public constant returns (address) { // get CURRENT block miner's address,
+  function getCurrentMinerAddress() public view returns (address) { // get CURRENT block miner's address,
     // not necessarily the address of the miner when this block was born
     return block.coinbase;
   }
 
-  function getCurrentDifficulty() public constant returns (uint) {
+  function getCurrentDifficulty() public view returns (uint) {
     return block.difficulty;
   }
 
-  function getCurrentGaslimit() public constant returns (uint) { // the most gas that can be spent on any given transaction right now
+  function getCurrentGaslimit() public view returns (uint) { // the most gas that can be spent on any given transaction right now
     return block.gaslimit;
   }
 
-  function getCurrentBlockNumber() public constant returns (uint) {
+  function getCurrentBlockNumber() public view returns (uint) {
     return block.number;
   }
 
-  function getBlockTimestamp() public constant returns (uint) { // returns current block timestamp in SECONDS (not ms) from epoch
+  function getBlockTimestamp() public view returns (uint) { // returns current block timestamp in SECONDS (not ms) from epoch
     return block.timestamp;
     // also "now" == "block.timestamp", as in "return now;"
   }
@@ -38,7 +38,7 @@ contract basicInfoGetter {
     return msg.data;
   }
 
-  function getMsgSender() public constant returns (address) { // Returns the address of whomever made this call
+  function getMsgSender() public view returns (address) { // Returns the address of whomever made this call
     // (i.e. not necessarily the creator of the contract)
     return msg.sender;
   }
@@ -54,25 +54,25 @@ contract basicInfoGetter {
    Whatever is not used is immediately refunded.
    */
 
-  function getMsgGas() public constant returns (uint) {
-    return msg.gas;
+  function getMsgGas() public view returns (uint) {
+    return gasleft();
   }
 
-  function getTxGasprice() public constant returns (uint) { // "gasprice" is the amount of gas the sender was *willing* to pay. 50000000 for me. (geth default)
-    return tx.gasprice;
+  function getTxGasprice() public view returns (uint) {
+    return tx.gasprice; // "gasprice" is the amount of gas the sender was *willing* to pay. 50000000 for me. (geth default)
   }
 
-  function getTxOrigin() public constant returns (address) { // returns sender of the transaction
+  function getTxOrigin() public view returns (address) { // returns sender of the transaction
   // What if there is a chain of calls? I think it returns the first sender, whoever provided the gas.
-    return tx.origin;
+    return msg.sender;
   }
 
-  function getContractAddress() public constant returns (address) {
+  function getContractAddress() public view returns (address) {
     return this;
   }
 
-  function getContractBalance() public constant returns (uint) {
-    return this.balance;
+  function getContractBalance() public view returns (uint) {
+    return address(this).balance;
   }
 
   /**********

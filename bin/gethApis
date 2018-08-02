@@ -3,8 +3,10 @@
 # Discover the geth APIs provided by invoking the modules JSON-RPC method
 # See https://github.com/ethereum/go-ethereum/wiki/Management-APIs
 
+network="${1:-devnet}"
+
 echo '{"jsonrpc":"2.0","method":"rpc_modules","params":[],"id":1}' | \
-  nc -NU /home/mslinn/.ethereum/devnet/geth.ipc | \
+  nc -NU ${HOME}/.ethereum/${network}/geth.ipc | \
   python -m json.tool
 
 # Typical response:
