@@ -46,93 +46,96 @@ public final class BasicInfoGetter extends Contract {
     public RemoteCall<TransactionReceipt> kill() {
         Function function = new Function(
                 "kill",
-                Arrays.<Type>asList(),
-                Collections.<TypeReference<?>>emptyList());
+                Collections.emptyList(),
+                Collections.emptyList());
         return executeRemoteCallTransaction(function);
     }
 
     public RemoteCall<BigInteger> getContractBalance() {
         Function function = new Function("getContractBalance",
-                Arrays.<Type>asList(),
-                Arrays.<TypeReference<?>>asList(new TypeReference<Uint256>() {}));
+                Collections.emptyList(),
+                Collections.singletonList(new TypeReference<Uint256>() {
+                }));
         return executeRemoteCallSingleValueReturn(function, BigInteger.class);
     }
 
     public RemoteCall<BigInteger> getCurrentBlockNumber() {
         Function function = new Function("getCurrentBlockNumber",
-                Arrays.<Type>asList(),
-                Arrays.<TypeReference<?>>asList(new TypeReference<Uint256>() {}));
+                Collections.emptyList(),
+                Collections.singletonList(new TypeReference<Uint256>() {}));
         return executeRemoteCallSingleValueReturn(function, BigInteger.class);
     }
 
     public RemoteCall<BigInteger> getTxGasprice() {
         Function function = new Function("getTxGasprice",
-                Arrays.<Type>asList(),
-                Arrays.<TypeReference<?>>asList(new TypeReference<Uint256>() {}));
+                Collections.emptyList(),
+                Collections.singletonList(new TypeReference<Uint256>() {
+                }));
         return executeRemoteCallSingleValueReturn(function, BigInteger.class);
     }
 
     public RemoteCall<BigInteger> getBlockTimestamp() {
         Function function = new Function("getBlockTimestamp",
-                Arrays.<Type>asList(),
-                Arrays.<TypeReference<?>>asList(new TypeReference<Uint256>() {}));
+                Collections.emptyList(),
+                Collections.singletonList(new TypeReference<Uint256>() {
+                }));
         return executeRemoteCallSingleValueReturn(function, BigInteger.class);
     }
 
     public RemoteCall<String> getMsgSender() {
         Function function = new Function("getMsgSender",
-                Arrays.<Type>asList(),
-                Arrays.<TypeReference<?>>asList(new TypeReference<Address>() {}));
+                Collections.emptyList(),
+                Collections.singletonList(new TypeReference<Address>() {}));
         return executeRemoteCallSingleValueReturn(function, String.class);
     }
 
     public RemoteCall<BigInteger> getCurrentGaslimit() {
         Function function = new Function("getCurrentGaslimit",
-                Arrays.<Type>asList(),
-                Arrays.<TypeReference<?>>asList(new TypeReference<Uint256>() {}));
+                Collections.emptyList(),
+                Collections.singletonList(new TypeReference<Uint256>() {}));
         return executeRemoteCallSingleValueReturn(function, BigInteger.class);
     }
 
     public RemoteCall<BigInteger> getMsgGas() {
         Function function = new Function("getMsgGas",
-                Arrays.<Type>asList(),
-                Arrays.<TypeReference<?>>asList(new TypeReference<Uint256>() {}));
+                Collections.emptyList(),
+                Collections.singletonList(new TypeReference<Uint256>() {}));
         return executeRemoteCallSingleValueReturn(function, BigInteger.class);
     }
 
     public RemoteCall<BigInteger> getCurrentDifficulty() {
         Function function = new Function("getCurrentDifficulty",
-                Arrays.<Type>asList(),
-                Arrays.<TypeReference<?>>asList(new TypeReference<Uint256>() {}));
+                Collections.emptyList(),
+                Collections.singletonList(new TypeReference<Uint256>() {}));
         return executeRemoteCallSingleValueReturn(function, BigInteger.class);
     }
 
     public RemoteCall<TransactionReceipt> getMsgValue(BigInteger weiValue) {
         Function function = new Function(
                 "getMsgValue",
-                Arrays.<Type>asList(),
-                Collections.<TypeReference<?>>emptyList());
+                Collections.emptyList(),
+                Collections.emptyList());
         return executeRemoteCallTransaction(function, weiValue);
     }
 
     public RemoteCall<String> getTxOrigin() {
         Function function = new Function("getTxOrigin",
-                Arrays.<Type>asList(),
-                Arrays.<TypeReference<?>>asList(new TypeReference<Address>() {}));
+                Collections.emptyList(),
+                Collections.singletonList(new TypeReference<Address>() {}));
         return executeRemoteCallSingleValueReturn(function, String.class);
     }
 
     public RemoteCall<byte[]> getMsgData() {
         Function function = new Function("getMsgData",
-                Arrays.<Type>asList(),
-                Arrays.<TypeReference<?>>asList(new TypeReference<DynamicBytes>() {}));
+                Collections.emptyList(),
+                Collections.singletonList(new TypeReference<DynamicBytes>() {}));
         return executeRemoteCallSingleValueReturn(function, byte[].class);
     }
 
     public RemoteCall<String> getCurrentMinerAddress() {
         Function function = new Function("getCurrentMinerAddress",
-                Arrays.<Type>asList(),
-                Arrays.<TypeReference<?>>asList(new TypeReference<Address>() {}));
+                Collections.emptyList(),
+                Collections.singletonList(new TypeReference<Address>() {}));
         return executeRemoteCallSingleValueReturn(function, String.class);
     }
 

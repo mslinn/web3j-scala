@@ -2,11 +2,10 @@ organization := "com.micronautics"
 
 name := "web3j-scala"
 
-version := "0.3.0"
+version := "0.3.1"
 
 scalaVersion := "2.12.6"
 
-// If you want to apply a license, such as the Apache 2 license, uncomment the following:
 licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
 
 scalacOptions ++= Seq( // From https://tpolecat.github.io/2017/04/25/scalac-flags.html
@@ -94,12 +93,12 @@ libraryDependencies ++= Seq(
   "org.web3j"              %  "rlp"                   % web3jVersion withSources(), // Recursive Length Prefix (RLP) encoders
 //  "org.web3j"              %  "tuples"                % web3jVersion withSources(), // See http://www.javatuples.org ... not needed for Scala?
   "org.web3j"              %  "utils"                 % web3jVersion withSources(), // Minimal set of utility classes
-  "org.web3j"              %  "web3j-maven-plugin"    % "0.2.0"      withSources(), // Create Java classes from solidity contract files
+  "org.web3j"              %  "web3j-maven-plugin"    % "0.3.1"      withSources(), // Create Java classes from solidity contract files
   //
-  "org.scala-lang.modules" %% "scala-java8-compat"    % "0.8.0",
+  "org.scala-lang.modules" %% "scala-java8-compat"    % "0.9.0",
   "ch.qos.logback"         %  "logback-classic"       % "1.2.3",
   //
-  "org.scalatest"          %% "scalatest"   % "3.0.3" % Test withSources(),
+  "org.scalatest"          %% "scalatest"   % "3.0.5" % Test withSources(),
   "junit"                  %  "junit"       % "4.12"  % Test
 )
 
