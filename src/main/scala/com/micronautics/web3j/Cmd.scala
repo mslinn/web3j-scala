@@ -22,7 +22,12 @@ object Cmd {
       .split(Pattern.quote(File.pathSeparator))
       .map(Paths.get(_))
       .find(path => Files.exists(path.resolve(program)))
-      .map(_.resolve(program))
+      .map(_.resolve(program)).orElse(
+        Paths.get("").resolve(program) match {
+          case path if Files.exists(path) => Some(path)
+          case _ => None
+        }
+      )
   }
 
   @inline protected def whichOrThrow(program: String): Path =
