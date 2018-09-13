@@ -18,7 +18,7 @@ Add this to your SBT project's `build.sbt`:
 
     resolvers += "micronautics/scala on bintray" at "http://dl.bintray.com/micronautics/scala"
 
-    libraryDependencies += "com.micronautics" %% "web3j-scala" % "0.3.1" withSources()
+    libraryDependencies += "com.micronautics" %% "web3j-scala" % "0.3.2" withSources()
 
 Only Scala 2.12 with JDK 8 is supported at present; this is a limitation of the Scala ecosystem as of November 7, 2017.
 
