@@ -1,3 +1,5 @@
+import scala.sys.process._
+
 lazy val scaladoc =
   taskKey[Unit]("Rebuilds the Scaladoc and pushes the updated Scaladoc to GitHub pages without committing to the git repository")
 
@@ -28,7 +30,7 @@ commitAndDoc := {
     println("Creating Scaladoc")
     doc.in(Test).value
 
-    val changedFileNames = "git diff --name-only".!!.trim.replace("\n", ", ")
+    val changedFileNames: String = "git diff --name-only".!!.trim.replace("\n", ", ")
     if (changedFileNames.nonEmpty) {
       println(s"About to commit these changed files: $changedFileNames")
       "git add -A".!!

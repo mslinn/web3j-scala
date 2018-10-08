@@ -11,16 +11,23 @@ Web3J is a lightweight, reactive, somewhat type safe Java and Android library fo
 Web3J features RxJava extensions, and `web3j-scala` wraps that syntax in Scala goodness.
 For example, the `web3j-scala` [observable methods](http://mslinn.github.io/web3j-scala/latest/api/com/micronautics/web3j/Web3JScala$.html)
 provide [simple and efficient application code](https://github.com/mslinn/web3j-scala/blob/master/demo/DemoObservables.scala#L14-L22).
-Scala's [value classes are used](https://github.com/mslinn/web3j-scala/blob/master/src/main/scala/com/micronautics/web3j/ValueClasses.scala) to provide much stronger type safety than Web3J, without incurring a runtime penalty.
+Scala's [value classes are used](https://github.com/mslinn/web3j-scala/blob/master/src/main/scala/com/micronautics/web3j/ValueClasses.scala) 
+to provide much stronger type safety than Web3J, without incurring a runtime penalty.
 
 ## Use As a Library
 Add this to your SBT project's `build.sbt`:
 
     resolvers += "micronautics/scala on bintray" at "http://dl.bintray.com/micronautics/scala"
 
-    libraryDependencies += "com.micronautics" %% "web3j-scala" % "0.3.2" withSources()
+    libraryDependencies += "com.micronautics" %% "web3j-scala" % "0.3.3" withSources()
 
 Only Scala 2.12 with JDK 8 is supported at present; this is a limitation of the Scala ecosystem as of November 7, 2017.
+
+## Questions and Problems
+This library merely wraps [Web3J](https://www.web3j.io), so if you have questions about how to use this library, 
+please [read their docs](https://web3j.readthedocs.io/en/stable/quickstart.html), and participate in [their Gitter channel](https://gitter.im/web3j/web3j).
+
+If you find a bug in this library you can [post an issue here](https://github.com/mslinn/web3j-scala/issues).
 
 ## Run the Demo Program
 The demo program performs the following:

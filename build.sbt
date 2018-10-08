@@ -2,9 +2,9 @@ organization := "com.micronautics"
 
 name := "web3j-scala"
 
-version := "0.3.2"
+version := "0.3.6"
 
-scalaVersion := "2.12.6"
+scalaVersion := "2.12.7"
 
 licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
 
@@ -78,7 +78,7 @@ resolvers ++= Seq(
   "Ethereum Maven" at "https://dl.bintray.com/ethereum/maven/"
 )
 
-val web3jVersion = "3.5.0"
+val web3jVersion = "3.6.0"
 libraryDependencies ++= Seq(
   // See https://docs.web3j.io/modules.html
   "org.web3j"              %  "abi"                   % web3jVersion withSources(), // Application Binary Interface encoders
