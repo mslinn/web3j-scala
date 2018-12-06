@@ -4,7 +4,7 @@ name := "web3j-scala"
 
 version := "0.3.6"
 
-scalaVersion := "2.12.7"
+scalaVersion := "2.12.8"
 
 licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
 
