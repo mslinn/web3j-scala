@@ -5,7 +5,7 @@ addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "5.2.4")
 addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.3.4")
 
 // See https://github.com/sbt/sbt-assembly
-addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.14.8")
+addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.14.9")
 
 // See https://github.com/sbt/sbt-bintray
 resolvers += Resolver.jcenterRepo

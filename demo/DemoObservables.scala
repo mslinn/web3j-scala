@@ -8,22 +8,22 @@ import org.web3j.protocol.core.methods.{request, response}
 /** Web3J's functional-reactive nature makes it easy to set up observers that notify subscribers of events taking place on the blockchain.
   * The functional-reactive programming style works really well with Scala.
   *
-  * Other transaction and block replay [[org.web3j.utils.Observables]] are described in [[https://docs.web3j.io/filters.html Filters and Events]]. */
+  * Other transaction and block replay [[org.web3j.utils.Flowables]] are described in [[https://docs.web3j.io/filters.html Filters and Events]]. */
 class DemoObservables(demo: Demo) {
   import demo._
 
   //  Display the first 2 new blocks as they are added to the blockchain:
-  observe(2)(web3j.blockObservable(false)) { ethBlock =>
+  observe(2)(web3j.blockFlowable(false)) { ethBlock =>
     println(format(ethBlock))
   }
 
   // Display only the first 2 new transactions as they are added to the blockchain:
-  observe(2)(web3j.transactionObservable) { tx =>
+  observe(2)(web3j.transactionFlowable) { tx =>
     println(format(tx))
   }
 
   // Display the first 2 pending transactions as they are submitted to the network, before they have been grouped into a block:
-  observe(2)(web3j.pendingTransactionObservable) { tx =>
+  observe(2)(web3j.pendingTransactionFlowable) { tx =>
     println(format(tx))
   }
 
@@ -31,7 +31,7 @@ class DemoObservables(demo: Demo) {
   // Display minimal information about old blocks, show detailed information for new blocks
   val now: Long = System.currentTimeMillis
   var count = 0
-  web3j.catchUpToLatestAndSubscribeToNewBlocksObservable(EARLIEST, false).subscribe { ethBlock =>
+  web3j.catchUpToLatestAndSubscribeToNewBlocksFlowable(EARLIEST, false).subscribe { ethBlock =>
     val block = ethBlock.getBlock
     if (block.getTimestamp.longValue<now) {
       count = count + 1
@@ -54,7 +54,7 @@ class DemoObservables(demo: Demo) {
         "0x0000000000000000000000000aff3454fce5edbc8cca8697c15331677e6ebccc"
       )
 
-  web3j.ethLogObservable(ethFilter).subscribe { log =>
+  web3j.ethLogFlowable(ethFilter).subscribe { log =>
     println(format(log))
   }
 

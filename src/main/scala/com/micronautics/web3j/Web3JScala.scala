@@ -4,7 +4,7 @@ import com.micronautics.web3j.InfuraNetwork._
 import org.web3j.protocol.Web3j
 import org.web3j.protocol.http.HttpService
 import org.web3j.protocol.infura.InfuraHttpService
-import rx.Observable
+import io.reactivex.{Flowable, Observable}
 import scala.concurrent.ExecutionContext
 
 /** [[https://www.web3j.io Web3J]] builders and stateless methods. */
@@ -35,10 +35,10 @@ object Web3JScala {
 
   /** Only runs fn on the first n elements observed from the given Observable[T] */
   def observe[T](n: Int)
-                (observable: Observable[T])
+                (observable: Flowable[T])
                 (fn: T => Unit): Unit =
-    observable.limit(n).doOnEach { t =>
-      fn(t.getValue.asInstanceOf[T])
+    observable.limit(n.toLong).doOnEach { t =>
+      fn(t.getValue)
     }
 
   /** Compile the smart contract.

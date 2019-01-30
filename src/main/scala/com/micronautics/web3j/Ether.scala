@@ -120,7 +120,7 @@ class Ether(val wei: BigInt) extends Ordered[Ether] {
   /** @return Amount of Ether corresponding to the given wei value */
   @inline def bigDecimal(wei: BigInt): java.math.BigDecimal =
     new java.math.BigDecimal(wei.bigInteger)
-      .setScale(16, java.math.BigDecimal.ROUND_DOWN)
+      .setScale(16, java.math.RoundingMode.DOWN)
 
   @inline def compare(that: Ether): Int = this.wei compare that.wei
 

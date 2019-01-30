@@ -2,7 +2,7 @@ organization := "com.micronautics"
 
 name := "web3j-scala"
 
-version := "0.3.6"
+version := "0.3.7"
 
 scalaVersion := "2.12.8"
 
@@ -78,7 +78,7 @@ resolvers ++= Seq(
   "Ethereum Maven" at "https://dl.bintray.com/ethereum/maven/"
 )
 
-val web3jVersion = "3.6.0"
+val web3jVersion = "4.1.1"
 libraryDependencies ++= Seq(
   // See https://docs.web3j.io/modules.html
   "org.web3j"              %  "abi"                   % web3jVersion withSources(), // Application Binary Interface encoders
@@ -102,6 +102,17 @@ libraryDependencies ++= Seq(
   "junit"                  %  "junit"       % "4.12"  % Test
 )
 
+libraryDependencies ++=  { // Newer versions of Java have had the runtime library reduced, so include missing Java dependencies
+  sys.props("java.version") match {
+    case jv if jv.startsWith("11") => 
+	  javacOptions += "-J--add-modules=java.xml.bind"
+	  Seq(
+        "javax.xml.bind" % "jaxb-api" % "2.3.1"
+      )
+	
+	case _ => Nil
+}}
+
 unmanagedSourceDirectories in Test += baseDirectory.value / "abiWrapper"
 unmanagedSourceDirectories in Test += baseDirectory.value / "demo"
 
@@ -115,7 +126,8 @@ logLevel in compile := Level.Warn
 logLevel in test := Level.Info
 
 // define the statements initially evaluated when entering 'console', 'console-quick', but not 'console-project'
-initialCommands in console := """import java.math.BigInteger
+initialCommands in console := """import scala.sys.process._
+                                |import java.math.BigInteger
                                 |import java.util.concurrent.Future
                                 |import org.web3j.protocol._
                                 |import org.web3j.protocol.infura._
