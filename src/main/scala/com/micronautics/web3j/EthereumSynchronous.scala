@@ -1,7 +1,6 @@
 package com.micronautics.web3j
 
 import java.math.BigInteger
-import java.util.Optional
 import org.web3j.protocol.Web3j
 import org.web3j.protocol.core.DefaultBlockParameter
 import org.web3j.protocol.core.DefaultBlockParameterName.LATEST
@@ -9,6 +8,7 @@ import org.web3j.protocol.core.methods.request
 import org.web3j.protocol.core.methods.request.ShhFilter
 import org.web3j.protocol.core.methods.response.{EthBlock, EthCompileSolidity, EthGetWork, EthLog, ShhMessages, Transaction, TransactionReceipt}
 import scala.collection.JavaConverters._
+import scala.compat.java8.OptionConverters._
 import scala.collection.immutable.List
 
 /** All of the methods in this class block until a value is ready to be returned to the caller.
@@ -283,26 +283,26 @@ class EthereumSynchronous(val web3j: Web3j) {
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactionbyblockhashandindex eth_gettransactionbyblockhashandindex]] JSON-RPC endpoint.
     * @return Some containing transaction information by block hash and transaction index position, or None if no matching transaction was found */
-  def transactionByBlockHashAndIndex(blockHash: BlockHash, transactionIndex: BigInteger): Optional[Transaction] =
-    web3j.ethGetTransactionByBlockHashAndIndex(blockHash.value, transactionIndex).send.getTransaction
+  def transactionByBlockHashAndIndex(blockHash: BlockHash, transactionIndex: BigInteger): Option[Transaction] =
+    web3j.ethGetTransactionByBlockHashAndIndex(blockHash.value, transactionIndex).send.getTransaction.asScala
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactionbyblocknumberandindex eth_gettransactionbyblocknumberandindex]] JSON-RPC endpoint.
     * @return Some containing transaction information by block hash and transaction index position, or None if no matching transaction was found */
   def transactionByBlockNumberAndIndex(
     defaultBlockParameter: DefaultBlockParameter,
     transactionIndex: BigInteger
-  ): Optional[Transaction] =
-    web3j.ethGetTransactionByBlockNumberAndIndex(defaultBlockParameter, transactionIndex).send.getTransaction
+  ): Option[Transaction] =
+    web3j.ethGetTransactionByBlockNumberAndIndex(defaultBlockParameter, transactionIndex).send.getTransaction.asScala
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactionbyhash eth_gettransactionbyhash]] JSON-RPC endpoint.
     * @return Future containing Some(transaction object), or None when no transaction was found */
-  def transactionByHash(transactionHash: TransactionHash): Optional[Transaction] =
-    web3j.ethGetTransactionByHash(transactionHash.value).send.getTransaction
+  def transactionByHash(transactionHash: TransactionHash): Option[Transaction] =
+    web3j.ethGetTransactionByHash(transactionHash.value).send.getTransaction.asScala
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactionreceipt eth_gettransactionreceipt]] JSON-RPC endpoint.
     * @return the receipt of a transaction, identified by transaction hash. (Note: receipts are not available for pending transactions.) */
-  def transactionReceipt(transactionHash: TransactionHash): Optional[TransactionReceipt] =
-    web3j.ethGetTransactionReceipt(transactionHash.value).send.getTransactionReceipt
+  def transactionReceipt(transactionHash: TransactionHash): Option[TransactionReceipt] =
+    web3j.ethGetTransactionReceipt(transactionHash.value).send.getTransactionReceipt.asScala
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getunclebyblocknumberandindex eth_getunclebyblocknumberandindex]] JSON-RPC endpoint.
     * @return information about a uncle of a block by hash and uncle index position */
