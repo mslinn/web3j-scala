@@ -1,13 +1,13 @@
 package com.micronautics.web3j
 
 import java.math.BigInteger
-import java.util.Optional
 import org.web3j.protocol.Web3j
 import org.web3j.protocol.core.DefaultBlockParameter
 import org.web3j.protocol.core.DefaultBlockParameterName.LATEST
 import org.web3j.protocol.core.methods.request
 import org.web3j.protocol.core.methods.response.{EthBlock, EthCompileSolidity, EthGetWork, EthLog, ShhMessages, Transaction, TransactionReceipt}
 import scala.collection.JavaConverters._
+import scala.compat.java8.OptionConverters._
 import scala.collection.immutable.List
 import scala.compat.java8.FutureConverters._
 import scala.concurrent.ExecutionContext.{global => defaultExecutionContext}
@@ -301,30 +301,30 @@ class EthereumASynchronous(val web3j: Web3j)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactionbyblockhashandindex eth_gettransactionbyblockhashandindex]] JSON-RPC endpoint.
     * @return Some containing transaction information by block hash and transaction index position, or None if no matching transaction was found */
-  def transactionByBlockHashAndIndex(blockHash: BlockHash, transactionIndex: BigInteger): Future[Optional[Transaction]] =
-    web3j.ethGetTransactionByBlockHashAndIndex(blockHash.value, transactionIndex).sendAsync.toScala.map(_.getTransaction)
+  def transactionByBlockHashAndIndex(blockHash: BlockHash, transactionIndex: BigInteger): Future[Option[Transaction]] =
+    web3j.ethGetTransactionByBlockHashAndIndex(blockHash.value, transactionIndex).sendAsync.toScala.map(_.getTransaction.asScala)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactionbyblocknumberandindex eth_gettransactionbyblocknumberandindex]] JSON-RPC endpoint.
     * @return Some containing transaction information by block hash and transaction index position, or None if no matching transaction was found */
   def transactionByBlockNumberAndIndex(
     defaultBlockParameter: DefaultBlockParameter,
     transactionIndex: BigInteger
-  ): Future[Optional[Transaction]] =
+  ): Future[Option[Transaction]] =
     web3j
       .ethGetTransactionByBlockNumberAndIndex(defaultBlockParameter, transactionIndex)
       .sendAsync
       .toScala
-      .map(_.getTransaction)
+      .map(_.getTransaction.asScala)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactionbyhash eth_gettransactionbyhash]] JSON-RPC endpoint.
     * @return Future containing Some(transaction object), or None when no transaction was found */
-  def transactionByHash(transactionHash: TransactionHash): Future[Optional[Transaction]] =
-    web3j.ethGetTransactionByHash(transactionHash.value).sendAsync.toScala.map(_.getTransaction)
+  def transactionByHash(transactionHash: TransactionHash): Future[Option[Transaction]] =
+    web3j.ethGetTransactionByHash(transactionHash.value).sendAsync.toScala.map(_.getTransaction.asScala)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactionreceipt eth_gettransactionreceipt]] JSON-RPC endpoint.
     * @return the receipt of a transaction, identified by transaction hash. (Note: receipts are not available for pending transactions.) */
-  def transactionReceipt(transactionHash: TransactionHash): Future[Optional[TransactionReceipt]] =
-    web3j.ethGetTransactionReceipt(transactionHash.value).sendAsync.toScala.map(_.getTransactionReceipt)
+  def transactionReceipt(transactionHash: TransactionHash): Future[Option[TransactionReceipt]] =
+    web3j.ethGetTransactionReceipt(transactionHash.value).sendAsync.toScala.map(_.getTransactionReceipt.asScala)
 
   /** Invokes the [[https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getunclecountbyblockhash eth_getunclecountbyblockhash]] JSON-RPC endpoint.
     * @return the number of uncles in a block from a block matching the given block hash */
