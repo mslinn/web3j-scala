@@ -104,12 +104,12 @@ libraryDependencies ++= Seq(
 
 libraryDependencies ++=  { // Newer versions of Java have had the runtime library reduced, so include missing Java dependencies
   sys.props("java.version") match {
-    case jv if jv.startsWith("11") => 
+    case jv if jv.startsWith("11") =>
 	  javacOptions += "-J--add-modules=java.xml.bind"
 	  Seq(
         "javax.xml.bind" % "jaxb-api" % "2.3.1"
       )
-	
+
 	case _ => Nil
 }}
 

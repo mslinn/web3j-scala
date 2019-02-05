@@ -31,7 +31,7 @@ class DemoObservables(demo: Demo) {
   // Display minimal information about old blocks, show detailed information for new blocks
   val now: Long = System.currentTimeMillis
   var count = 0
-  web3j.catchUpToLatestAndSubscribeToNewBlocksFlowable(EARLIEST, false).subscribe { ethBlock =>
+  web3j.replayPastAndFutureBlocksFlowable(EARLIEST, false).subscribe { ethBlock =>
     val block = ethBlock.getBlock
     if (block.getTimestamp.longValue<now) {
       count = count + 1
