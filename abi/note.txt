@@ -1,0 +1,13 @@
+compiled with `solc Version: 0.4.24+commit.e67f0147`
+
+```
+$ solc --bin --abi --optimize --overwrite -o abi/ src/test/resources/basic_info_getter.sol
+```
+
+java wrapper generated with
+```
+$ bin/web3j solidity generate -a abi/basicInfoGetter.bin -b abi/basicInfoGetter.abi -o abiWrapper/ -p com.micronautics.solidity
+```
+
+member function `getContractAddress` of the generated wrapper class clashes with it's super.
+renamed manually `getContractAddress2`

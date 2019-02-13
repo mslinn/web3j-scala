@@ -1,11 +1,9 @@
 package demo
 
-import java.math.BigInteger
 import com.micronautics.web3j.{Address, Nonce}
 import org.web3j.crypto.{Credentials, RawTransaction, TransactionEncoder, WalletUtils}
 import org.web3j.protocol.admin.Admin
 import org.web3j.protocol.admin.methods.response.PersonalUnlockAccount
-import org.web3j.protocol.core.DefaultBlockParameterName._
 import org.web3j.protocol.core.methods.response.TransactionReceipt
 import org.web3j.protocol.http.HttpService
 import org.web3j.tx.Transfer
@@ -14,6 +12,7 @@ import org.web3j.utils.Convert.Unit.{ETHER, WEI}
 /** Web3J provides support for both working with Ethereum wallet files (recommended) and Ethereum client admin commands
   * for sending transactions. */
 class DemoTransaction(demo: Demo) {
+
   import Demo._, demo._
 
   //  Send Ether to another party using your Ethereum wallet file
@@ -43,39 +42,39 @@ class DemoTransaction(demo: Demo) {
   val web3jAdmin: Admin = Admin.build(new HttpService)
   val personalUnlockAccount: PersonalUnlockAccount = web3jAdmin.personalUnlockAccount("0x000...", "a password").sendAsync.get
   if (personalUnlockAccount.accountUnlocked) {
-       // todo send a transaction
+    // todo send a transaction
   }
 
   // Todo demonstrate the use of Parity’s Personal, Trace, or geth’s personal client APIs, by using the org.web3j:parity and org.web3j:geth modules respectively.
 
   protected def format(tx: RawTransaction): String =
     s"""Raw transaction:
-       |  Data         = ${ tx.getData }
-       |  Gas limit    = ${ tx.getGasLimit }
-       |  Gas price    = ${ tx.getGasPrice }
-       |  Gas limit    = ${ tx.getGasLimit }
-       |  Nonce        = ${ tx.getNonce }
-       |  To           = ${ tx.getTo }
-       |  Value        = ${ tx.getValue }
+       |  Data         = ${tx.getData}
+       |  Gas limit    = ${tx.getGasLimit}
+       |  Gas price    = ${tx.getGasPrice}
+       |  Gas limit    = ${tx.getGasLimit}
+       |  Nonce        = ${tx.getNonce}
+       |  To           = ${tx.getTo}
+       |  Value        = ${tx.getValue}
        |""".stripMargin
 
   protected def format(tx: TransactionReceipt): String =
     s"""Transaction receipt:
-       |  Block hash              = ${ tx.getBlockHash }
-       |  Block number            = ${ tx.getBlockNumber }
-       |  Raw block number        = ${ tx.getBlockNumberRaw }
-       |  Contract address        = ${ tx.getContractAddress }
-       |  Cumulative gas used     = ${ tx.getCumulativeGasUsed }
-       |  Raw cumulative gas used = ${ tx.getCumulativeGasUsedRaw }
-       |  From                    = ${ tx.getFrom }
-       |  Gas used                = ${ tx.getGasUsed }
-       |  Raw gas used            = ${ tx.getGasUsedRaw }
-       |  Logs                    = ${ tx.getLogs }
-       |  Log bloom               = ${ tx.getLogsBloom }
-       |  Root                    = ${ tx.getRoot }
-       |  To                      = ${ tx.getTo }
-       |  Transaction hash        = ${ tx.getTransactionHash }
-       |  Transaction index       = ${ tx.getTransactionIndex }
-       |  Raw transaction index   = ${ tx.getTransactionIndexRaw }
+       |  Block hash              = ${tx.getBlockHash}
+       |  Block number            = ${tx.getBlockNumber}
+       |  Raw block number        = ${tx.getBlockNumberRaw}
+       |  Contract address        = ${tx.getContractAddress}
+       |  Cumulative gas used     = ${tx.getCumulativeGasUsed}
+       |  Raw cumulative gas used = ${tx.getCumulativeGasUsedRaw}
+       |  From                    = ${tx.getFrom}
+       |  Gas used                = ${tx.getGasUsed}
+       |  Raw gas used            = ${tx.getGasUsedRaw}
+       |  Logs                    = ${tx.getLogs}
+       |  Log bloom               = ${tx.getLogsBloom}
+       |  Root                    = ${tx.getRoot}
+       |  To                      = ${tx.getTo}
+       |  Transaction hash        = ${tx.getTransactionHash}
+       |  Transaction index       = ${tx.getTransactionIndex}
+       |  Raw transaction index   = ${tx.getTransactionIndexRaw}
        |""".stripMargin
 }

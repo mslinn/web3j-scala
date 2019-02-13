@@ -2,7 +2,7 @@ organization := "com.micronautics"
 
 name := "web3j-scala"
 
-version := "0.3.6"
+version := "0.4.1.1"
 
 scalaVersion := "2.12.8"
 
@@ -78,7 +78,7 @@ resolvers ++= Seq(
   "Ethereum Maven" at "https://dl.bintray.com/ethereum/maven/"
 )
 
-val web3jVersion = "3.6.0"
+val web3jVersion = "4.1.1"
 libraryDependencies ++= Seq(
   // See https://docs.web3j.io/modules.html
   "org.web3j"              %  "abi"                   % web3jVersion withSources(), // Application Binary Interface encoders
@@ -89,11 +89,11 @@ libraryDependencies ++= Seq(
   "org.web3j"              %  "geth"                  % web3jVersion withSources(), // Geth-specific JSON-RPC module
   "org.web3j"              %  "infura"                % web3jVersion withSources(), // Infura-specific HTTP header support
   "org.web3j"              %  "parity"                % web3jVersion withSources(), // Parity-specific JSON-RPC module
-//  "org.web3j"              %  "quorum"                % "0.7.0"      withSources(), // integration with JP Morgan's Quorum
+//  "org.web3j"              %  "quorum"                % "4.0.6"      withSources(), // integration with JP Morgan's Quorum
   "org.web3j"              %  "rlp"                   % web3jVersion withSources(), // Recursive Length Prefix (RLP) encoders
 //  "org.web3j"              %  "tuples"                % web3jVersion withSources(), // See http://www.javatuples.org ... not needed for Scala?
   "org.web3j"              %  "utils"                 % web3jVersion withSources(), // Minimal set of utility classes
-  "org.web3j"              %  "web3j-maven-plugin"    % "0.3.5"      withSources(), // Create Java classes from solidity contract files
+  "org.web3j"              %  "web3j-maven-plugin"    % "4.1.0"      withSources(), // Create Java classes from solidity contract files
   //
   "org.scala-lang.modules" %% "scala-java8-compat"    % "0.9.0",
   "ch.qos.logback"         %  "logback-classic"       % "1.2.3",
