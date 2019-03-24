@@ -2,7 +2,7 @@ organization := "com.micronautics"
 
 name := "web3j-scala"
 
-version := "4.1.1"
+version := "4.2.0"
 
 scalaVersion := "2.12.8"
 
@@ -78,7 +78,7 @@ resolvers ++= Seq(
   "Ethereum Maven" at "https://dl.bintray.com/ethereum/maven/"
 )
 
-val web3jVersion = "4.1.1"
+val web3jVersion = "4.2.0"
 libraryDependencies ++= Seq(
   // See https://docs.web3j.io/modules.html
   "org.web3j"              %  "abi"                   % web3jVersion withSources(), // Application Binary Interface encoders
