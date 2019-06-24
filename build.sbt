@@ -7,7 +7,7 @@ version := "4.2.0"
 scalaVersion := "2.13.0"
 
 // Travis can be a PITA
-crossScalaVersions := { if (!new java.io.File("/home/travis").exists) Seq("2.12.8", "2.13.0") else Seq("2.13.0") }
+crossScalaVersions := { if (new java.io.File("/home/travis").exists) Seq("2.13.0") else Seq("2.12.8", "2.13.0") }
 
 licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
 
