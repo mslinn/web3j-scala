@@ -2,7 +2,7 @@
 
 <img src='https://docs.web3j.io/_static/web3j.png' align='right' width='15%'>
 
-[![Build Status](https://travis-ci.org/mslinn/web3j-scala.svg?branch=master)](https://travis-ci.org/mslinn/web3j-scala)
+<!-- [![Build Status](https://travis-ci.org/mslinn/web3j-scala.svg?branch=master)](https://travis-ci.org/mslinn/web3j-scala) -->
 [![GitHub version](https://badge.fury.io/gh/mslinn%2Fweb3j-scala.svg)](https://badge.fury.io/gh/mslinn%2Fweb3j-scala)
 
 `web3j-scala` is an idiomatic Scala wrapper around [Web3J](https://www.web3j.io) for Ethereum.
@@ -144,8 +144,7 @@ the company that delivers online Scala training via [ScalaCourses.com](http://ww
 You can learn Scala by taking the [Introduction to Scala](http://www.ScalaCourses.com/showCourse/40),
 and [Intermediate Scala](http://www.ScalaCourses.com/showCourse/45) courses.
 
-Micronautics Research also offers Ethereum and Scala consulting.
-Please [contact us](mailto:sales@micronauticsresearch.com) to discuss your organization&rsquo;s needs.
+Please [contact us](mailto:sales@micronauticsresearch.com) to discuss your organization&rsquo;s training needs.
 
 ## License
 This software is published under the [Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html).
