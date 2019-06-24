@@ -78,7 +78,7 @@ resolvers ++= Seq(
   "Ethereum Maven" at "https://dl.bintray.com/ethereum/maven/"
 )
 
-val web3jVersion = "4.2.0"
+val web3jVersion = "4.3.0"
 libraryDependencies ++= Seq(
   // See https://docs.web3j.io/modules.html
   "org.web3j"              %  "abi"                   % web3jVersion withSources(), // Application Binary Interface encoders
