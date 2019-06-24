@@ -1,12 +1,9 @@
 import com.micronautics.web3j.Ether
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
-import org.scalatest._
+import com.micronautics.web3j.Ether._
 import org.scalatest.Matchers._
-import Ether._
+import org.scalatest.wordspec.AnyWordSpec
 
-@RunWith(classOf[JUnitRunner])
-class EtherTest extends WordSpec {
+class EtherTest extends AnyWordSpec {
   val wei: Ether    = Ether(e(0))
   val kWei: Ether   = Ether(e(3))
   val mWei: Ether   = Ether(e(6))

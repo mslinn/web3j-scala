@@ -83,7 +83,7 @@ object Web3JScala {
 
   protected def toCamelCase(s: String): String = {
     val words = s.split("_")
-    val tail = words.tail.map { word => word.head.toUpper + word.tail }
+    val tail = words.tail.map { word => word.head.toUpper.toString + word.tail }
     words.head + tail.mkString
   }
 }

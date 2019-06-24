@@ -4,7 +4,9 @@ name := "web3j-scala"
 
 version := "4.2.0"
 
-scalaVersion := "2.12.8"
+scalaVersion := "2.13.0"
+
+crossScalaVersions := Seq(scalaVersion.value, "2.13.0")
 
 licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
 
@@ -20,13 +22,11 @@ scalacOptions ++= Seq( // From https://tpolecat.github.io/2017/04/25/scalac-flag
   "-unchecked",                        // Enable additional warnings where generated code depends on assumptions.
   "-Xcheckinit",                       // Wrap field accessors to throw an exception on uninitialized access.
   //"-Xfatal-warnings",                  // Fail the compilation if there are any warnings.
-  "-Xfuture",                          // Turn on future language features.
   "-Xlint:adapted-args",               // Warn if an argument list is modified to match the receiver.
-  "-Xlint:by-name-right-associative",  // By-name parameter of right associative operator.
   "-Xlint:constant",                   // Evaluation of a constant arithmetic expression results in an error.
   "-Xlint:delayedinit-select",         // Selecting member of DelayedInit.
   "-Xlint:doc-detached",               // A Scaladoc comment appears to be detached from its element.
-  "-Xlint:inaccessible",               // Warn about inaccessible types in method signatures.
+//  "-Xlint:inaccessible",               // Warn about inaccessible types in method signatures.
   "-Xlint:infer-any",                  // Warn when a type argument is inferred to be `Any`.
   "-Xlint:missing-interpolator",       // A string literal appears to be missing an interpolator id.
   "-Xlint:nullary-override",           // Warn when non-nullary `def f()' overrides nullary `def f'.
@@ -37,23 +37,6 @@ scalacOptions ++= Seq( // From https://tpolecat.github.io/2017/04/25/scalac-flag
   "-Xlint:private-shadow",             // A private field (or class parameter) shadows a superclass field.
   "-Xlint:stars-align",                // Pattern sequence wildcard must align with sequence component.
   "-Xlint:type-parameter-shadow",      // A local type parameter shadows a type already in scope.
-  "-Xlint:unsound-match",              // Pattern match may not be typesafe.
-  "-Yno-adapted-args",                 // Do not adapt an argument list (either by inserting () or creating a tuple) to match the receiver.
-  "-Ypartial-unification",             // Enable partial unification in type constructor inference
-  //"-Ywarn-dead-code",                  // Warn when dead code is identified.
-  "-Ywarn-extra-implicit",             // Warn when more than one implicit parameter section is defined.
-  "-Ywarn-inaccessible",               // Warn about inaccessible types in method signatures.
-  "-Ywarn-infer-any",                  // Warn when a type argument is inferred to be `Any`.
-  "-Ywarn-nullary-override",           // Warn when non-nullary `def f()' overrides nullary `def f'.
-  "-Ywarn-nullary-unit",               // Warn when nullary methods return Unit.
-  "-Ywarn-numeric-widen"               // Warn when numerics are widened.
-  //"-Ywarn-unused:implicits",           // Warn if an implicit parameter is unused.
-  //"-Ywarn-unused:imports",             // Warn if an import selector is not referenced.
-  //"-Ywarn-unused:locals",              // Warn if a local definition is unused.
-  //"-Ywarn-unused:params",              // Warn if a value parameter is unused.
-  //"-Ywarn-unused:patvars",             // Warn if a variable bound in a pattern is unused.
-  //"-Ywarn-unused:privates",            // Warn if a private member is unused.
-  //"-Ywarn-value-discard"               // Warn when non-Unit expression results are unused.
 )
 
 // The REPL can’t cope with -Ywarn-unused:imports or -Xfatal-warnings so turn them off for the console
@@ -87,7 +70,7 @@ libraryDependencies ++= Seq(
   "org.web3j"              %  "core"                  % web3jVersion withSources(),
 //  "org.web3j"              %  "crypto"                % web3jVersion withSources(), // For transaction signing and key/wallet management
   "org.web3j"              %  "geth"                  % web3jVersion withSources(), // Geth-specific JSON-RPC module
-  "org.web3j"              %  "infura"                % web3jVersion withSources(), // Infura-specific HTTP header support
+  "org.web3j"              %  "infura"                % "4.2.0"      withSources(), // Infura-specific HTTP header support
   "org.web3j"              %  "parity"                % web3jVersion withSources(), // Parity-specific JSON-RPC module
 //  "org.web3j"              %  "quorum"                % "0.7.0"      withSources(), // integration with JP Morgan's Quorum
   "org.web3j"              %  "rlp"                   % web3jVersion withSources(), // Recursive Length Prefix (RLP) encoders
@@ -98,8 +81,8 @@ libraryDependencies ++= Seq(
   "org.scala-lang.modules" %% "scala-java8-compat"    % "0.9.0",
   "ch.qos.logback"         %  "logback-classic"       % "1.2.3",
   //
-  "org.scalatest"          %% "scalatest"   % "3.0.5" % Test withSources(),
-  "junit"                  %  "junit"       % "4.12"  % Test
+  "org.scalatest"          %% "scalatest"   % "3.1.0-SNAP13" % Test withSources(),
+  "junit"                  %  "junit"       % "4.12"         % Test
 )
 
 libraryDependencies ++=  { // Newer versions of Java have had the runtime library reduced, so include missing Java dependencies
