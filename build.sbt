@@ -4,7 +4,8 @@ name := "web3j-scala"
 
 version := "4.4.0"
 
-scalaVersion := "2.13.0"
+//scalaVersion := "2.13.0"
+scalaVersion := "2.12.9"
 
 // Travis can be a PITA
 crossScalaVersions := { if (new java.io.File("/home/travis").exists) Seq("2.13.0") else Seq("2.12.9", "2.13.0") }
@@ -64,27 +65,26 @@ resolvers ++= Seq(
 
 val web3jVersion = "4.4.0"
 libraryDependencies ++= Seq(
-  "org.scala-lang.modules" %% "scala-collection-compat" % "2.0.0" withSources(),
+  "org.scala-lang.modules" %% "scala-collection-compat" % "2.1.2" withSources(),
   // See https://docs.web3j.io/modules.html
-  "org.web3j"              %  "abi"                   % web3jVersion withSources(), // Application Binary Interface encoders
-  "org.web3j"              %  "codegen"               % web3jVersion withSources(), // Code generators
-  "org.web3j"              %  "console"               % web3jVersion withSources(), // Command-line tools
-  "org.web3j"              %  "core"                  % web3jVersion withSources(),
-//  "org.web3j"              %  "crypto"                % web3jVersion withSources(), // For transaction signing and key/wallet management
-  "org.web3j"              %  "geth"                  % web3jVersion withSources(), // Geth-specific JSON-RPC module
-  "org.web3j"              %  "infura"                % "4.2.0"      withSources(), // Infura-specific HTTP header support
-  "org.web3j"              %  "parity"                % web3jVersion withSources(), // Parity-specific JSON-RPC module
-//  "org.web3j"              %  "quorum"                % "0.7.0"      withSources(), // integration with JP Morgan's Quorum
-  "org.web3j"              %  "rlp"                   % web3jVersion withSources(), // Recursive Length Prefix (RLP) encoders
-//  "org.web3j"              %  "tuples"                % web3jVersion withSources(), // See http://www.javatuples.org ... not needed for Scala?
-  "org.web3j"              %  "utils"                 % web3jVersion withSources(), // Minimal set of utility classes
-  "org.web3j"              %  "web3j-maven-plugin"    % "0.3.5"      withSources(), // Create Java classes from solidity contract files
+  "org.web3j"              %  "abi"                     % web3jVersion withSources(), // Application Binary Interface encoders
+  "org.web3j"              %  "codegen"                 % web3jVersion withSources(), // Code generators
+  "org.web3j"              %  "console"                 % web3jVersion withSources(), // Command-line tools
+  "org.web3j"              %  "core"                    % web3jVersion withSources(),
+//  "org.web3j"              %  "crypto"                  % web3jVersion withSources(), // For transaction signing and key/wallet management
+  "org.web3j"              %  "geth"                    % web3jVersion withSources(), // Geth-specific JSON-RPC module
+  "org.web3j"              %  "infura"                  % "4.2.0"      withSources(), // Infura-specific HTTP header support
+  "org.web3j"              %  "parity"                  % web3jVersion withSources(), // Parity-specific JSON-RPC module
+//  "org.web3j"              %  "quorum"                  % "0.7.0"      withSources(), // integration with JP Morgan's Quorum
+  "org.web3j"              %  "rlp"                     % web3jVersion withSources(), // Recursive Length Prefix (RLP) encoders
+  "org.web3j"              %  "utils"                   % web3jVersion withSources(), // Minimal set of utility classes
+  "org.web3j"              %  "web3j-maven-plugin"      % "0.3.5"      withSources(), // Create Java classes from solidity contract files
   //
-  "org.scala-lang.modules" %% "scala-java8-compat"    % "0.9.0",
-  "ch.qos.logback"         %  "logback-classic"       % "1.2.3",
+  "org.scala-lang.modules" %% "scala-java8-compat"      % "0.9.0",
+  "ch.qos.logback"         %  "logback-classic"         % "1.2.3",
   //
-  "org.scalatest"          %% "scalatest"   % "3.1.0-SNAP13" % Test withSources(),
-  "junit"                  %  "junit"       % "4.12"         % Test
+  "org.scalatest"          %% "scalatest"     % "3.0.8" % Test withSources(),
+  "junit"                  %  "junit"         % "4.12"  % Test
 )
 
 libraryDependencies ++=  { // Newer versions of Java have had the runtime library reduced, so include missing Java dependencies

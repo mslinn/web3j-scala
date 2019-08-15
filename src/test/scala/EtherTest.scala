@@ -1,9 +1,9 @@
 import com.micronautics.web3j.Ether
 import com.micronautics.web3j.Ether._
+import org.scalatest._
 import org.scalatest.Matchers._
-import org.scalatest.wordspec.AnyWordSpec
 
-class EtherTest extends AnyWordSpec {
+class EtherTest extends WordSpec {
   val wei: Ether    = Ether(e(0))
   val kWei: Ether   = Ether(e(3))
   val mWei: Ether   = Ether(e(6))

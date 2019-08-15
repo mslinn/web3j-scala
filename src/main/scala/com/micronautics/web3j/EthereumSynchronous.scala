@@ -7,6 +7,7 @@ import org.web3j.protocol.core.DefaultBlockParameterName.LATEST
 import org.web3j.protocol.core.methods.request
 import org.web3j.protocol.core.methods.request.ShhFilter
 import org.web3j.protocol.core.methods.response.{EthBlock, EthCompileSolidity, EthGetWork, EthLog, ShhMessages, Transaction, TransactionReceipt}
+import scala.collection.compat._
 import scala.jdk.CollectionConverters._
 import scala.compat.java8.OptionConverters._
 import scala.collection.immutable.List
