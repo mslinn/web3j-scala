@@ -4,8 +4,8 @@ name := "web3j-scala"
 
 version := "4.4.0"
 
-//scalaVersion := "2.13.0"
-scalaVersion := "2.12.9"
+scalaVersion := "2.13.0"
+//scalaVersion := "2.12.9"
 
 // Travis can be a PITA
 crossScalaVersions := { if (new java.io.File("/home/travis").exists) Seq("2.13.0") else Seq("2.12.9", "2.13.0") }
