@@ -2,12 +2,12 @@ organization := "com.micronautics"
 
 name := "web3j-scala"
 
-version := "4.2.0"
+version := "4.4.0"
 
 scalaVersion := "2.13.0"
 
 // Travis can be a PITA
-crossScalaVersions := { if (new java.io.File("/home/travis").exists) Seq("2.13.0") else Seq("2.12.8", "2.13.0") }
+crossScalaVersions := { if (new java.io.File("/home/travis").exists) Seq("2.13.0") else Seq("2.12.9", "2.13.0") }
 
 licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
 
@@ -62,8 +62,9 @@ resolvers ++= Seq(
   "Ethereum Maven" at "https://dl.bintray.com/ethereum/maven/"
 )
 
-val web3jVersion = "4.3.0"
+val web3jVersion = "4.4.0"
 libraryDependencies ++= Seq(
+  "org.scala-lang.modules" %% "scala-collection-compat" % "2.0.0" withSources(),
   // See https://docs.web3j.io/modules.html
   "org.web3j"              %  "abi"                   % web3jVersion withSources(), // Application Binary Interface encoders
   "org.web3j"              %  "codegen"               % web3jVersion withSources(), // Code generators
