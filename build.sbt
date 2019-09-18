@@ -4,11 +4,11 @@ name := "web3j-scala"
 
 version := "4.5.1"
 
-scalaVersion := "2.13.0"
+scalaVersion := "2.13.1"
 //scalaVersion := "2.12.10"
 
 // Travis can be a PITA
-crossScalaVersions := { if (new java.io.File("/home/travis").exists) Seq("2.13.0") else Seq("2.12.9", "2.13.0") }
+crossScalaVersions := { if (new java.io.File("/home/travis").exists) Seq("2.13.1") else Seq("2.12.9", "2.13.1") }
 
 licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
 
