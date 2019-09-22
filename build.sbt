@@ -8,7 +8,7 @@ scalaVersion := "2.13.1"
 //scalaVersion := "2.12.10"
 
 // Travis can be a PITA
-crossScalaVersions := { if (new java.io.File("/home/travis").exists) Seq("2.13.1") else Seq("2.12.9", "2.13.1") }
+crossScalaVersions := { if (new java.io.File("/home/travis").exists) Seq("2.13.1") else Seq("2.12.10", "2.13.1") }
 
 licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
 
@@ -63,7 +63,7 @@ resolvers ++= Seq(
   "Ethereum Maven" at "https://dl.bintray.com/ethereum/maven/"
 )
 
-val web3jVersion = "4.5.2"
+val web3jVersion = "4.5.4"
 libraryDependencies ++= Seq(
   "org.scala-lang.modules" %% "scala-collection-compat" % "2.1.2" withSources(),
   // See https://docs.web3j.io/modules.html
