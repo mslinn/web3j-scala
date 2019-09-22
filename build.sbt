@@ -2,7 +2,7 @@ organization := "com.micronautics"
 
 name := "web3j-scala"
 
-version := "4.5.2"
+version := "4.5.4"
 
 scalaVersion := "2.13.1"
 //scalaVersion := "2.12.10"
