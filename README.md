@@ -19,7 +19,7 @@ Add this to your SBT project's `build.sbt`:
 
     resolvers += "micronautics/scala on bintray" at "http://dl.bintray.com/micronautics/scala"
 
-    libraryDependencies += "com.micronautics" %% "web3j-scala" % "4.5.4" withSources()
+    libraryDependencies += "com.micronautics" %% "web3j-scala" % "4.5.5" withSources()
 
 This library is cross-built for Scala 2.12 and 2.13. Tested with Oracle JDK 8 and OpenJDK 8 & 11.
 
