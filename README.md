@@ -1,6 +1,7 @@
 # Web3J-Scala Library
 
 <img src='https://raw.githubusercontent.com/mslinn/web3j-scala/gh-pages/images/web3j.png' align='right' width='15%'>
+
 [![GitHub version](https://badge.fury.io/gh/mslinn%2Fweb3j-scala.svg)](https://badge.fury.io/gh/mslinn%2Fweb3j-scala)
 
 `web3j-scala` is an idiomatic Scala wrapper around [Web3J](https://www.web3j.io) for Ethereum.
