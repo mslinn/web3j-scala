@@ -70,7 +70,7 @@ libraryDependencies ++= Seq(
   // See https://docs.web3j.io/modules.html
   "org.web3j"              %  "abi"                     % web3jVersion withSources(), // Application Binary Interface encoders
   "org.web3j"              %  "codegen"                 % web3jVersion withSources(), // Code generators
-  "org.web3j"              %  "console"                 % web3jVersion withSources(), // Command-line tools
+  //"org.web3j"              %  "console"                 % web3jVersion withSources(), // Command-line tools
   "org.web3j"              %  "core"                    % web3jVersion withSources(),
 //  "org.web3j"              %  "crypto"                  % web3jVersion withSources(), // For transaction signing and key/wallet management
   "org.web3j"              %  "geth"                    % web3jVersion withSources(), // Geth-specific JSON-RPC module
