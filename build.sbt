@@ -2,7 +2,7 @@ organization := "com.micronautics"
 
 name := "web3j-scala"
 
-version := "4.5.7"
+version := "4.5.8"
 
 scalaVersion := "2.13.1"
 //scalaVersion := "2.12.10"
@@ -64,7 +64,7 @@ resolvers ++= Seq(
   "bintray"        at "https://bintray.com/web3j/maven/org.web3j"
 )
 
-val web3jVersion = "4.5.7"
+val web3jVersion = "4.5.8"
 libraryDependencies ++= Seq(
   "org.scala-lang.modules" %% "scala-collection-compat" % "2.1.2" withSources(),
   // See https://docs.web3j.io/modules.html
