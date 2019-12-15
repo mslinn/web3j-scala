@@ -12,4 +12,4 @@ resolvers += Resolver.jcenterRepo
 addSbtPlugin("org.foundweekends" % "sbt-bintray" % "0.5.5")
 
 // See https://github.com/ThoughtWorksInc/sbt-api-mappings
-addSbtPlugin("com.thoughtworks.sbt-api-mappings" % "sbt-api-mappings" % "2.1.0")
+addSbtPlugin("com.thoughtworks.sbt-api-mappings" % "sbt-api-mappings" % "3.0.0")
