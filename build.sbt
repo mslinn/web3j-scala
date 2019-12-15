@@ -66,7 +66,7 @@ resolvers ++= Seq(
 
 val web3jVersion = "4.5.8"
 libraryDependencies ++= Seq(
-  "org.scala-lang.modules" %% "scala-collection-compat" % "2.1.2" withSources(),
+  "org.scala-lang.modules" %% "scala-collection-compat" % "2.1.3" withSources(),
   // See https://docs.web3j.io/modules.html
   "org.web3j"              %  "abi"                     % web3jVersion withSources(), // Application Binary Interface encoders
   "org.web3j"              %  "codegen"                 % web3jVersion withSources(), // Code generators
