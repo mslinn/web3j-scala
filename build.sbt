@@ -64,7 +64,7 @@ resolvers ++= Seq(
   "bintray"        at "https://bintray.com/web3j/maven/org.web3j"
 )
 
-val web3jVersion = "4.5.8"
+val web3jVersion = "4.5.10"
 libraryDependencies ++= Seq(
   "org.scala-lang.modules" %% "scala-collection-compat" % "2.1.2" withSources(),
   // See https://docs.web3j.io/modules.html
