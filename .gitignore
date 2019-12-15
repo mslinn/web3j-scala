@@ -3,6 +3,7 @@
 *~
 .cache
 .ethereum/
+.github/
 .idea/
 .idea_modules/
 .project

@@ -1,6 +1,3 @@
-// See https://github.com/typesafehub/sbteclipse
-addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "5.2.4")
-
 // See https://github.com/rtimush/sbt-updates
 addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.3.4")
 
