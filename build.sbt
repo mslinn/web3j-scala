@@ -2,7 +2,8 @@ organization := "com.micronautics"
 
 name := "web3j-scala"
 
-version := "4.5.8"
+val web3jVersion = "4.5.10"
+version := web3jVersion
 
 scalaVersion := "2.13.1"
 //scalaVersion := "2.12.10"
@@ -61,10 +62,10 @@ javacOptions ++= Seq(
 
 resolvers ++= Seq(
   "Ethereum Maven" at "https://dl.bintray.com/ethereum/maven/",
-  "bintray"        at "https://bintray.com/web3j/maven/org.web3j"
+  "bintray"        at "https://bintray.com/web3j/maven/org.web3j",
+  "Snapshots"      at "https://oss.sonatype.org/content/repositories/snapshots"
 )
 
-val web3jVersion = "4.5.8"
 libraryDependencies ++= Seq(
   "org.scala-lang.modules" %% "scala-collection-compat" % "2.1.3" withSources(),
   // See https://docs.web3j.io/modules.html
