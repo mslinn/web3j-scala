@@ -1,56 +1,19 @@
-organization := "com.micronautics"
+val web3jVersion = "4.5.11"
 
-name := "web3j-scala"
-
-val web3jVersion = "4.5.10"
-version := web3jVersion
-
-scalaVersion := "2.13.1"
-//scalaVersion := "2.12.10"
+cancelable := true
 
 // Travis can be a PITA
 crossScalaVersions := { if (new java.io.File("/home/travis").exists) Seq("2.13.1") else Seq("2.12.10", "2.13.1") }
 
-licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
+fork in Test := true
 
-scalacOptions ++= Seq( // From https://tpolecat.github.io/2017/04/25/scalac-flags.html
-  "-deprecation",                      // Emit warning and location for usages of deprecated APIs.
-  "-encoding", "utf-8",                // Specify character encoding used by source files.
-  "-explaintypes",                     // Explain type errors in more detail.
-  "-feature",                          // Emit warning and location for usages of features that should be imported explicitly.
-  "-language:existentials",            // Existential types (besides wildcard types) can be written and inferred
-  "-language:experimental.macros",     // Allow macro definition (besides implementation and application)
-  "-language:higherKinds",             // Allow higher-kinded types
-  "-language:implicitConversions",     // Allow definition of implicit functions called views
-  "-unchecked",                        // Enable additional warnings where generated code depends on assumptions.
-  "-Xcheckinit",                       // Wrap field accessors to throw an exception on uninitialized access.
-  //"-Xfatal-warnings",                  // Fail the compilation if there are any warnings.
-  "-Xlint:adapted-args",               // Warn if an argument list is modified to match the receiver.
-  "-Xlint:constant",                   // Evaluation of a constant arithmetic expression results in an error.
-  "-Xlint:delayedinit-select",         // Selecting member of DelayedInit.
-  "-Xlint:doc-detached",               // A Scaladoc comment appears to be detached from its element.
-//  "-Xlint:inaccessible",               // Warn about inaccessible types in method signatures.
-  "-Xlint:infer-any",                  // Warn when a type argument is inferred to be `Any`.
-  "-Xlint:missing-interpolator",       // A string literal appears to be missing an interpolator id.
-  "-Xlint:nullary-override",           // Warn when non-nullary `def f()' overrides nullary `def f'.
-  "-Xlint:nullary-unit",               // Warn when nullary methods return Unit.
-  "-Xlint:option-implicit",            // Option.apply used implicit view.
-  "-Xlint:package-object-classes",     // Class or object defined in package object.
-  "-Xlint:poly-implicit-overload",     // Parameterized overloaded implicit methods are not visible as view bounds.
-  "-Xlint:private-shadow",             // A private field (or class parameter) shadows a superclass field.
-  "-Xlint:stars-align",                // Pattern sequence wildcard must align with sequence component.
-  "-Xlint:type-parameter-shadow",      // A local type parameter shadows a type already in scope.
-)
-
-// The REPL can’t cope with -Ywarn-unused:imports or -Xfatal-warnings so turn them off for the console
-scalacOptions in (Compile, console) --= Seq("-Ywarn-unused:imports", "-Xfatal-warnings")
-
-scalacOptions in (Compile, doc) ++= baseDirectory.map { bd: File =>
-  Seq[String](
-     "-sourcepath", bd.getAbsolutePath,
-     "-doc-source-url", "https://github.com/mslinn/web3j-scala/tree/master€{FILE_PATH}.scala"
-  )
-}.value
+// define the statements initially evaluated when entering 'console', 'console-quick', but not 'console-project'
+initialCommands in console := """import scala.sys.process._
+                                |import java.math.BigInteger
+                                |import java.util.concurrent.Future
+                                |import org.web3j.protocol._
+                                |import org.web3j.protocol.infura._
+                                |""".stripMargin
 
 javacOptions ++= Seq(
   "-Xlint:deprecation",
@@ -58,12 +21,6 @@ javacOptions ++= Seq(
   "-source", "1.8",
   "-target", "1.8",
   "-g:vars"
-)
-
-resolvers ++= Seq(
-  "Ethereum Maven" at "https://dl.bintray.com/ethereum/maven/",
-  "bintray"        at "https://bintray.com/web3j/maven/org.web3j",
-  "Snapshots"      at "https://oss.sonatype.org/content/repositories/snapshots"
 )
 
 libraryDependencies ++= Seq(
@@ -100,8 +57,7 @@ libraryDependencies ++=  { // Newer versions of Java have had the runtime librar
 	case _ => Nil
 }}
 
-unmanagedSourceDirectories in Test += baseDirectory.value / "abiWrapper"
-unmanagedSourceDirectories in Test += baseDirectory.value / "demo"
+licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
 
 logLevel := Level.Warn
 
@@ -112,13 +68,58 @@ logLevel in compile := Level.Warn
 // Level.INFO is needed to see detailed output when running tests
 logLevel in test := Level.Info
 
-// define the statements initially evaluated when entering 'console', 'console-quick', but not 'console-project'
-initialCommands in console := """import scala.sys.process._
-                                |import java.math.BigInteger
-                                |import java.util.concurrent.Future
-                                |import org.web3j.protocol._
-                                |import org.web3j.protocol.infura._
-                                |""".stripMargin
+name := "web3j-scala"
 
-cancelable := true
-fork in Test := true
+organization := "com.micronautics"
+
+resolvers ++= Seq(
+  "Ethereum Maven" at "https://dl.bintray.com/ethereum/maven/",
+  "bintray"        at "https://bintray.com/web3j/maven/org.web3j",
+  //"Snapshots"      at "https://oss.sonatype.org/content/repositories/snapshots"
+)
+
+scalacOptions ++= Seq( // From https://tpolecat.github.io/2017/04/25/scalac-flags.html
+  "-deprecation",                      // Emit warning and location for usages of deprecated APIs.
+  "-encoding", "utf-8",                // Specify character encoding used by source files.
+  "-explaintypes",                     // Explain type errors in more detail.
+  "-feature",                          // Emit warning and location for usages of features that should be imported explicitly.
+  "-language:existentials",            // Existential types (besides wildcard types) can be written and inferred
+  "-language:experimental.macros",     // Allow macro definition (besides implementation and application)
+  "-language:higherKinds",             // Allow higher-kinded types
+  "-language:implicitConversions",     // Allow definition of implicit functions called views
+  "-unchecked",                        // Enable additional warnings where generated code depends on assumptions.
+  "-Xcheckinit",                       // Wrap field accessors to throw an exception on uninitialized access.
+  "-Xlint:adapted-args",               // Warn if an argument list is modified to match the receiver.
+  "-Xlint:constant",                   // Evaluation of a constant arithmetic expression results in an error.
+  "-Xlint:delayedinit-select",         // Selecting member of DelayedInit.
+  "-Xlint:doc-detached",               // A Scaladoc comment appears to be detached from its element.
+  "-Xlint:infer-any",                  // Warn when a type argument is inferred to be `Any`.
+  "-Xlint:missing-interpolator",       // A string literal appears to be missing an interpolator id.
+  "-Xlint:nullary-override",           // Warn when non-nullary `def f()' overrides nullary `def f'.
+  "-Xlint:nullary-unit",               // Warn when nullary methods return Unit.
+  "-Xlint:option-implicit",            // Option.apply used implicit view.
+  "-Xlint:package-object-classes",     // Class or object defined in package object.
+  "-Xlint:poly-implicit-overload",     // Parameterized overloaded implicit methods are not visible as view bounds.
+  "-Xlint:private-shadow",             // A private field (or class parameter) shadows a superclass field.
+  "-Xlint:stars-align",                // Pattern sequence wildcard must align with sequence component.
+  "-Xlint:type-parameter-shadow",      // A local type parameter shadows a type already in scope.
+)
+
+// The REPL can’t cope with -Ywarn-unused:imports or -Xfatal-warnings so turn them off for the console
+scalacOptions in (Compile, console) --= Seq("-Ywarn-unused:imports", "-Xfatal-warnings")
+
+scalacOptions in (Compile, doc) ++= baseDirectory.map { bd: File =>
+  Seq[String](
+     "-sourcepath", bd.getAbsolutePath,
+     "-doc-source-url", "https://github.com/mslinn/web3j-scala/tree/master€{FILE_PATH}.scala"
+  )
+}.value
+
+scalaVersion := "2.13.1"
+
+unmanagedSourceDirectories in Test ++= Seq(
+  baseDirectory.value / "abiWrapper",
+  baseDirectory.value / "demo"
+)
+
+version := web3jVersion
