@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+function findSettingValue {
+  echo "$( grep "$1 :=" build.sbt | cut -d' ' -f 3 | tr -d \" | tr -d '\n' | tr -d '\r' )"
+}
+
+function findVarValue {
+  echo "$( grep "$1 =" build.sbt | cut -d' ' -f 4 | tr -d \" | tr -d '\n' | tr -d '\r' )"
+}
+
+VER="$( findVarValue web3jVersion )"
+
+read -r -d '' TWEET << EndOfMessage
+I updated web3j-scala to match upstream (web3j v$VER).
+web3j-scala supports Scala 2.12 and 2.13.
+
+https://github.com/mslinn/web3j-scala
+
+#web3j #ethereum #Scala
+EndOfMessage
+
+echo "$TWEET"
