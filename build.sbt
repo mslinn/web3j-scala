@@ -2,7 +2,7 @@ organization := "com.micronautics"
 
 name := "web3j-scala"
 
-val web3jVersion = "4.5.10"
+val web3jVersion = "4.5.11"
 version := web3jVersion
 
 scalaVersion := "2.13.1"
