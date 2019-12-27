@@ -16,7 +16,10 @@ to provide much stronger type safety than Web3J, without incurring a runtime pen
 ## Use As a Library
 Add this to your SBT project's `build.sbt`:
 
-    resolvers += "micronautics/scala on bintray" at "http://dl.bintray.com/micronautics/scala"
+    resolvers ++= Seq(
+      "micronautics/scala on bintray" at "https://dl.bintray.com/micronautics/scala",
+      "ethereum" at "https://dl.bintray.com/ethereum/maven/"
+    )
 
     libraryDependencies += "com.micronautics" %% "web3j-scala" % "4.5.11" withSources()
 
