@@ -1,4 +1,4 @@
-val web3jVersion = "4.5.11"
+val web3jVersion = "4.5.13"
 
 cancelable := true
 
