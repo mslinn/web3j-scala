@@ -21,7 +21,7 @@ Add this to your SBT project's `build.sbt`:
       "ethereum" at "https://dl.bintray.com/ethereum/maven/"
     )
 
-    libraryDependencies += "com.micronautics" %% "web3j-scala" % "4.5.15" withSources()
+    libraryDependencies += "com.micronautics" %% "web3j-scala" % "4.5.16" withSources()
 
 This library is cross-built for Scala 2.12 and 2.13. Tested with Oracle JDK 8 and OpenJDK 8 & 11.
 
