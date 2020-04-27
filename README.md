@@ -1,3 +1,9 @@
+# DEATH NOTICE
+April 27, 2020: After working on `web3j-scala` for 3 years I see no reason to continue doing so and I will probably abandon this project soon.
+If someone else wants to take over the project let me know soon.
+
+ -- Mike
+
 # Web3J-Scala Library
 
 <img src='https://raw.githubusercontent.com/mslinn/web3j-scala/gh-pages/images/web3j.png' align='right' width='15%'>
