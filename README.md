@@ -1,6 +1,5 @@
 # DEATH NOTICE
-April 27, 2020: After working on `web3j-scala` for 3 years I see no reason to continue doing so and I will probably abandon this project soon.
-If someone else wants to take over the project let me know soon.
+May 8, 2020: I have abandoned this project and will not update it. If someone else wants to take it over please contact me.
 
  -- Mike
 
