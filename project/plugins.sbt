@@ -2,7 +2,7 @@
 addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.5.0")
 
 // See https://github.com/sbt/sbt-assembly
-addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.14.10")
+addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.15.0")
 
 // See https://github.com/sbt/sbt-bintray
 resolvers += Resolver.jcenterRepo
