@@ -3,7 +3,7 @@ val web3jVersion = "4.5.17"
 cancelable := true
 
 // Travis can be a PITA
-crossScalaVersions := { if (new java.io.File("/home/travis").exists) Seq("2.13.1") else Seq("2.12.10", "2.13.1") }
+crossScalaVersions := { if (new java.io.File("/home/travis").exists) Seq("2.13.1") else Seq("2.12.14", "2.13.1") }
 
 fork in Test := true
 
