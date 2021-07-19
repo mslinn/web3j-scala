@@ -40,7 +40,7 @@ libraryDependencies ++= Seq(
   "org.web3j"              %  "web3j-maven-plugin"      % "0.3.5"      withSources(), // Create Java classes from solidity contract files
   //
   "org.scala-lang.modules" %% "scala-java8-compat"      % "0.9.0",
-  "ch.qos.logback"         %  "logback-classic"         % "1.2.3",
+  "ch.qos.logback"         %  "logback-classic"         % "1.2.4",
   //
   "org.scalatest"          %% "scalatest"     % "3.0.8" % Test withSources(),
   "junit"                  %  "junit"         % "4.12"  % Test
